@@ -3,7 +3,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     height: 60px;
-    padding-inline: 30px;
     position: fixed;
     top: 0;
     width: 100%;
@@ -11,10 +10,11 @@ nav {
     transition: 0.5s;
     z-index: 999999;
     background-color: #0A0A0A;
+    box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
+    padding: 35px;
 }
 
 .navbarSolid {
-    background-color: #1A2A44; /* Deep Navy Blue for solid background */
     box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
     z-index: 1;
 }

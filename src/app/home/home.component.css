@@ -35,22 +35,33 @@
 .icon{
     border: 1px solid black;
     padding: 25px;
-    border-radius: 100px;
+    border-radius: 100%;
     transition: 0.3s;
 }
+
+.container{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 
 
 .arrivals {
     
     height: 400px;
-    background-image: url("/arrivals.jpg");
+    background-image: url("https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-position: center center;
+    background-attachment: fixed; 
     background-size: cover;
-    background-attachment: fixed;
-    background-position: right;
+    
    
    
 }
+
+
 
 main {
     height: 100%;
@@ -66,20 +77,22 @@ main {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    align-items: start;
+    align-items: center;
 }
 
 .infos h1 {
     font-size: 50px;
     font-family: sans-serif;
     letter-spacing: 1px;
-    color: red;
+    color: #C0C0C0;
 }
 
 
 .infos p {
     font-family:sans-serif;
     font-size: 20px;
+    text-align: center;
+    color: #C0C0C0;
 }
 
 .bestS {

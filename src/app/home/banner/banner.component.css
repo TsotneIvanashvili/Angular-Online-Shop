@@ -1,11 +1,16 @@
 section {
     height: 550px;
-    background-image: url("https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed; 
     background-size: cover;
-    background-attachment: fixed;
-    background-position: 0 -150px;
     position: relative; /* Added to support overlay */
     display: flex;
+
+}
+.container{
+    max-width: 100%;
+
 }
 
 /* Adding a subtle overlay to improve text readability */
@@ -35,6 +40,7 @@ main {
     flex-direction: column;
     gap: 40px;
     align-items: center;
+    max-width: 100%;
 }
 
 .infos h1 {
@@ -42,6 +48,8 @@ main {
     font-family: sans-serif;
     color: #C0C0C0; /* Sunset Pink for the heading */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    max-width: 100%;
+
 }
 
 .infos p {
@@ -49,6 +57,8 @@ main {
     font-size: 18px; /* Slightly larger for readability */
     line-height: 1.5; /* Better line spacing */
     color: #C0C0C0; /* Cool Gray for paragraph text */
+    max-width: 100%;
+
 }
 
 .infos button {
