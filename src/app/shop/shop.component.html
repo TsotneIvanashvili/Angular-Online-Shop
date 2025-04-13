@@ -1,0 +1,74 @@
+<header></header>
+<article>
+  <div class="sidebar">
+    <app-sidebar 
+    (sendBrands)="switchBrands($event)"
+    (sendAllProducts)="showProducts(1, pageSize)"
+    (sendFilterData)="filterProducts($event)"
+    (sendSearchInfo)="search($event)"
+    ></app-sidebar>
+  </div>
+  <section class="container">
+   
+      <div  class="categories">
+        @for (item of categories; track $index) {
+        <button>
+          <img [src]="item.image" alt="" />
+          <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
+        </button>
+        }
+      </div>
+   
+    <main>
+      @for (item of productList; track $index) {
+      <div class="card">
+        <img
+          [src]="!item.images[0] ? altImage : item.images[0]"
+          alt="product"
+        />
+        <h4>{{ item.title }}</h4>
+        <h2>
+          ${{ item.price.current }} <sub>${{ item.price.beforeDiscount }}</sub>
+        </h2>
+        <p>
+          {{ item.description }}
+        </p>
+        <div class="hiddenPart">
+          <button routerLink="/details/{{item._id}}"><i class="fa-solid fa-eye"></i> See More</button>
+        </div>
+      </div>
+      }
+    </main>
+    <div class="bottomArea">
+      <span></span>
+      <div class="pages">
+        <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; prev</button>
+        @for (item of pageList; track $index) {
+        <button
+          [class.current]="item == currentPage"
+          (click)="!isCategoryShown ? showProducts(item, pageSize) : showByCategory(currentCategory, item)"
+        >
+          {{ item }}
+        </button>
+        }
+        <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows"> next &rarr;</button>
+      </div>
+      @if (productList.length > 10) {
+      <div class="sizePerPage">
+        <label for="">Items per Page:</label>
+        <select (change)="changePageSize()" [(ngModel)]="pageSize">
+          <option value="">All</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+        </select>
+      </div>
+    }
+    @else { 
+      <span></span>
+    }
+    </div>
+  </section>
+</article>

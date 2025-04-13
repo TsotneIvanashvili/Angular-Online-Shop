@@ -1,0 +1,264 @@
+header {
+  background-image: url("https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  height: 600px;
+  background-attachment: fixed;
+}
+
+article {
+  display: flex;
+  gap: 10px;
+  z-index: -1;
+  
+}
+
+article .sidebar {
+  position: sticky;
+  top: 60px;
+  width: 230px;
+  height: calc(100vh - 60px);
+  border-right: 1px solid rgb(221, 220, 220);
+  padding-top: 20px;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: 1s;
+  margin: 20px 0;
+  gap: 20px;
+  padding-inline: 5px;
+}
+
+.categories {
+  display: flex;
+  gap: 20px;
+}
+
+.categories button {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #5DC5C4;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: 0.4s;
+  font-family: sans-serif;
+  
+}
+
+.categories button:hover {
+  box-shadow:  inset 0 0 20px 0px rgb(64, 36, 36);
+}
+
+.categories img {
+  width: 20px;
+}
+
+section main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 230px;
+  height: 400px;
+  padding: 10px;
+  box-shadow: 0 0 10px 1px rgb(192, 186, 186);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: sans-serif;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: scale(1.04);
+}
+.card:hover img {
+  transform: scale(1.07);
+}
+
+.card:hover .hiddenPart {
+  
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+  
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.card h4 {
+  font-weight: 500;
+}
+
+.card h2 sub {
+  font-size: 14px;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.card p {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.card .hiddenPart {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 15px;
+  padding-bottom: 20px;
+  transform: translateY(50px);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  backdrop-filter: grayscale(100%) blur(1px) brightness(80%);
+  left: 0;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: 0.7s;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card .hiddenPart button {
+  width: 150px;
+  height: 35px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card .hiddenPart button i {
+  font-size: 17px;
+}
+
+.card .hiddenPart button:hover {
+  background-color: darkgoldenrod;
+  box-shadow: 0 0 6px 2px darkgoldenrod;
+}
+
+.pages {
+  display: flex;
+  gap: 10px;
+}
+
+.pages button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: #7c2ae6;
+  color: white;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.4s;
+  font-family: sans-serif;
+}
+
+.pages button:hover {
+  background-color: #670bdf;
+  box-shadow: 0 0 10px 1px #7c2ae6;
+}
+
+.pages button:active {
+  background-color: rgb(3, 226, 255);
+}
+
+.bottomArea {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 50px;
+}
+
+.sizePerPage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: sans-serif;
+}
+
+.sizePerPage select {
+  width: 50px;
+  border: none;
+  border-bottom: 1px solid grey;
+  text-align: center;
+  font-family: sansserif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  outline: none;
+}
+
+.current {
+  background-color: #5903c9 !important;
+  box-shadow: 0 0 5px 3px #220067;
+  font-size: 20px !important;
+  text-shadow: 0px 0px 3px rgb(0, 0, 0) !important;
+}
+
+.current:hover {
+  box-shadow: 0 0 5px 3px #220067 !important;
+}
+
+
+.arrows {
+  width: 70px !important;
+}
+
+.arrows:disabled {
+  background-color: #4d3c6f !important;
+  box-shadow:  none !important;
+}

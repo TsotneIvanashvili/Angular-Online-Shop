@@ -1,0 +1,62 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding-inline: 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    backdrop-filter: brightness(90%) blur(5px);
+    transition: 0.5s;
+    z-index: 999999;
+    background-color: #0A0A0A;
+}
+
+.navbarSolid {
+    background-color: #1A2A44; /* Deep Navy Blue for solid background */
+    box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
+    z-index: 1;
+}
+
+nav h1 {
+    font-family:sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #C0C0C0; /* Sunset Pink for header text */
+}
+
+button img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+nav .account {
+    display: flex;
+    gap: 10px;
+}
+
+nav .account button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family:sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: #4DA8DA; /* Soft Cyan for buttons */
+    color: #ffffff; /* Cool Gray for button text */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+nav .account button i {
+    color: #ffffff; /* Cool Gray for icons */
+}
+
+nav .account button:hover {
+    background-color: #FF9F43; /* Warm Orange on hover */
+}

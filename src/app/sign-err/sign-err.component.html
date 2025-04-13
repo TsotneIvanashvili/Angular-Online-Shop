@@ -1,0 +1,14 @@
+@if (isShown) {
+<div class="notAccountErr" (click)="outSide($event)">
+    <div class="errCard">
+        <button (click)="closeErr()" class="close">X</button>
+        <h2>You are not signed in</h2>
+        <p>please sign in or sign up to continue...</p>
+        <div class="btns">
+            <button (click)="signIn()">Sign in</button>
+            <button (click)="register()">Sign up</button>
+        </div>
+    </div>
+  </div>
+
+}

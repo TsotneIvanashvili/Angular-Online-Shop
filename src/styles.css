@@ -1,0 +1,33 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1440px;
+    margin-inline:  auto;
+}
+
+@keyframes smoothSlide {
+    0%{
+        transform: translateY(-2000px);
+    }
+
+    55% {
+        transform: translateY(50px);
+    }
+
+    85% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+body{
+    font-family: sans-serif;
+}

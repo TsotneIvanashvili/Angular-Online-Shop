@@ -1,0 +1,96 @@
+@if (prodINFO) {
+<section class="container detailArea">
+  <div class="left">
+    <img class="mainImg" [src]="mainImage" alt="" />
+    <div class="otherIMGS">
+      @for (item of allImages; track $index) {
+      <img
+        [class.activeImg]="item === mainImage"
+        (click)="zoomImg(item)"
+        [src]="item"
+        alt=""
+      />
+      }
+    </div>
+  </div>
+  <div class="middle">
+    <h2>
+      {{ prodINFO.title }}
+    </h2>
+    <div class="rating">
+      <div class="stars">
+        @if (starNum == 0) {
+        <h5>No Rating</h5>
+        } @else { @for (item of [].constructor(starNum ); track $index) {
+        <i class="fa-solid fa-star"></i>
+        }
+        <span>{{ prodINFO.rating }}</span>
+
+        }
+      </div>
+    </div>
+    @if (prodINFO.stock > 0) {
+    <h4 style="color: green">
+      <i class="fa-solid fa-check"></i> {{ prodINFO.stock }} In stock
+    </h4>
+    } @else {
+    <h4 style="color: red"><i class="fa-solid fa-xmark"></i> Not in stock</h4>
+    }
+
+    <ul>
+      <li>Category: {{ prodINFO.category.name }}</li>
+      <li>Brand: {{ prodINFO.brand }}</li>
+      <li>Issue Date: {{ prodINFO.issueDate | date }}</li>
+    </ul>
+    <div class="desc">
+      <h3>Description</h3>
+      <div class="line"></div>
+    </div>
+
+    <p>
+      {{ prodINFO.description }}
+    </p>
+  </div>
+  <div class="right">
+    @if (prodINFO.price.discountPercentage != 0) {
+    <h2 class="disc">-{{ prodINFO.price.discountPercentage }}%</h2>
+    }
+
+    <div class="prices">
+      <h1>{{ prodINFO.price.current | currency }}</h1>
+      @if (prodINFO.price.current != prodINFO.price.beforeDiscount) {
+      <h1 class="beforeDisc">{{ prodINFO.price.beforeDiscount | currency }}</h1>
+      }
+    </div>
+
+    <div class="quantity">
+      <button [disabled]="prodQuant == 1" (click)="decrease()">-</button>
+      <h2>{{ prodQuant }}</h2>
+      <button (click)="increase()">+</button>
+    </div>
+    <button (click)="cartBTN()" class="cartBtn">
+      <i class="fa-solid fa-cart-shopping"></i> Add To cart
+    </button>
+    <div class="line"></div>
+    <div class="delivInfos">
+      <p><i class="fa-solid fa-truck-fast"></i>Worldwide shipping</p>
+      <p><i class="fa-solid fa-table-cells-row-lock"></i> Secure payment</p>
+      <p>
+        <i class="fa-solid fa-calendar-check"></i> {{ prodINFO.warranty }} years
+        full warranty
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+<app-related-prods 
+[categoryID]="prodINFO.category.id"
+(otherRelated)="otherRelatedArea($event)"
+></app-related-prods>
+
+}
+
+
+<app-sign-err></app-sign-err>

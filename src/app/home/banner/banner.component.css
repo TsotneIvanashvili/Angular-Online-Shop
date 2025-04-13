@@ -1,0 +1,69 @@
+section {
+    height: 550px;
+    background-image: url("https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 0 -150px;
+    position: relative; /* Added to support overlay */
+    display: flex;
+}
+
+/* Adding a subtle overlay to improve text readability */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #C0C0C0; /* Cool Gray for default text color */
+    position: relative; /* Ensure content sits above the overlay */
+    padding-right: 30px; /* Add some padding for better spacing */
+    text-align: center;
+}
+
+.infos {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.infos h1 {
+    font-size: 50px;
+    font-family: sans-serif;
+    color: #C0C0C0; /* Sunset Pink for the heading */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.infos p {
+    font-family: sans-serif;
+    font-size: 18px; /* Slightly larger for readability */
+    line-height: 1.5; /* Better line spacing */
+    color: #C0C0C0; /* Cool Gray for paragraph text */
+}
+
+.infos button {
+    padding: 10px 50px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4DA8DA; /* Soft Cyan for the button */
+    color: #D3D3D3; /* Cool Gray for button text */
+    font-family: sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.infos button:hover {
+    background-color: #FF9F43; /* Warm Orange on hover */
+    box-shadow: 0 0 5px 0px #FF9F43; /* Matching glow effect on hover */
+}

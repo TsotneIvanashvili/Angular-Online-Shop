@@ -1,0 +1,32 @@
+<nav appScrolling>
+  <h1 routerLink="/"><i class="fa-solid fa-shop fa-l" style="color: #ffffff;"></i> Online Shopping </h1>
+  
+
+  <div class="account">
+    @if (!isLoggedIn) {
+    <button (click)="showRegister()">
+      <i class="fa-solid fa-user-plus fa-lg" style="color: #ffffff;"></i>Create Account
+    </button>
+    <button (click)="signInForm()">
+      <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #ffffff;"></i> Sign in
+    </button>
+    } @else  {
+    <button><img [src]="userImg" alt="">{{userName}}</button>
+    <button (click)="signOut()"><i class="fa-solid fa-right-to-bracket"></i> Sign Out</button>
+    }
+  </div>
+</nav>
+
+@if (isSignShow) {
+<app-sign-in
+  (closeEmit)="closeForm($event)"
+  (changeEmit)="showRegister()"
+  (loggedEmit)="loggedIn($event)"
+  (loggedInfo)="profileInfoNav($event)"
+></app-sign-in>
+} @if (isRegisterShow) {
+<app-sign-up
+  (closeEmit)="closeRegister($event)"
+ 
+></app-sign-up>
+}

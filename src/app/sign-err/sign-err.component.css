@@ -1,0 +1,69 @@
+.notAccountErr {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: brightness(40%);
+}
+
+.errCard {
+    width: 400px;
+    height: 250px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 1px 10px 0px black;
+    position: relative;
+    overflow: hidden;
+    animation: smoothSlide 1s 1 forwards ease-in-out;
+}
+
+.errCard .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25px;
+    border: none;
+    border-bottom-left-radius: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.errCard .close:hover {
+    background-color: rgb(200, 11, 11);
+    color: white;
+    box-shadow: 0 0 5px 0 red;
+}
+
+.errCard .btns {
+    display: flex;
+    gap: 20px;
+}
+
+.errCard .btns button {
+    width: 100px;
+    height: 35px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: rgb(63, 98, 164);
+    color: white;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.errCard .btns button:hover {
+    background-color: rgb(89, 89, 206);
+    box-shadow: inset 0 0 16px 0px rgb(61, 61, 61);
+}
+
+
