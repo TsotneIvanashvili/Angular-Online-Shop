@@ -62,7 +62,6 @@
 }
 
 
-
 main {
     height: 100%;
     display: flex;
@@ -71,6 +70,7 @@ main {
     color: white;
   
 }
+
 
 .infos {
     width: 500px;
