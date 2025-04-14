@@ -18,7 +18,7 @@
     font-family: sans-serif;
     font-weight: bold;
     transition: 0.3s;
-    z-index: 1000;
+    z-index: 2;
   }
   
   .filter-toggle-btn:hover {
@@ -43,7 +43,7 @@
     height: calc(100vh - 60px);
     transform: translateX(-110%);
     transition: transform 0.3s ease;
-    z-index: 999;
+    z-index: 3;
     overflow-y: auto;
   }
   
@@ -263,3 +263,4 @@
     background-color: #555;
     border-radius: 5px;
   }
+  
