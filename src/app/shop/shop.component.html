@@ -1,4 +1,14 @@
-<header></header>
+<header>
+  <div class="head">
+    <h1>Welcome to TechNest Innovations</h1>
+<p>Discover the latest in cutting-edge technology at TechNest Innovations! From sleek smartphones and powerful laptops to smart home devices and gaming gear, our curated selection brings you top brands and unbeatable performance. Shop now for fast shipping, exclusive deals, and tech that transforms your world. Upgrade your life today!</p>
+  </div>
+</header>
+
+<div class="bestS">
+  <h1>Discover All Of Our Products Here</h1>
+</div>
+
 <article>
   <div class="sidebar">
     <app-sidebar 
@@ -42,7 +52,7 @@
     <div class="bottomArea">
       <span></span>
       <div class="pages">
-        <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; prev</button>
+        <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; Prev</button>
         @for (item of pageList; track $index) {
         <button
           [class.current]="item == currentPage"
@@ -51,24 +61,9 @@
           {{ item }}
         </button>
         }
-        <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows"> next &rarr;</button>
+        <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows"> Next &rarr;</button>
       </div>
-      @if (productList.length > 10) {
-      <div class="sizePerPage">
-        <label for="">Items per Page:</label>
-        <select (change)="changePageSize()" [(ngModel)]="pageSize">
-          <option value="">All</option>
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-        </select>
-      </div>
-    }
-    @else { 
-      <span></span>
-    }
+     
     </div>
   </section>
 </article>

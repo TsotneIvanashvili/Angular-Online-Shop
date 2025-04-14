@@ -25,7 +25,7 @@ export class ShopComponent implements OnInit {
   public productList: Product[] = [];
   public pageList: number[] = [];
   public currentPage: number = 1;
-  public pageSize: any = 15;
+  public pageSize: any = 10;
   public totalSize!: any;
   public isCategoryShown: boolean = false;
   public altImage: string =
