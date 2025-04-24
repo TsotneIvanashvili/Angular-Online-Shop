@@ -1,88 +1,83 @@
-<div class="signArea" (click)="everyWhere($event)">
+<div class="signArea">
   <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-    
     @if (successRegister) {
-        <small class="success"><i class="fa-solid fa-address-book"></i>Signed in Successfully</small>
+      <small class="success"><i class="fa-solid fa-address-book"></i> Signed in Successfully</small>
+    } @else if (errorList) {
+      <ul class="errors">
+        @for (item of errorList; track $index) {
+          <li><i class="fa-solid fa-circle-info"></i> {{item}}</li>
+        }
+      </ul>
     }
-    @else if (errorList) {
-        <ul class="errors">
-            @for (item of errorList; track $index) {
-                <li><i class="fa-solid fa-circle-info"></i> {{item}}</li>
-            }
-        </ul>
-    }
-    <i (click)="closeForm()" class="fa-solid fa-x"></i>
     <h1>Registration</h1>
     <div class="content">
       <div class="leftSide">
         <div class="area">
-            <i class="fa-solid fa-user-tie"></i>
-          <label for="">First Name</label>
-          <input type="text" formControlName="firstName"/>
+          <i class="fa-solid fa-user-tie"></i>
+          <label for="firstName">First Name</label>
+          <input type="text" formControlName="firstName" id="firstName" />
         </div>
         <div class="area">
-            <i class="fa-solid fa-envelope"></i>
-          <label for="">Email</label>
-          <input type="email"  formControlName="email"/>
+          <i class="fa-solid fa-envelope"></i>
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" id="email" />
         </div>
         <div class="area">
-            <i class="fa-solid fa-phone"></i>
-          <label for="">Phone</label>
-          <input type="text" formControlName="phone" />
+          <i class="fa-solid fa-phone"></i>
+          <label for="phone">Phone</label>
+          <input type="text" formControlName="phone" id="phone" />
         </div>
         <div class="area">
-            <i class="fa-solid fa-map"></i>
-          <label for="">Address</label>
-          <input type="text"  formControlName="address"/>
+          <i class="fa-solid fa-map"></i>
+          <label for="address">Address</label>
+          <input type="text" formControlName="address" id="address" />
         </div>
-        
-        
       </div>
       <div class="rightSide">
         <div class="area">
-            <i class="fa-solid fa-id-badge"></i>
-          <label for="">Last Name</label>
-          <input type="text"  formControlName="lastName"/>
+          <i class="fa-solid fa-id-badge"></i>
+          <label for="lastName">Last Name</label>
+          <input type="text" formControlName="lastName" id="lastName" />
         </div>
         <div class="area">
-            <i class="fa-solid fa-key"></i>
-          <label for="">Password</label>
-          <input type="password"  formControlName="password"/>
+          <i class="fa-solid fa-key"></i>
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" id="password" />
         </div>
         <div class="area">
-            <i class="fa-solid fa-file-zipper"></i>
-          <label for="">ZIP Code</label>
-          <input type="text"  formControlName="zipcode"/>
+          <i class="fa-solid fa-file-zipper"></i>
+          <label for="zipcode">ZIP Code</label>
+          <input type="text" formControlName="zipcode" id="zipcode" />
         </div>
-       
         <div class="area">
-            <i class="fa-solid fa-image-portrait"></i>
-          <label for="">Age</label>
-          <input type="text"  formControlName="age"/>
+          <i class="fa-solid fa-image-portrait"></i>
+          <label for="age">Age</label>
+          <input type="text" formControlName="age" id="age" />
         </div>
       </div>
     </div>
     <div class="bottomContent">
       <div class="imageArea">
         <i class="fa-solid fa-image"></i>
-        <label for="">Image</label>
-        <input type="text"  formControlName="avatar"/>
+        <label for="avatar">Image</label>
+        <input type="text" formControlName="avatar" id="avatar" />
       </div>
       <h3>Gender</h3>
       <div class="chooseArea">
         <div class="choose">
-          <input type="radio" name="gender" id="" value="MALE"  formControlName="gender"/>
-          <label for="">Male</label>
+          <input type="radio" name="gender" id="male" value="MALE" formControlName="gender" />
+          <label for="male">Male</label>
         </div>
         <div class="choose">
-          <input type="radio" name="gender" id="" value="FEMALE"  formControlName="gender"/>
-          <label for="">Female</label >
+          <input type="radio" name="gender" id="female" value="FEMALE" formControlName="gender" />
+          <label for="female">Female</label>
         </div>
       </div>
       <button [disabled]="signUpForm.invalid" type="submit">Register</button>
     </div>
   </form>
 </div>
+
 
 
 

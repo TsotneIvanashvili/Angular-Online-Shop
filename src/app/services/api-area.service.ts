@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AllProductArea } from '../../interfaces/all-product-area';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiAreaService {
-
   constructor(private http: HttpClient) { }
 
   signIn(body: any) {
@@ -20,6 +18,4 @@ export class ApiAreaService {
   profileInfo() {
     return this.http.get("https://api.everrest.educata.dev/auth")
   }
-
- 
 }

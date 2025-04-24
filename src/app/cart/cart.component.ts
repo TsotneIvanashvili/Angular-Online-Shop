@@ -40,17 +40,4 @@ export class CartComponent implements OnInit {
     })
   }
 
-  // getCart() {
-  //   this.api.getCart().subscribe({
-  //     next: (data:any) => {
-  //       console.log(data);
-        
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-        
-  //     }
-  //   })
-  // }
-
 }
