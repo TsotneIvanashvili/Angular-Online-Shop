@@ -8,7 +8,7 @@ import { ToolsService } from '../services/tools.service';
   styleUrl: './sign-err.component.css'
 })
 export class SignErrComponent implements OnInit {
-  constructor(private tools: ToolsService) {}
+  constructor(public tools: ToolsService) {}
   ngOnInit(): void {
     this.tools.isErrSMS.subscribe((info: boolean) => {
       this.isShown = info

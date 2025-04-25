@@ -8,7 +8,7 @@ import { Product } from '../../interfaces/product';
   providedIn: 'root',
 })
 export class ProductsAreaService {
-  constructor(private http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
   getCategories() {
     return this.http.get(

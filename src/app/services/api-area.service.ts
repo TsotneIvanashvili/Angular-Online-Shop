@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiAreaService {
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
   signIn(body: any) {
     return this.http.post("https://api.everrest.educata.dev/auth/sign_in", body)

@@ -15,7 +15,7 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
-  constructor(private api: ApiAreaService, public _cookie: SsrCookieService) {}
+  constructor(public api: ApiAreaService, public _cookie: SsrCookieService) {}
   @Output() closeEmit: EventEmitter<boolean> = new EventEmitter();
   @Output() changeEmit: EventEmitter<boolean> = new EventEmitter();
   @Output() loggedEmit: EventEmitter<boolean> = new EventEmitter();

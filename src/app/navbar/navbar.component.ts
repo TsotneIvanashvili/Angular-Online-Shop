@@ -14,7 +14,7 @@ import { ToolsService } from '../services/tools.service';
   standalone: true,
 })
 export class NavbarComponent implements OnInit {
-  constructor(private _cookie: SsrCookieService, private tools: ToolsService) {}
+  constructor(public _cookie: SsrCookieService, public tools: ToolsService) {}
 
   public isSignShow: boolean = false;
   public isRegisterShow: boolean = false;

@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  constructor(private productApi: ProductsAreaService) {}
+  constructor(public productApi: ProductsAreaService) {}
 
   @Output() sendBrands: EventEmitter<AllProductArea> = new EventEmitter();
   @Output() sendAllProducts: EventEmitter<AllProductArea> = new EventEmitter();

@@ -22,33 +22,40 @@
    
       <div  class="categories">
         @for (item of categories; track $index) {
-        <button>
-          <img [src]="item.image" alt="" />
+        <button class="button1">
+          <img class="hehe" [src]="item.image" alt="" />
           <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
         </button>
         }
       </div>
-   
-    <main>
-      @for (item of productList; track $index) {
+
+
+      <section class="container">
+        <main>
+    
+        
+        @for (item of productList; track $index) {
       <div class="card">
         <img
           [src]="!item.images[0] ? altImage : item.images[0]"
           alt="product"
         />
-        <h4>{{ item.title }}</h4>
-        <h2>
-          ${{ item.price.current }} <sub>${{ item.price.beforeDiscount }}</sub>
-        </h2>
-        <p>
-          {{ item.description }}
-        </p>
-        <div class="hiddenPart">
-          <button routerLink="/details/{{item._id}}"><i class="fa-solid fa-eye"></i> See More</button>
+        <div class="main-but">
+          <h2 class="title">{{item.title}}</h2>
+          <div class="but">
+            <h2>${{item.price.current}} <sub>${{item.price.beforeDiscount}}</sub></h2>
+            <button routerLink="/details/{{item._id}}"><i class="fa-solid fa-eye"></i> See Details </button>
+          </div>
         </div>
+    
+    
       </div>
-      }
+    }
     </main>
+    </section>
+
+
+    
     <div class="bottomArea">
       <span></span>
       <div class="pages">

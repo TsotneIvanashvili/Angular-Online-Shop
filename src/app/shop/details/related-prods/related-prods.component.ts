@@ -19,7 +19,7 @@ import { AllProductArea } from '../../../../interfaces/all-product-area';
   styleUrl: './related-prods.component.css',
 })
 export class RelatedProdsComponent implements OnInit {
-  constructor(private serv: ProductsAreaService) {}
+  constructor(public serv: ProductsAreaService) {}
   @Input() public categoryID: string | undefined;
   @Output() public otherRelated: EventEmitter<any> = new EventEmitter();
   public relatedProds: Product[] = [];

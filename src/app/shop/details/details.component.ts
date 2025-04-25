@@ -16,11 +16,11 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 })
 export class DetailsComponent implements OnInit {
   constructor(
-    private actR: ActivatedRoute,
-    private service: ProductsAreaService,
+    public actR: ActivatedRoute,
+    public service: ProductsAreaService,
     public router: Router,
     public tools: ToolsService,
-    private _cookie: SsrCookieService
+    public _cookie: SsrCookieService
   ) {}
 
   ngOnInit(): void {

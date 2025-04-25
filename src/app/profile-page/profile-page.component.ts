@@ -9,12 +9,12 @@ import { ApiAreaService } from '../services/api-area.service';
   styleUrl: './profile-page.component.css',
 })
 export class ProfilePageComponent implements OnInit {
-  constructor(private api: ApiAreaService) {}
+  constructor(public api: ApiAreaService) {}
   ngOnInit(): void {
     this.getProfileData();
   }
 
-  private userId: any;
+  public userId: any;
 
   getProfileData() {
     this.api.profileInfo().subscribe({

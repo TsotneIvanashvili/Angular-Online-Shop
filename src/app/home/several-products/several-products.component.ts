@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './several-products.component.css'
 })
 export class SeveralProductsComponent implements OnInit {
-  constructor(private service: ProductsAreaService) {}
+  constructor(public service: ProductsAreaService) {}
   ngOnInit(): void {
     this.showCards()
   }

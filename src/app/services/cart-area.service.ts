@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CartAreaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
 
   createCart(body: any) {

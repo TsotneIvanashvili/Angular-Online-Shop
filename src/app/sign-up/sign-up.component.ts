@@ -15,7 +15,7 @@ import { ApiAreaService } from '../services/api-area.service';
   standalone: true,
 })
 export class SignUpComponent {
-  constructor(private service: ApiAreaService) {}
+  constructor(public service: ApiAreaService) {}
 
   @Output() closeEmit: EventEmitter<boolean> = new EventEmitter();
 
