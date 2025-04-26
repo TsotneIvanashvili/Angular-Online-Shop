@@ -11,10 +11,9 @@ import { CartAreaService } from '../services/cart-area.service';
     styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
-  constructor(private api: CartAreaService) {}
+  constructor(public api: CartAreaService) {}
   ngOnInit(): void {
-    // this.createCart()
-    // this.getCart()
+    this.createCart()
   }
 
   private productId:any;

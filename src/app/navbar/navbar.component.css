@@ -25,9 +25,29 @@ nav h1 {
     letter-spacing: 0.5px;
     font-size: 30px;
     cursor: pointer;
-    color: #00F0FF; /* Sunset Pink for header text */
+    color: #00F0FF; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
+
+@media only screen and (max-width: 560px) {
+    nav .laptop{
+    display: none;
+    }
+
+}
+
+
+.mainh1{
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
 
 button img {

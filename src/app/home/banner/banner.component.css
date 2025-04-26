@@ -30,7 +30,6 @@ main {
     align-items: center;
     color: #C0C0C0; /* Cool Gray for default text color */
     position: relative; /* Ensure content sits above the overlay */
-    padding-right: 30px; /* Add some padding for better spacing */
     text-align: center;
 }
 
