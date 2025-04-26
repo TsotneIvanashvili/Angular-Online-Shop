@@ -1,266 +1,207 @@
-/* MAIN AREA */
+.main-arrea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  background: #e1e1e1;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #5f5f5f;
+}
+
 .main-area {
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
-  
-  /* FILTER TOGGLE BUTTON */
-  .filter-toggle-btn {
-    background-color: #7C2AE6;
-    color: #E3E3E3;
-    border: none;
-    padding: 10px 18px;
-    font-size: 14px;
-    border-radius: 8px;
-    margin: 20px;
-    cursor: pointer;
-    font-family: sans-serif;
-    font-weight: bold;
-    transition: 0.3s;
-    z-index: 2;
-  }
-  
-  .filter-toggle-btn:hover {
-    background-color: #5d1fc4;
-    box-shadow: 0 0 10px 1px #7C2AE6;
-  }
-  
-  /* FILTER PANEL STYLING */
-  .area {
-    background-color: #2F2E2E;
-    color: #E3E3E3;
-    width: 240px;
-    padding: 20px 15px;
-    border-radius: 16px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-    display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
+
+}
+
+.brands {
+  background: #e1e1e1;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px #5f5f5f;
+  width: 100%;
+}
+
+.brands h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 24px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+li {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+li:hover {
+  background-color: #e1e1e1;
+}
+
+.activedBrand {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.main-filterr {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #e1e1e1;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px #5f5f5f;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Responsive styles for mobile */
+@media only screen and (max-width: 768px) {
+  .main-filterr {
     flex-direction: column;
-    gap: 16px;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    height: calc(100vh - 60px);
-    transform: translateX(-110%);
-    transition: transform 0.3s ease;
-    z-index: 3;
-    overflow-y: auto;
+    align-items: stretch;
+    padding: 15px;
+    gap: 15px;
   }
-  
-  .area.open {
-    transform: translateX(0);
-  }
-  
-  /* MOBILE OVERRIDE */
-  @media (max-width: 767px) {
-    .area {
-      width: 100%;
-      height: auto;
-      max-height: none;
-      top: 60px;
-      left: 0;
-      right: 0;
-      flex-direction: row;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 10px;
-      border-radius: 0 0 16px 16px;
-      gap: 12px;
-      transform: translateY(-100%);
-      transition: transform 0.3s ease;
-    }
-  
-    .area.open {
-      transform: translateY(0);
-    }
-  
-    .brands, .search, .prices, .rating, .sort {
-      min-width: max-content;
-      flex: 0 0 auto;
-    }
-  
-    ul {
-      flex-direction: column;
-    }
-  
-    .sort select,
-    .prices input,
-    .rating input,
-    .search input {
-      min-width: 100px;
-    }
-  
-    button {
-      flex: 0 0 auto;
-      margin: 0;
-    }
-  }
-  
-  /* DESKTOP OVERRIDE */
-  @media (min-width: 768px) {
-    .area {
-      position: relative;
-      transform: translateX(0);
-      height: auto;
-    }
-  
-    .filter-toggle-btn {
-      display: none;
-    }
-  }
-  
-  /* Brand list */
-  .brands h1 {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 6px;
-    font-weight: 600;
-    color: #E3E3E3;
-  }
-  
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 0;
-  }
-  
-  ul li {
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-family: sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.3s ease;
-  }
-  
-  ul li:hover {
-    background-color: #3E3E3E;
-    text-shadow: 0 0 2px #ccc;
-  }
-  
-  .activedBrand {
-    background-color: #4A3C69;
-    font-weight: bold;
-    border-left: 4px solid #7C2AE6;
-  }
-  
-  /* Search */
-  .search {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search span {
-    left: 12px;
-    font-size: 22px;
-    color: #aaa;
-  }
-  
-  .search input {
-    width: 100%;
-    padding-left: 40px;
-    height: 30px;
-    background-color: #3A3A3A;
-    color: #E3E3E3;
-    border: none;
-    border-radius: 6px;
-    font-family: sans-serif;
-    font-size: 13px;
-    transition: box-shadow 0.3s;
-  }
-  
-  .search input::placeholder {
-    color: #aaa;
-  }
-  
-  .search input:focus {
-    box-shadow: 0 0 0 2px #7c2ae6aa;
-    outline: none;
-  }
-  
-  /* Prices & Rating */
+
+  .search,
   .prices,
-  .rating {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: sans-serif;
-    font-size: 13px;
-  }
-  
-  h4 {
-    margin: 0;
-    font-size: 13px;
-    color: #ccc;
-  }
-  
-  .prices input,
-  .rating input {
-    width: 50px;
-    height: 26px;
-    text-align: center;
-    background-color: #3A3A3A;
-    color: #E3E3E3;
-    border: none;
-    border-radius: 5px;
-    font-size: 13px;
-  }
-  
-  /* Sort */
+  .rating,
   .sort {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
   }
-  
-  .sort select {
+
+  .search-input,
+  .range,
+  .dropdown,
+  input[type="number"] {
     width: 100%;
-    height: 32px;
-    background-color: #3A3A3A;
-    color: #E3E3E3;
-    border: none;
-    border-radius: 6px;
-    padding: 0 8px;
-    font-family: sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    appearance: none;
   }
-  
-  /* Button */
-  button {
-    width: 85%;
-    height: 36px;
-    margin: 10px auto 0;
-    background-color: #7C2AE6;
+
+  .filter-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #2c8e99;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
+    border-radius: 10px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: background-color 0.3s;
   }
-  
-  button:hover {
-    background-color: #5d1fc4;
-    box-shadow: 0 0 10px 1px #7C2AE6;
+
+  .filter-button:hover {
+    background-color: #22727b;
   }
-  
-  /* Scrollbar for overflow */
-  .area::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
+}
+
+
+.option{
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bff88;
+}
+
+.prices, .rating, .sort {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.range, .dropdown, input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+}
+
+.range:focus, .dropdown:focus, input[type="number"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bff88;
+}
+
+.filter-button {
+  width: 200px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .main-area {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .area::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 5px;
-  }
-  
+}
+
+.brands-dropdown {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.brands-dropdown:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bff88;
+}

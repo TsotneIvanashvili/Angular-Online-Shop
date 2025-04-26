@@ -1,55 +1,58 @@
-<div class="main-area">
-  <button class="filter-toggle-btn" (click)="toggleFilter()"><i class="fa-solid fa-arrow-right fa-lg" style="color: #ffffff;"></i> Filter <i class="fa-solid fa-arrow-left fa-lg" style="color: #ffffff;"></i></button>
-
-
-    <div class="area" [class.open]="isFilterOpen">
-
+<div class="main-arrea">
+  <div class="main-area">
     <div class="brands">
       <h1>Brands</h1>
-      <ul>
-        <li [class.activedBrand]="activeBrand == 'All'" (click)="showAll()"><i class="fa-solid fa-tag"></i>All</li>
+      <select class="brands-dropdown" [(ngModel)]="activeBrand" (change)="getBrandData(activeBrand)">
+        <option value="All"><i class="fa-solid fa-tag fa-lg" style="color: #000000;"></i> All</option>
         @for (item of brands; track $index) {
-        <li [class.activedBrand]="item == activeBrand" (click)="getBrandData(item)">
-          <i class="fa-solid fa-tag"></i>{{ item }}
-        </li>
+          <option [value]="item"><i class="fa-solid fa-tag fa-lg" style="color: #000000;"></i> {{ item }}</option>
         }
-      </ul>
+      </select>
     </div>
-    <div class="search">
-      <span class="material-symbols-outlined"> manage_search </span>
-      <input
-        (keyup.enter)="searchData()"
-        type="search"
-        placeholder="Search here..."
-        [(ngModel)]="searchText"
-      />
-    </div>
-    <div class="prices">
-      <h4>Select price:</h4>
-      <input type="text" placeholder="from" [(ngModel)]="minPrice" />
+    
+    <div class="main-filterr">
+      <div class="search">
+        <span class="material-symbols-outlined">manage_search</span>
+        <input
+          class="search-input"
+          (keyup.enter)="searchData()"
+          type="search"
+          placeholder="Search here..."
+          [(ngModel)]="searchText"
+        />
+      </div>
   
-      <input type="text" placeholder="to" [(ngModel)]="maxPrice" />
+      <div class="prices">
+        <h4>Select price:</h4>
+        <input class="range" type="text" placeholder="From" [(ngModel)]="minPrice" />
+        <input class="range" type="text" placeholder="To" [(ngModel)]="maxPrice" />
+      </div>
+  
+      <div class="rating">
+        <h4>Rating:</h4>
+        <input type="number" placeholder="0" max="5" min="0" [(ngModel)]="rating" />
+      </div>
+  
+      <div class="sort">
+        <select class="dropdown" [(ngModel)]="type">
+          <option value="">Choose Type</option>
+          <option value="rating">Rating</option>
+          <option value="price">Price</option>
+          <option value="issue_date">Issue Date</option>
+          <option value="title">Title</option>
+        </select>
+  
+        <select class="dropdown" [(ngModel)]="sort">
+          <option value="">Sort Direction</option>
+          <option value="asc">Ascendes</option>
+          <option value="desc">Descendes</option>
+        </select>
+      </div>
+  
+      <button class="filter-button" (click)="filterData()">Filter</button>
     </div>
-    <div class="rating">
-      <h4>rating:</h4>
-      <input type="number" placeholder="0" max="5" min="0" [(ngModel)]="rating"/>
     </div>
-    <div class="sort">
-     
-      <select [(ngModel)]="type">
-        <option value="">Choose Type</option>
-        <option value="rating">Rating</option>
-        <option value="price">Price</option>
-        <option value="issue_date">Issue Date</option>
-        <option value="title">Title</option>
-      </select>
-      <select [(ngModel)]="sort">
-        <option value="">Sort Direction</option>
-        <option value="asc">Ascendes</option>
-        <option value="desc">Descendes</option>
-      </select>
-    </div>
-    <button (click)="filterData()">Filter</button>
-  </div>
+
+    
   
 </div>
