@@ -45,7 +45,7 @@ main {
 .infos h1 {
     font-size: 50px;
     font-family: sans-serif;
-    color: #C0C0C0; /* Sunset Pink for the heading */
+    color: white; /* Sunset Pink for the heading */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
     max-width: 100%;
 
@@ -55,7 +55,7 @@ main {
     font-family: sans-serif;
     font-size: 18px; /* Slightly larger for readability */
     line-height: 1.5; /* Better line spacing */
-    color: #C0C0C0; /* Cool Gray for paragraph text */
+    color: white; /* Cool Gray for paragraph text */
     max-width: 100%;
 
 }

@@ -1,182 +1,286 @@
-
-.mainn{
+.mainn {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 130vh;
+  background: linear-gradient(135deg, #05594c 0%,  #002efa 100%);
+  padding: 1rem;
 }
+
 /* Registration Form Container */
 .signArea {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 1000px;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 64rem;
+  margin: 1rem;
+  animation: cardEntrance 0.6s ease-out;
 }
 
-/* Title and Success/Error Messages */
+@keyframes cardEntrance {
+  from { transform: translateY(2rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Title and Messages */
 h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  margin-bottom: 1.5rem;
+  color: #2d3748;
   text-align: center;
 }
 
 .success {
-  color: green;
+  display: block;
+  padding: 0.75rem;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
   text-align: center;
-  font-size: 16px;
+  animation: slideIn 0.3s ease-out;
 }
 
 .errors {
   list-style-type: none;
-  color: red;
   padding: 0;
-  margin: 10px 0;
+  margin: 0 0 1.5rem 0;
+  animation: slideIn 0.3s ease-out;
 }
 
 .errors li {
-  font-size: 14px;
+  padding: 0.75rem;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
-/* Content Area */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form Layout */
 .content {
   display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .leftSide, .rightSide {
-  width: 48%;
+  flex: 1;
+  min-width: 0;
 }
 
-/* Input Fields */
-.area {
-  margin-bottom: 20px;
+/* Input Fields - Consistent styling for all inputs */
+.area, .imageArea {
+  margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.area label {
-  font-size: 14px;
-  color: #555;
-  width: 100px;
-}
-
-.area input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  outline: none;
+  gap: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
   transition: border-color 0.3s ease;
+  padding-bottom: 0.5rem;
 }
 
-.area input:focus {
-  border-color: #007bff; /* Focus border color */
+.area:hover, .imageArea:hover {
+  border-color: #667eea;
 }
 
-/* Right Side Inputs */
-.rightSide .area input {
-  background-color: #f9f9f9;
+.area i, .imageArea i {
+  color: #718096;
+  transition: color 0.3s ease;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  min-width: 16px;
 }
 
-/* Radio Buttons and Gender Section */
+.area label, .imageArea label {
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: #4a5568;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.area input, .imageArea input {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.5rem 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  color: #2d3748;
+}
+
+.area input:focus ~ i, .imageArea input:focus ~ i {
+  color: #667eea;
+}
+
+/* Radio Buttons */
 .chooseArea {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
-.choose input {
-  margin-right: 5px;
+.choose {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.choose input[type="radio"] {
+  accent-color: #667eea;
+  width: 1rem;
+  height: 1rem;
 }
 
 .choose label {
-  font-size: 14px;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: #4a5568;
+  white-space: nowrap;
 }
 
+/* Bottom Content */
 .bottomContent {
-  margin-top: 30px;
-}
-
-.imageArea {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.imageArea input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  margin-top: 1.5rem;
 }
 
 /* Submit Button */
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #007bff;
+  padding: 0.8rem;
+  background: #667eea;
   color: white;
-  font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background: #764ba2;
+  transform: translateY(-1px);
 }
 
-/* Media Queries for Responsiveness */
-@media only screen and (max-width: 768px) {
+button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+  .content {
+    gap: 1rem;
+  }
+  
+  .area, .imageArea {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .signArea {
+    padding: 1.5rem;
+    margin-top: 140px;
+    }
+  
   .content {
     flex-direction: column;
-    align-items: center;
+    gap: 0.5rem;
   }
-
+  
   .leftSide, .rightSide {
     width: 100%;
   }
-
-  .bottomContent {
-    text-align: center;
+  
+  .area, .imageArea {
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.5rem;
   }
-
-  button {
-    padding: 15px;
+  
+  .area label, .imageArea label {
+    min-width: 70px;
+  }
+  
+  .chooseArea {
+    gap: 1rem;
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media (max-width: 576px) {
+  .mainn {
+    padding: 0.5rem;
+    align-items: flex-start;
+  }
+  
   .signArea {
-    padding: 20px;
+    padding: 1.25rem;
+    margin: 0.5rem;
+    width: 95%;
+    margin-top: 130px;
   }
-
-  .area {
+  
+  .area, .imageArea {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    border-bottom: none;
+    padding-bottom: 0;
   }
-
-  .area label {
-    width: auto;
+  
+  .area label, .imageArea label {
+    width: 100%;
+    margin-bottom: 0.25rem;
   }
-
+  
+  .area input, .imageArea input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+  }
+  
+  .chooseArea {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  
   button {
-    padding: 18px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .signArea {
+    padding: 1rem;
+    margin-top: 130px;
+  }
+  
+  h1 {
+    font-size: 1.4rem;
+  }
+  
+  .area i, .imageArea i {
+    font-size: 1rem;
+  }
+  
+  .area label, .imageArea label {
+    font-size: 0.85rem;
+  }
+  
+  button {
+    font-size: 0.95rem;
   }
 }

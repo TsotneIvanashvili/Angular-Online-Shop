@@ -181,17 +181,21 @@
     color: #764ba2;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 945px) {
     .card {
       flex-direction: column;
-      margin: 1rem;
+      padding: 15px;
     }
   
     .main-area, .imgtext {
-      width: 100%;
+      width: 500px;
       padding: 2rem;
     }
   
+    .mainimgtext{
+      display: none;
+    }
+
     .imgtext {
       text-align: center;
       padding: 2rem 1.5rem;
