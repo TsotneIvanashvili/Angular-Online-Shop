@@ -10,6 +10,14 @@ header {
   align-items: center;
 }
 
+@media only screen and (max-width: 768px) {
+  header{
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+  }
+}
+
 .head{
   display: flex;
   justify-content: center;
