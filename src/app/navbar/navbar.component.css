@@ -4,18 +4,18 @@ nav {
     align-items: center;
     height: 70px;
     position: fixed;
-    top: 13px; /* Push down from the top */
-    left: 13px; /* Push away from the left */
-    right: 13px; /* Push away from the right */
-    width: calc(100% - 26px); /* Adjust width to account for left and right spacing */
+    top: 13px;
+    left: 13px; 
+    right: 13px;
+    width: calc(100% - 26px); 
     transition: 0.5s;
     z-index: 9999999;
     background-color: #0A0A0A;
     box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
-    padding: 20px; /* Adjust padding for inner spacing */
-    margin: 0; /* Remove margin to avoid extra spacing */
+    padding: 20px; 
+    margin: 0; 
     border-radius: 16px;
-    box-sizing: border-box; /* Ensure padding is included in the element's width/height */
+    box-sizing: border-box; 
 }
 
 .navbarSolid {
