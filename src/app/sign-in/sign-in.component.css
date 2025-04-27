@@ -206,10 +206,41 @@
       margin-bottom: 1.5rem;
     }
   }
+  @media only screen and (max-width: 768px){
+    .area{
+      width: 350px;
+    }
+    .submit{
+      width: 350px;
+    }
+    .main-area{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .okey{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   
   @media (max-width: 480px) {
     .main-area {
       padding: 1.5rem;
+    }
+    .area{
+      width: 200px;
+    }
+    .okey{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .submit{
+      width: 200px;
     }
   
     input {
