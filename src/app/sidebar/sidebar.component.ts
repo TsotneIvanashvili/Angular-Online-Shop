@@ -45,6 +45,7 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+
   showAll() {
     this.activeBrand = 'All';
     this.productApi

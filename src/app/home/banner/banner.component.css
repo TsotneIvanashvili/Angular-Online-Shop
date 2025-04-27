@@ -34,7 +34,7 @@ main {
 }
 
 .infos {
-    width: 500px;
+    width: 600px;
     display: flex;
     flex-direction: column;
     gap: 40px;

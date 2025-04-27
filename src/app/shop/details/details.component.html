@@ -1,63 +1,66 @@
 @if (prodINFO) {
 <section class="container detailArea">
-  <div class="left">
-    <img class="mainImg" [src]="mainImage" alt="" />
-    <div class="otherIMGS">
-      @for (item of allImages; track $index) {
-      <img
-        [class.activeImg]="item === mainImage"
-        (click)="zoomImg(item)"
-        [src]="item"
-        alt=""
-      />
-      }
-    </div>
-  </div>
-  <div class="middle">
-    <h2>
-      {{ prodINFO.title }}
-    </h2>
-    <div class="rating">
-      <div class="stars">
-        @if (starNum == 0) {
-        <h5>No Rating</h5>
-        } @else { @for (item of [].constructor(starNum ); track $index) {
-        <i class="fa-solid fa-star"></i>
-        }
-        <span>{{ prodINFO.rating }}</span>
-
+  <div class="main-left">
+    <div class="left">
+      <img class="mainImg" [src]="mainImage" alt="" />
+      <div class="otherIMGS">
+        @for (item of allImages; track $index) {
+        <img
+          [class.activeImg]="item === mainImage"
+          (click)="zoomImg(item)"
+          [src]="item"
+          alt=""
+        />
         }
       </div>
     </div>
-    @if (prodINFO.stock > 0) {
-    <h4 style="color: green">
-      <i class="fa-solid fa-check"></i> {{ prodINFO.stock }} In stock
-    </h4>
-    } @else {
-    <h4 style="color: red"><i class="fa-solid fa-xmark"></i> Not in stock</h4>
-    }
-
-    <ul>
-      <li>Category: {{ prodINFO.category.name }}</li>
-      <li>Brand: {{ prodINFO.brand }}</li>
-      <li>Issue Date: {{ prodINFO.issueDate | date }}</li>
-    </ul>
-    <div class="desc">
-      <h3>Description</h3>
-      <div class="line"></div>
+    <div class="middle">
+      <h2>
+        {{ prodINFO.title }}
+      </h2>
+      <div class="rating">
+        <div class="stars">
+          @if (starNum == 0) {
+          <h5>No Rating</h5>
+          } @else { @for (item of [].constructor(starNum ); track $index) {
+          <i class="fa-solid fa-star"></i>
+          }
+          <span>{{ prodINFO.rating }}</span>
+  
+          }
+        </div>
+      </div>
+      @if (prodINFO.stock > 0) {
+      <h4 style="color: green">
+        <i class="fa-solid fa-check"></i> {{ prodINFO.stock }} In stock
+      </h4>
+      } @else {
+      <h4 style="color: red"><i class="fa-solid fa-xmark"></i> Not in stock</h4>
+      }
+  
+      <ul>
+        <li>Category: {{ prodINFO.category.name }}</li>
+        <li>Brand: {{ prodINFO.brand }}</li>
+        <li>Issue Date: {{ prodINFO.issueDate | date }}</li>
+      </ul>
+      <div class="desc">
+        <h3>Description</h3>
+        <div class="line"></div>
+      </div>
+  
+      <p>
+        {{ prodINFO.description }}
+      </p>
     </div>
-
-    <p>
-      {{ prodINFO.description }}
-    </p>
   </div>
+
   <div class="right">
     @if (prodINFO.price.discountPercentage != 0) {
     <h2 class="disc">-{{ prodINFO.price.discountPercentage }}%</h2>
     }
 
     <div class="prices">
-      <h1>{{ prodINFO.price.current | currency }}</h1>
+      <h1 class="green">{{ prodINFO.price.current | currency }}</h1>
       @if (prodINFO.price.current != prodINFO.price.beforeDiscount) {
       <h1 class="beforeDisc">{{ prodINFO.price.beforeDiscount | currency }}</h1>
       }
