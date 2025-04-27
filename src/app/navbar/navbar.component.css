@@ -12,13 +12,19 @@ nav {
     background-color: #0A0A0A;
     box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
     padding: 35px;
+    gap: 10px;
+}
+
+li{
+    cursor: pointer;
+}
+
+.laptop{
+    cursor: pointer;
 }
 
 
 @media only screen and (max-width: 570px) {
-    nav .laptop{
-    display: none;
-    }
 
     nav .adzin{
         display: none;
@@ -57,12 +63,7 @@ nav h1 {
 }
 
 
-@media only screen and (max-width: 560px) {
-    nav .laptop{
-    display: none;
-    }
 
-}
 
 
 .mainh1{
@@ -115,8 +116,92 @@ ul{
     color: white;
     font-size: 22px;
     gap: 20px;
+    height: fit-content;
 }
 
 #none{
     color: white;
 }
+
+
+
+
+
+
+
+
+
+/* Add these new styles */
+.burger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 21px;
+    z-index: 1000;
+  }
+  
+  .burger div {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  /* Burger animation when active */
+  .burger.active .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .burger.active .line2 {
+    opacity: 0;
+  }
+  .burger.active .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .burger {
+      display: flex;
+    }
+    
+    .pages, .account {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: #0A0A0A;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 999999;
+    }
+    
+    .pages.active, .account.active {
+      transform: translateX(0);
+    }
+    
+    .pages ul {
+      flex-direction: column;
+      gap: 15px;
+      height: fit-content;
+    }
+    
+    /* Keep your existing mobile styles */
+    nav .adzin {
+      display: none;
+    }
+    
+    nav {
+      padding: 15px;
+      justify-content: space-between;
+    }
+    
+    .account {
+      top: 180px; /* Adjust based on your pages height */
+      flex-direction: column;
+      gap: 15px;
+    }
+  }

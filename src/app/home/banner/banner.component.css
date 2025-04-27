@@ -13,7 +13,7 @@ section {
 
 }
 
-/* Adding a subtle overlay to improve text readability */
+
 section::before {
     content: '';
     position: absolute;
@@ -76,3 +76,12 @@ main {
     background-color: #FF9F43; /* Warm Orange on hover */
     box-shadow: 0 0 5px 0px #FF9F43; /* Matching glow effect on hover */
 }
+
+@media only screen and (max-width: 768px) {
+    section{
+        background-attachment: local;
+        background-position: center center;
+        background-size: cover;
+    }
+
+ }

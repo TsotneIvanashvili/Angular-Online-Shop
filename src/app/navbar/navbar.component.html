@@ -1,17 +1,30 @@
 <nav appScrolling>
   <div class="mainh1">
-    <i class="fa-solid fa-desktop fa-2xl laptop" style="color: #ffffff;" routerLink="/" ></i>
+    <i routerLink="/" class="fa-solid fa-desktop fa-2xl laptop" style="color: #ffffff;" routerLink="/"></i>
     <h1 class="adzin" id="none" routerLink="/">TechStore</h1>
-
   </div>
 
+  <!-- Add burger button (visible only on mobile) -->
+  <div class="burger" (click)="toggleMenu()">
+    <div class="line1"></div>
+    <div class="line2"></div>
+    <div class="line3"></div>
+  </div>
 
-  <div class="account">
+  <div class="pages" [class.active]="isMenuOpen">
+    <ul>
+      <li routerLink="/" (click)="closeMenu()">Home</li>
+      <li routerLink="/shop" (click)="closeMenu()">Shop</li>
+      <li routerLink="/cart" (click)="closeMenu()">Cart</li>
+    </ul>
+  </div>
+
+  <div class="account" [class.active]="isMenuOpen">
     @if (!isLoggedIn) {
-      <button routerLink="/register">
+      <button routerLink="/register" (click)="closeMenu()">
         <i class="fa-solid fa-user-plus fa-lg" style="color: #ffffff;"></i>Create Account
       </button>
-      <button routerLink="/Signin">
+      <button routerLink="/Signin" (click)="closeMenu()">
         <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #ffffff;"></i> Sign in
       </button>
     } @else {
@@ -21,16 +34,4 @@
   </div>
 </nav>
 
-@if (isSignShow) {
-  <app-sign-in
-    (closeEmit)="closeForm($event)"
-    (changeEmit)="showRegister()"
-    (loggedEmit)="loggedIn($event)"
-    (loggedInfo)="profileInfoNav($event)"
-  ></app-sign-in>
-}
-@if (isRegisterShow) {
-  <app-sign-up
-    (closeEmit)="closeRegister($event)"
-  ></app-sign-up>
-}
+<!-- Keep your existing modal conditions -->
