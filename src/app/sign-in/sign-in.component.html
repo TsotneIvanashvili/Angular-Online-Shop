@@ -1,4 +1,4 @@
-<div class="signArea" (click)="outSide($event)">
+<div class="signArea" >
     <div class="card">
         <form [formGroup]="signInForm" (ngSubmit)="signIn()">
             @if (errAlert) {
@@ -7,28 +7,38 @@
             @else if (successLogin) {
                 <small class="success"><i class="fa-solid fa-address-book"></i>Signed in Successfully</small>
             }
-            
+
             <h1>Login</h1>
-            <div class="area">
-                <i class="fa-solid fa-envelope"></i>
-                
-                <input type="email" formControlName="email" placeholder="Enter your email">
+
+
+            <div class="main-area">
+                <div class="area">
+                    <i class="fa-solid fa-envelope"></i>
+                    
+                    <input type="email" formControlName="email" placeholder="Enter your email">
+                </div>
+                <div class="area">
+                    <i class="fa-solid fa-lock"></i>
+                   
+                    <input type="password" formControlName="password" placeholder="Enter your password">
+                </div>
+                <p>Forgot password?</p>
+
             </div>
-            <div class="area">
-                <i class="fa-solid fa-lock"></i>
-               
-                <input type="password" formControlName="password" placeholder="Enter your password">
-            </div>
-            <p>Forgot password?</p>
-            <button [disabled]="signInForm.invalid" type="submit">Sign In</button>
-            
-            <h3>Don`t have an account? <span (click)="change()">Signup now</span></h3>
+            <div class="okey">
+
+                <button class="submit" [disabled]="signInForm.invalid" type="submit">Sign In</button>
+                </div>
+
         </form>
-        <div class="rightBack">
-            <h1>Join us with our Account</h1>
-            <p>let`s get connected</p>
+        <div class="mainimgtext">
+            <div class="imgtext">
+                <h1 class="new">New Here?</h1>
+                <p>Sign up and discover great amount of new opportunities!</p>
+            </div>
+            <button class="signButton">Sign Up</button>
         </div>
-        <i (click)="closeForm()" class="fa-solid fa-x"></i>
-    </div>
+
     
+</div>
 </div>

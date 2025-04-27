@@ -2,20 +2,40 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 60px;
     position: fixed;
-    top: 13px;
-    left: 13px; 
-    right: 13px;
-    width: calc(100% - 26px); 
+    top: 0;
+    width: 100%;
+    backdrop-filter: brightness(90%) blur(5px);
     transition: 0.5s;
     z-index: 9999999;
     background-color: #0A0A0A;
     box-shadow: 0 0px 25px -4px rgb(229, 227, 227);
-    padding: 20px; 
-    margin: 0; 
-    border-radius: 16px;
-    box-sizing: border-box; 
+    padding: 35px;
+}
+
+
+@media only screen and (max-width: 570px) {
+    nav .laptop{
+    display: none;
+    }
+
+    nav .adzin{
+        display: none;
+    }
+
+    .account{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 .navbarSolid {
@@ -40,22 +60,6 @@ nav h1 {
 @media only screen and (max-width: 560px) {
     nav .laptop{
     display: none;
-    }
-
-    nav h1{
-        display: none;
-    }
-
-    .account{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    nav{
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
 }

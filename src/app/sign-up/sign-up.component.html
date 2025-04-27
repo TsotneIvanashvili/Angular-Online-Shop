@@ -1,83 +1,86 @@
-<div class="signArea">
-  <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-    @if (successRegister) {
-      <small class="success"><i class="fa-solid fa-address-book"></i> Signed in Successfully</small>
-    } @else if (errorList) {
-      <ul class="errors">
-        @for (item of errorList; track $index) {
-          <li><i class="fa-solid fa-circle-info"></i> {{item}}</li>
-        }
-      </ul>
-    }
-    <h1>Registration</h1>
-    <div class="content">
-      <div class="leftSide">
-        <div class="area">
-          <i class="fa-solid fa-user-tie"></i>
-          <label for="firstName">First Name</label>
-          <input type="text" formControlName="firstName" id="firstName" />
+<div class="mainn">
+  <div class="signArea">
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+      @if (successRegister) {
+        <small class="success"><i class="fa-solid fa-address-book"></i> Signed in Successfully</small>
+      } @else if (errorList) {
+        <ul class="errors">
+          @for (item of errorList; track $index) {
+            <li><i class="fa-solid fa-circle-info"></i> {{item}}</li>
+          }
+        </ul>
+      }
+      <h1>Registration</h1>
+      <div class="content">
+        <div class="leftSide">
+          <div class="area">
+            <i class="fa-solid fa-user-tie"></i>
+            <label for="firstName">First Name</label>
+            <input type="text" formControlName="firstName" id="firstName" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-envelope"></i>
+            <label for="email">Email</label>
+            <input type="email" formControlName="email" id="email" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-phone"></i>
+            <label for="phone">Phone</label>
+            <input type="number" formControlName="phone" id="phone" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-map"></i>
+            <label for="address">Address</label>
+            <input type="text" formControlName="address" id="address" />
+          </div>
         </div>
-        <div class="area">
-          <i class="fa-solid fa-envelope"></i>
-          <label for="email">Email</label>
-          <input type="email" formControlName="email" id="email" />
-        </div>
-        <div class="area">
-          <i class="fa-solid fa-phone"></i>
-          <label for="phone">Phone</label>
-          <input type="text" formControlName="phone" id="phone" />
-        </div>
-        <div class="area">
-          <i class="fa-solid fa-map"></i>
-          <label for="address">Address</label>
-          <input type="text" formControlName="address" id="address" />
-        </div>
-      </div>
-      <div class="rightSide">
-        <div class="area">
-          <i class="fa-solid fa-id-badge"></i>
-          <label for="lastName">Last Name</label>
-          <input type="text" formControlName="lastName" id="lastName" />
-        </div>
-        <div class="area">
-          <i class="fa-solid fa-key"></i>
-          <label for="password">Password</label>
-          <input type="password" formControlName="password" id="password" />
-        </div>
-        <div class="area">
-          <i class="fa-solid fa-file-zipper"></i>
-          <label for="zipcode">ZIP Code</label>
-          <input type="text" formControlName="zipcode" id="zipcode" />
-        </div>
-        <div class="area">
-          <i class="fa-solid fa-image-portrait"></i>
-          <label for="age">Age</label>
-          <input type="text" formControlName="age" id="age" />
-        </div>
-      </div>
-    </div>
-    <div class="bottomContent">
-      <div class="imageArea">
-        <i class="fa-solid fa-image"></i>
-        <label for="avatar">Image</label>
-        <input type="text" formControlName="avatar" id="avatar" />
-      </div>
-      <h3>Gender</h3>
-      <div class="chooseArea">
-        <div class="choose">
-          <input type="radio" name="gender" id="male" value="MALE" formControlName="gender" />
-          <label for="male">Male</label>
-        </div>
-        <div class="choose">
-          <input type="radio" name="gender" id="female" value="FEMALE" formControlName="gender" />
-          <label for="female">Female</label>
+        <div class="rightSide">
+          <div class="area">
+            <i class="fa-solid fa-id-badge"></i>
+            <label for="lastName">Last Name</label>
+            <input type="text" formControlName="lastName" id="lastName" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-key"></i>
+            <label for="password">Password</label>
+            <input type="password" formControlName="password" id="password" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-file-zipper"></i>
+            <label for="zipcode">ZIP Code</label>
+            <input type="text" formControlName="zipcode" id="zipcode" />
+          </div>
+          <div class="area">
+            <i class="fa-solid fa-image-portrait"></i>
+            <label for="age">Age</label>
+            <input type="text" formControlName="age" id="age" />
+          </div>
         </div>
       </div>
-      <button [disabled]="signUpForm.invalid" type="submit">Register</button>
-    </div>
-  </form>
+      <div class="bottomContent">
+        <div class="imageArea">
+          <i class="fa-solid fa-image"></i>
+          <label for="avatar">Image</label>
+          <input type="text" formControlName="avatar" id="avatar" />
+        </div>
+        <h3>Gender</h3>
+        <div class="chooseArea">
+          <div class="choose">
+            <input type="radio" name="gender" id="male" value="MALE" formControlName="gender" />
+            <label for="male">Male</label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="gender" id="female" value="FEMALE" formControlName="gender" />
+            <label for="female">Female</label>
+          </div>
+        </div>
+        <button [disabled]="signUpForm.invalid" type="submit">Register</button>
+      </div>
+    </form>
+  </div>
+  
+  
+  
+  
+  
 </div>
-
-
-
-

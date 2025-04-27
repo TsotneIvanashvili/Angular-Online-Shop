@@ -7,10 +7,11 @@ import {
 } from '@angular/forms';
 import { ApiAreaService } from '../services/api-area.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
@@ -54,6 +55,7 @@ export class SignInComponent {
           setTimeout(() => {
             this.closeEmit.emit(false);
             this.loggedEmit.emit(true);
+            window.location.href = '/';
           }, 1000);
         }
       },
