@@ -42,6 +42,22 @@ nav h1 {
     display: none;
     }
 
+    nav h1{
+        display: none;
+    }
+
+    .account{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 
