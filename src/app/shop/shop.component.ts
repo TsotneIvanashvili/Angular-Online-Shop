@@ -132,8 +132,12 @@ export class ShopComponent implements OnInit {
       });
   }
 
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
 
-
+  // code below is not a part of the project
   public one: number = 1;
   public two: number = 2;
   public three: number = 3;

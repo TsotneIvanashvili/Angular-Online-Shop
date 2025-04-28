@@ -23,8 +23,13 @@ export class HomeComponent implements OnInit {
     this.shopCards = shopCards
   }
 
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
 
 
+  // The Code below is not a part of the project,
   public one: number = 1;
   public two: number = 2;
   public three: number = 3;

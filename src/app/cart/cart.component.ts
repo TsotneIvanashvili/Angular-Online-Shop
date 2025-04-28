@@ -16,8 +16,8 @@ export class CartComponent implements OnInit {
     this.createCart()
   }
 
-  private productId:any;
-  private token = sessionStorage.getItem("token")
+  public productId:any;
+  public token = sessionStorage.getItem("token")
  
 
   createCart() {
