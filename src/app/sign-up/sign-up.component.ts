@@ -33,7 +33,7 @@ export class SignUpComponent {
       Validators.minLength(7),
     ]),
     address: new FormControl('', Validators.required),
-    phone: new FormControl('', [Validators.required, Validators.minLength(9)]),
+    phone: new FormControl('', [Validators.required, Validators.minLength(8)]),
     zipcode: new FormControl('', Validators.required),
     avatar: new FormControl('', Validators.required),
     gender: new FormControl('', Validators.required),
