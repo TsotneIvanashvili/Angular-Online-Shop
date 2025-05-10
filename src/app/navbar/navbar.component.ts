@@ -1,6 +1,4 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { SignInComponent } from '../sign-in/sign-in.component';
-import { SignUpComponent } from '../sign-up/sign-up.component';
 import { ScrollingDirective } from '../../directives/scrolling.directive';
 import { RouterModule } from '@angular/router';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
@@ -8,7 +6,7 @@ import { ToolsService } from '../services/tools.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [SignInComponent, SignUpComponent, ScrollingDirective, RouterModule],
+  imports: [ ScrollingDirective, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
@@ -75,6 +73,8 @@ export class NavbarComponent implements OnInit {
   closeMenu() {
     this.isMenuOpen = false;
     document.body.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
   }
 
   signInForm() {

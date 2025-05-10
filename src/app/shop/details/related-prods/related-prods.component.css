@@ -1,6 +1,5 @@
 section {
   padding: 40px 20px;
-  background: linear-gradient(135deg, #f8f9fa, #e0eafc);
 }
 
 .relatedP h1 {
@@ -89,7 +88,7 @@ main {
   transform: translateY(0);
 }
 
-.hiddenPart button {
+button {
   background-color: orange;
   border: none;
   padding: 10px 20px;
@@ -103,10 +102,9 @@ main {
   gap: 8px;
 }
 
-.hiddenPart button:hover {
+ button:hover {
   background-color: rgb(179, 117, 0);
 
-  transform: translateY(-3px);
 }
 
 /* Animations */

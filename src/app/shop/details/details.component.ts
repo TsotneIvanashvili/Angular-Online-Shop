@@ -80,7 +80,7 @@ export class DetailsComponent implements OnInit {
   }
 
   createAndAddCart() {
-    alert('createddddddd');
+    alert('created and added');
   }
 
   cartBTN() {

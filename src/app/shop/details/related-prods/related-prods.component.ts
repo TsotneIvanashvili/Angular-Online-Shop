@@ -32,6 +32,8 @@ export class RelatedProdsComponent implements OnInit {
 
   otherRelatedPage(id: string) {
     this.otherRelated.emit(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
   }
 
   getRelatedProds() {
