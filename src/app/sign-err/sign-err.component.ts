@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolsService } from '../services/tools.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sign-err',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './sign-err.component.html',
   styleUrl: './sign-err.component.css'
 })

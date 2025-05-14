@@ -1,151 +1,142 @@
-.relatedP {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin: 40px 0;
-  }
-  
-  .relatedP::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background-color: rgb(197, 197, 197);
-    top: 50%;
-    z-index: -1;
-  }
-  
-  .relatedP h1 {
-    background-color: white;
-    padding-inline: 20px;
-    font-family: sans-serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: #244353;
-  }
-  
-  section main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    gap: 30px;
-    flex-wrap: wrap;
-  }
-  
-.container {
-    padding: 2rem;
-    color: #e3e3e3;
-    border-radius: 30px;
-  }
-  
-  main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-  }
-  
-  .card {
-    background-color: #2f2e2e;
-    border-radius: 1rem;
-    overflow: hidden;
-    width: 260px;
-    height: 350px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .main-but {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-  }
-  
-  .title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .but {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-  }
-  
-  .but h2 {
-    font-size: 1.1rem;
-    color: #ffcc00;
-    margin: 0;
-  }
-  
-  .but h2 sub {
-    color: #888;
-    text-decoration: line-through;
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-  }
-  
-  .but button {
-    background-color: #e3e3e3;
-    color: #2f2e2e;
-    padding: 0.5rem 0.8rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .but button:hover {
-    background-color: #565656;
-    color: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+section {
+  padding: 40px 20px;
+}
 
-  }
-  
-  .viewMore {
-    display: block;
-    margin: 2rem auto;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .viewMore:hover {
-    background-color: #565656;
-    color: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+.relatedP h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 40px;
+  animation: fadeSlideIn 1s ease forwards;
+}
 
-  }
-  
-  h1{
-    text-align: center;
-    font-size: 40px;
-    margin: 40px;
-  }
-  
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 100%;
+  margin: auto;
+  padding: 0 20px;
+}
 
-  .mainh11{
-    color: black;
+/* Card Styling */
+.card {
+  background-color: #2f2e2e;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: popUp 0.8s ease forwards;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  animation: fadeIn 1s ease forwards;
+}
+
+.card h4 {
+  font-size: 20px;
+  color: #ffffff;
+  margin: 10px 0;
+}
+
+.card h2 {
+  font-size: 22px;
+  color: #1e90ff;
+  margin: 10px 0;
+}
+
+.card h2 sub {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+
+.card p {
+  font-size: 15px;
+  color: #666;
+  margin: 10px 0 20px;
+  height: 60px;
+  overflow: hidden;
+}
+
+/* Hidden part appears on hover */
+.hiddenPart {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.card:hover .hiddenPart {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button {
+  background-color: orange;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+ button:hover {
+  background-color: rgb(179, 117, 0);
+
+}
+
+/* Animations */
+@keyframes popUp {
+  0% {
+      transform: scale(0.8);
+      opacity: 0;
   }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  100% {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+@keyframes fadeSlideIn {
+  0% {
+      opacity: 0;
+      transform: translateY(-30px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}

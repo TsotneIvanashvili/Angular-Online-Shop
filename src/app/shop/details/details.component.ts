@@ -57,6 +57,11 @@ export class DetailsComponent implements OnInit {
   zoomImg(currImg: string) {
     this.mainImage = currImg;
   }
+  
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
 
   increase() {
     this.prodQuant++;
@@ -75,7 +80,7 @@ export class DetailsComponent implements OnInit {
   }
 
   createAndAddCart() {
-    alert('createddddddd');
+    alert('created and added');
   }
 
   cartBTN() {

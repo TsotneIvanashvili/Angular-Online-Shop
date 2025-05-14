@@ -51,6 +51,7 @@ export class ShopComponent implements OnInit {
         this.totalSize = data.total;
         this.pagination(data);
       });
+
   }
 
   search(search: string) {
@@ -130,10 +131,15 @@ export class ShopComponent implements OnInit {
         this.productList = data.products;
         this.pagination(data);
       });
+      
   }
 
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
 
-
+  // code below is not a part of the project
   public one: number = 1;
   public two: number = 2;
   public three: number = 3;

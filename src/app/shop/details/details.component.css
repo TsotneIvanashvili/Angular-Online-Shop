@@ -293,3 +293,28 @@
 
 
 }
+
+
+.scrollToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: #2F2E2E;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: 0.3s;
+}
+
+.scrollToTop:hover {
+  transform: translateY(-10px) scale(1.1);
+}
