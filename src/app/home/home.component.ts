@@ -6,10 +6,11 @@ import { HttpHeaders } from '@angular/common/http';
 import { BannerComponent } from "./banner/banner.component";
 import { shopCards} from "./shopCardData"
 import { SeveralProductsComponent } from "./several-products/several-products.component";
+import { SplineViewComponent } from "../spline-view/spline-view.component";
 
 @Component({
     selector: 'app-home',
-    imports: [BannerComponent, SeveralProductsComponent],
+    imports: [ SeveralProductsComponent, SplineViewComponent],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
