@@ -68,7 +68,7 @@ export class ShopComponent implements OnInit {
         (info.search = ''),
         info.rating,
         (info.min = '1'),
-        (info.max = '999'),
+        (info.max = '99999'),
         info.type,
         info.sort,
         this.pageSize

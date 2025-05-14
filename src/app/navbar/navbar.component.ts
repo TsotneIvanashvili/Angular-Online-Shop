@@ -8,7 +8,7 @@ import { ToolsService } from '../services/tools.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [SignInComponent, SignUpComponent, ScrollingDirective, RouterModule],
+  imports: [ ScrollingDirective, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,

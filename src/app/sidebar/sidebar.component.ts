@@ -69,11 +69,7 @@ export class SidebarComponent implements OnInit {
         this.sendBrands.emit(data);
       });
   }
-  isFilterOpen = false;
 
-  toggleFilter() {
-    this.isFilterOpen = !this.isFilterOpen;
-  }
-  
+
   
 }
