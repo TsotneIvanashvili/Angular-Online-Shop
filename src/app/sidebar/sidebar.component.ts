@@ -35,22 +35,26 @@ export class SidebarComponent implements OnInit {
   }
 
   filterData() {
+    const min = this.minPrice !== '' ? Number(this.minPrice) : undefined;
+    const max = this.maxPrice !== '' ? Number(this.maxPrice) : undefined;
+
+    if ((min !== undefined && isNaN(min)) || (max !== undefined && isNaN(max))) {
+      return;
+    }
     this.sendFilterData.emit({
       search: this.searchText,
-      min: this.minPrice,
-      max: this.maxPrice,
+      min,
+      max,
       rating: this.rating,
       type: this.type,
       sort: this.sort,
+      brand: this.activeBrand !== 'All' ? this.activeBrand : undefined
     });
   }
 
-
   showAll() {
     this.activeBrand = 'All';
-    this.productApi
-      .getCardsOnShopPage(1, 15)
-      .subscribe((data: AllProductArea) => {
+    this.productApi.getCardsOnShopPage(1, 15).subscribe((data: AllProductArea) => {
         this.sendAllProducts.emit(data);
       });
   }
@@ -70,6 +74,11 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-
-  
+  onBrandChange(event: Event) {
+    if (this.activeBrand === 'All') {
+      this.showAll();
+    } else {
+      this.getBrandData(this.activeBrand);
+    }
+  }
 }

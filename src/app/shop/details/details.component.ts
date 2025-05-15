@@ -79,16 +79,11 @@ export class DetailsComponent implements OnInit {
     alert('addedd');
   }
 
-  createAndAddCart() {
-    alert('created and added');
-  }
 
   cartBTN() {
     if (this._cookie.check('userInfo')) {
       if (this._cookie.get('cartInfo') != '') {
         this.addToCart();
-      } else {
-        this.createAndAddCart();
       }
     } else {
       this.errorSMS();

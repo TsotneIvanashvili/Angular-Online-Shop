@@ -8,6 +8,9 @@ import { Product } from '../../interfaces/product';
   providedIn: 'root',
 })
 export class ProductsAreaService {
+  getFilteredProducts(arg0: { search: string; min: number | undefined; max: number | undefined; rating: number; type: string; sort: string; brand: string | undefined; }) {
+    throw new Error('Method not implemented.');
+  }
   constructor(public http: HttpClient) {}
 
   getCategories() {

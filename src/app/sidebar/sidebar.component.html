@@ -2,10 +2,10 @@
   <div class="main-area">
     <div class="brands">
       <h1>Brands</h1>
-      <select class="brands-dropdown" [(ngModel)]="activeBrand" (change)="getBrandData(activeBrand)">
-        <option value="All" (click)="showAll()"><i class="fa-solid fa-tag fa-lg" style="color: #000000;"></i> All</option>
+      <select class="brands-dropdown" [(ngModel)]="activeBrand" (change)="onBrandChange($event)">
+        <option value="All"> All</option>
         @for (item of brands; track $index) {
-          <option [value]="item"><i class="fa-solid fa-tag fa-lg" style="color: #000000;"></i> {{ item }}</option>
+          <option [value]="item"> {{ item }}</option>
         }
       </select>
     </div>
