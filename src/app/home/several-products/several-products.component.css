@@ -10,96 +10,119 @@
     gap: 2rem;
     justify-content: center;
   }
-  
-  .card {
-    background-color: #2f2e2e;
-    border-radius: 1rem;
-    overflow: hidden;
-    width: 260px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  .main-but{
     display: flex;
-    flex-direction: column;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .main-but {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-  }
-  
-  .title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .but {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-top: auto;
-  }
-  
-  .but h2 {
-    font-size: 1.1rem;
-    color: #ffcc00;
-    margin: 0;
-  }
-  
-  .but h2 sub {
-    color: #888;
-    text-decoration: line-through;
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-  }
-  
-  .but button {
-    background-color: #e3e3e3;
-    color: #2f2e2e;
-    padding: 0.5rem 0.8rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .but button:hover {
-    background-color: #565656;
-    color: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    gap: 15px;
+    padding-top: 10px;
+    flex-direction: column;
+
 
   }
   
-  .viewMore {
-    display: block;
-    margin: 2rem auto;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .viewMore:hover {
-    background-color: #565656;
-    color: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+ .card-wrapper {
+  perspective: 1000px;
+  width: 260px;
+  height: 360px;
+}
 
-  }
-  
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card-wrapper:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background-color: #2f2e2e;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.card-front {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: rotateY(180deg);
+  padding: 20px;
+  gap: 20px;
+}
+
+img{
+  height: 200px;
+}
+
+.card-back .add-cart {
+  background-color: #e3e3e3;
+  color: #2f2e2e;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card-back .add-cart:hover {
+  background-color: #565656;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+h2{
+  text-align: center;
+}
+
+.h2{
+  color: rgb(218, 218, 218);
+}
+
+sub{
+  color: rgb(142, 142, 142);
+  text-decoration: line-through;
+}
+
+.view{
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewMore {
+  text-decoration: none;
+  color: #e3e3e3;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #2f2e2e;
+  border: none;
+    transition: 0.3s ease;
+
+}
+
+
+.viewMore:hover {
+  background-color: #212121;
+  color: #ffffff;
+  scale: 1.05;
+}

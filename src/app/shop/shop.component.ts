@@ -52,6 +52,7 @@ export class ShopComponent implements OnInit {
         this.pagination(data);
       });
 
+
   }
 
   search(search: string) {

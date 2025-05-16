@@ -113,7 +113,7 @@ z-index: -1;
 }
 
 .bestS h1 {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(255, 255, 255);
     padding-inline: 20px;
     font-family: sans-serif;
     font-weight: 500;
@@ -154,4 +154,6 @@ z-index: -1;
   .scrollToTop:hover {
     transform: translateY(-10px) scale(1.1);
   }
+  
+
   

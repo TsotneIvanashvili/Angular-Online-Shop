@@ -14,6 +14,6 @@ export class SplineViewComponent implements AfterViewInit {
     const app = new Application(canvas);
 
     // 👇 Replace with your actual .splinecode URL
-    app.load('https://prod.spline.design/wNBASGONPFK2uzS5/scene.splinecode');
+    app.load('https://prod.spline.design/Ufmnf1-mEHdW9ML5/scene.splinecode')
   }
 }
