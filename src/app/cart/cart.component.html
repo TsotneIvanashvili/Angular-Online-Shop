@@ -1,1 +1,34 @@
-<p>cart works!</p>
+<section>
+
+  @if (cart && cart.length > 0) {
+      <h1>Your Cart!</h1>
+
+    <div class="cart-container">
+      @for (item of cart; track $index) {
+        <div class="cart-card">
+          <div class="cart-img">
+            <img class="image" [src]="item.image" alt="{{ item.title }}" />
+          </div>
+          <div class="cart-details">
+            <h3>{{ item.title }}</h3>
+            <p class="price">{{ item.pricePerQuantity }}$</p>
+
+<div class="quantity-controls">
+  <button type="button" (click)="updateQuantity(item.productId, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+  <span>{{ item.quantity }}</span>
+  <button type="button" (click)="updateQuantity(item.productId, item.quantity + 1)">+</button>
+</div>
+
+<button type="button" class="delete-btn" (click)="deleteProduct(item.productId)">🗑 Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+          <h1>Your cart is empty!</h1>
+
+    <div class="empty-cart">
+      <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png?f=webp" alt="Empty Cart" />
+    </div>
+  }
+</section>

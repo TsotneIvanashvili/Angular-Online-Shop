@@ -8,18 +8,19 @@ export class CartAreaService {
 
   constructor(public http: HttpClient) { }
 
-
-  createCart(body: any) {
-    return this.http.post("https://api.everrest.educata.dev/shop/cart/product", body)
+  getCart() {
+    return this.http.get('https://api.everrest.educata.dev/shop/cart');
   }
 
-  addtoCart(body: any,) {
-    return this.http.patch("https://api.everrest.educata.dev/shop/cart/product", body )
+  addToCart(body: any) {
+    return this.http.post('https://api.everrest.educata.dev/shop/cart/product', body);
   }
 
-  
+  updateToCart(body: any) {
+    return this.http.patch('https://api.everrest.educata.dev/shop/cart/product', body);
+  }
 
   deleteProduct(body: any) {
-    return this.http.delete("https://api.everrest.educata.dev/shop/cart/product", body)
+    return this.http.delete('https://api.everrest.educata.dev/shop/cart/product', { body: body });
   }
 }

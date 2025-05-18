@@ -1,14 +1,17 @@
 .container {
-    padding: 2rem;
     color: #e3e3e3;
-    border-radius: 30px;
+    background-color: #1E1E1E;
+  padding-bottom: 50px;
   }
   
   main {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
+    padding-top: 50px;
+
     justify-content: center;
+
   }
 
   .main-but{
@@ -117,6 +120,7 @@ sub{
   background-color: #2f2e2e;
   border: none;
     transition: 0.3s ease;
+    margin: 10px;
 
 }
 

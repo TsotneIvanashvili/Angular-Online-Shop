@@ -3,6 +3,68 @@
 <app-spline-view></app-spline-view>
 
 
+
+<h1 style="text-align: center; padding: 40px; font-size: 40px;">Explore Our Latest Laptops!</h1>
+<div class="carousel-wrapper">
+  <div class="carousel-track">
+    @for (image of loopImages; track image) {
+      <div class="carousel-slide">
+        <img [src]="image" alt="Laptop image" />
+      </div>
+    }
+  </div>
+</div>
+
+
+<section class="main">
+
+<section id="arrivals">
+
+
+<div class="infos2">
+  <div class="info-text">
+    <h1 style="color: white;">Looking for power, performance, and style?</h1>
+    <p style="color: white;     text-align: center;">Browse our collection of the latest laptops — perfect for work, gaming, or everyday use.
+From ultra-light notebooks to high-performance machines, we’ve got the perfect match for your needs.</p>
+
+  <button routerLink="/shop" (click)="scrollToTop()">Shop Now!</button>
+  </div>
+  <div class="info-image">
+    <img
+      class="cube"
+      src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Laptop"
+    />
+  </div>
+</div>
+
+</section>
+
+<section class="one1">
+  
+<div class="infos2">
+ 
+  <div class="info-image">
+    <img
+      class="cube"
+      src="https://pixelz.cc/wp-content/uploads/2018/10/razer-project-valerie-laptop-uhd-4k-wallpaper.jpg"
+      alt="Laptop"
+    />
+  </div>
+   <div class="info-text">
+    <h1 style="color: white;">Laptops That Work as Hard as You Do</h1>
+    <p style="color: white;     text-align: center;"> From seamless multitasking to sleek portability, our laptops are designed to keep up with your demands — in the office, at home, or on the go.</p>
+
+  <button routerLink="/shop" (click)="scrollToTop()">Shop Now!</button>
+  </div>
+</div>
+</section>
+
+</section>
+
+
+
+
 <section class="shopInfos">
   @for (item of shopCards; track $index) {
   <div class="card">
@@ -14,15 +76,6 @@
   </div>
   }
 </section>
-
-<section id="arrivals">
-    <main class="container">
-        <div class="infos">
-        <h1>20% Off On Every Product</h1>
-        <p>Discover Deals Today!</p>
-        </div>
-    </main>
-</section>
 <div class="bestS">
   <h1 >Best Selling</h1>
 </div>
@@ -30,6 +83,8 @@
 <button class="scrollToTop " (click)="scrollToTop()">
   <i class="fa-solid fa-arrow-up fa-xl" style="color: #ffffff;"></i>
 </button>
+
+
 
 
 <app-several-products></app-several-products>

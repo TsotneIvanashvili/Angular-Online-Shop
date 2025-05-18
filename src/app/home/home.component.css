@@ -39,24 +39,13 @@
     transition: 0.3s;
 }
 
-.container{
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 
 
 
 #arrivals {
-    
-    height: 400px;
-    background-image: url("https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-    background-position: center center;
-    background-attachment: fixed; 
-    background-size: cover;
-    
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
@@ -70,6 +59,8 @@ main {
     color: white;
   
 }
+
+
 
 
 .infos {
@@ -157,3 +148,108 @@ z-index: -1;
   
 
   
+.carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  padding: 20px 0;
+}
+
+.carousel-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 30s linear infinite;
+}
+
+.carousel-slide {
+  flex: 0 0 auto;
+  padding: 0 10px;
+}
+
+.carousel-slide img {
+  height: 200px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+
+.infos2 {
+  width: 800px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #000000;
+  gap: 40px;overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid grey;
+  margin: 10px;
+}
+
+.info-text {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px;
+}
+
+.info-text h1 {
+  color: #E3E3E3;
+  font-size: 30px;
+  margin: 0;
+      text-align: center;
+
+  text-shadow:
+
+    0 0 50px #E3E3E3;
+}
+.info-image {
+  flex: 1;
+  text-align: center;
+}
+
+.cube {
+  max-width: 100%;
+  width: 500px;
+  height: 400px;
+}
+
+button{
+    background-color: transparent;
+    border: 1px solid rgb(174, 174, 174);
+    width: fit-content;
+    color: white;
+    font-size: 25px;
+    border-radius: 30px;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+.one1{
+    display: flex;
+    justify-content: end;
+}
+
+.main{
+    background-color: #1E1E1E;
+    padding: 15px;
+}

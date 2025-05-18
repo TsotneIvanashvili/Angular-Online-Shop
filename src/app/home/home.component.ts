@@ -7,17 +7,35 @@ import { BannerComponent } from "./banner/banner.component";
 import { shopCards} from "./shopCardData"
 import { SeveralProductsComponent } from "./several-products/several-products.component";
 import { SplineViewComponent } from "../spline-view/spline-view.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-home',
-    imports: [ SeveralProductsComponent, SplineViewComponent],
+    imports: [ SeveralProductsComponent, SplineViewComponent, RouterModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   constructor(public api: ApiAreaService) {}
 
-  
+  rawImages: string[] = [
+    'https://cdn.mos.cms.futurecdn.net/v2/t:0,l:0,cw:2000,ch:1125,q:80,w:2000/sJUAmbBLMmhEPcMqtQGGGg.jpg',
+    'https://dlcdnrog.asus.com/rog/media/1546895302493.webp',
+    'https://dlcdnrog.asus.com/rog/media/1546895302493.webp',
+    'https://wallpapercat.com/w/full/8/4/3/896207-3840x2160-desktop-4k-laptop-wallpaper.jpg',
+    'https://in.aorus.com/upload/Product/F_20220104171438Ap71093.JPG',
+    'https://images6.alphacoders.com/133/1338694.png'
+  ];
+
+  // Remove duplicates using a Set
+  get uniqueImages(): string[] {
+    return Array.from(new Set(this.rawImages));
+  }
+
+  // Duplicate the unique images for smooth infinite loop
+  get loopImages(): string[] {
+    return [...this.uniqueImages, ...this.uniqueImages];
+  }
   public shopCards: any;
 
   ngOnInit(): void {

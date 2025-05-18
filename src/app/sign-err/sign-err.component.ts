@@ -39,4 +39,9 @@ export class SignErrComponent implements OnInit {
     this.tools.isRegistered.next(true)
   }
 
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  }
+
 }

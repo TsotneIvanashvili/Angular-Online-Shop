@@ -1,0 +1,149 @@
+.cart-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+section {
+  margin-top: 100px;
+}
+
+section h1 {
+  font-size: 40px;
+  text-align: center;
+}
+
+.cart-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto; /* center cards on larger screens */
+  transition: transform 0.2s ease;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.cart-card:hover {
+  transform: translateY(-5px);
+}
+
+.cart-img {
+  flex: 0 0 250px; /* fixed width */
+  max-width: 100%;
+}
+
+.cart-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: contain;
+  display: block;
+}
+
+.cart-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  color: #333;
+}
+
+.cart-details h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.cart-details .price {
+  color: #0b8d4d;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-controls button {
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-controls button:hover:not(:disabled) {
+  background-color: #e0f7e9;
+}
+
+.quantity-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  align-self: flex-start; /* align left on larger screens */
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+
+.empty-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.empty-cart img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 700px) {
+  .cart-card {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 1rem 1.5rem;
+  }
+
+  .cart-img {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 1rem;
+  }
+
+  .cart-details {
+    align-items: center;
+    text-align: center;
+  }
+
+  .delete-btn {
+    align-self: center;
+  }
+}
