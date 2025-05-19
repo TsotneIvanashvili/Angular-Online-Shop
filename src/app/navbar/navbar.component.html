@@ -29,7 +29,7 @@
       </button>
     } @else {
       <button><img [src]="userImg" alt="">{{userName}}</button>
-      <button (click)="signOut()"><i class="fa-solid fa-right-to-bracket"></i> Sign Out</button>
+      <button (click)="signOut()" routerLink="/home"><i class="fa-solid fa-right-to-bracket"></i> Sign Out</button>
     }
   </div>
 </nav>
