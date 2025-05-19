@@ -69,7 +69,7 @@ main {
 
 
 .infos {
-    width: 500px;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -188,13 +188,26 @@ z-index: -1;
 }
 
 
+.nope{
+  animation-name: load-in;
+  animation-duration: 1s;
+}
 
+@keyframes load-in {
+  0%{
+    opacity: 0;
+    }
+
+  100%{
+    opacity: 1;
+  }
+}
 
 
 .infos2 {
       flex-wrap: wrap;
 
-  width: 800px;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;

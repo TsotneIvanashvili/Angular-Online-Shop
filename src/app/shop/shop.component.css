@@ -339,3 +339,18 @@ sub{
   color: #ffffff;
   scale: 1.05;
 }
+
+  .nope{
+  animation-name: load-in;
+  animation-duration: 1s;
+}
+
+@keyframes load-in {
+  0%{
+    opacity: 0;
+    }
+
+  100%{
+    opacity: 1;
+  }
+}

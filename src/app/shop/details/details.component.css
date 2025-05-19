@@ -318,3 +318,18 @@
 .scrollToTop:hover {
   transform: translateY(-10px) scale(1.1);
 }
+
+  .nope{
+  animation-name: load-in;
+  animation-duration: 1s;
+}
+
+@keyframes load-in {
+  0%{
+    opacity: 0;
+    }
+
+  100%{
+    opacity: 1;
+  }
+}

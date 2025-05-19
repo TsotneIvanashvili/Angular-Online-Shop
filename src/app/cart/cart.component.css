@@ -147,3 +147,18 @@ section h1 {
     align-self: center;
   }
 }
+
+  .nope{
+  animation-name: load-in;
+  animation-duration: 1s;
+}
+
+@keyframes load-in {
+  0%{
+    opacity: 0;
+    }
+
+  100%{
+    opacity: 1;
+  }
+}
