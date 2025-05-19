@@ -28,7 +28,7 @@ getCart() {
         enrichedCartItems.push({
           ...item,
           title: productData.title,
-          image: productData.images[0] || '', // first image
+          image: productData.images[0] || '', 
         });
       });
     });
@@ -47,7 +47,7 @@ updateQuantity(productId: string, newQuantity: number) {
   };
 
   this.api.updateToCart(body).subscribe(() => {
-    this.getCart(); // Refresh cart
+    this.getCart(); 
   });
 }
 
@@ -57,7 +57,7 @@ deleteProduct(productId: string) {
   };
 
   this.api.deleteProduct(body).subscribe(() => {
-    this.getCart(); // Refresh cart
+    this.getCart(); 
   });
 }
 

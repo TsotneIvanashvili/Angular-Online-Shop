@@ -86,21 +86,18 @@ addToCart(id: number) {
   };
 
   if (this._cookie.check('userInfo')) {
-    // User is signed in, get profile to confirm and add to cart
     this.userServ.profileInfo().subscribe({
       next: (userData) => {
-        // Add or update product in cart
         this.CartServ.updateToCart(prodInfo).subscribe({
           next: (response) => {
               alert("Product Added To Cart!")
           },
           error: (err) => {
-            // If update fails, try adding
             this.CartServ.addToCart(prodInfo).subscribe({
               
               error: (addErr) => {
                 console.error("Failed to add to cart:", addErr);
-                this.errorSMS(); // show error if cart add also fails
+                this.errorSMS(); 
               }
             });
           },
@@ -108,11 +105,10 @@ addToCart(id: number) {
       },
       error: (profileErr) => {
         console.error("Failed to get user profile:", profileErr);
-        this.errorSMS(); // show error if profile fetch fails
+        this.errorSMS(); 
       }
     });
   } else {
-    // User is not signed in — show error message
     this.errorSMS();
   }
 }
