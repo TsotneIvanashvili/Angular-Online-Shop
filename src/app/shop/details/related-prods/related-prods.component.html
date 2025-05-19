@@ -1,23 +1,40 @@
-<section>
-  <div class="relatedP">
-    <h1 >Related Products</h1>
-  </div>
-  <main>
-      @for (item of relatedProds; track $index) {
-      <div class="card">
-        <img
-          [src]="!item.images[0] ? altImage : item.images[0]"
-          alt="product"
-        />
-        <h4>{{ item.title }}</h4>
-        <h2>
-          ${{ item.price.current }} <sub>${{ item.price.beforeDiscount }}</sub>
-        </h2>
+<section class="container">
+  <h1 style="text-align: center; font-size: 40px;"> Related Products</h1>
+<main>
+  @for (item of productList; track $index) {
+    <div class="card-wrapper">
+      <div class="card-inner">
+        <div class="card-front">
+          <img [src]="item.images[0]" alt="product" />
+          <div class="main-but">
+            <h2 class="title">{{item.title}}</h2>
+            <div class="but">
+              <h2 class="h2">
+                ${{item.price.current}} 
+                <sub>${{item.price.beforeDiscount}}</sub>
+              </h2>
+@if (item.stock <= 0) {
+  <h2 style="color:#FC6189;">
+    ❌ Not In Stock
+  </h2>
+} @else {
+  <h2 style="color:green;">
+    ✔️ In Stock ({{ item.stock }})
+  </h2>
+}
 
-          <button (click)="otherRelatedPage(item._id)"><i class="fa-solid fa-eye"></i> See More</button>
+
+            </div>
+          </div>
+        </div>
+        <div class="card-back">
+          <h1>Description</h1>
+          <p>{{item.description}}</p>
+        <button (click)="otherRelatedPage(item._id)" class="add-cart"><i class="fa-solid fa-eye"></i> See Details </button>
+        </div>
       </div>
-      }
-    </main>
+    </div>
+  }
+ 
+</main>
 </section>
-
-

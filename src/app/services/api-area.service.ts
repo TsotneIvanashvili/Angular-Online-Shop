@@ -18,4 +18,7 @@ export class ApiAreaService {
   profileInfo() {
     return this.http.get("https://api.everrest.educata.dev/auth")
   }
+
+
+
 }

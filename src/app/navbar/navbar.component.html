@@ -13,9 +13,9 @@
 
   <div class="pages" [class.active]="isMenuOpen">
     <ul>
-      <li routerLink="/" (click)="closeMenu()">Home</li>
-      <li routerLink="/shop" (click)="closeMenu()">Shop</li>
-      <li routerLink="/cart" (click)="closeMenu()">Cart</li>
+      <li routerLink="/home" routerLinkActive="active" (click)="closeMenu()">Home</li>
+      <li routerLink="/shop" routerLinkActive="active" (click)="closeMenu()">Shop</li>
+      <li routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Cart</li>
     </ul>
   </div>
 

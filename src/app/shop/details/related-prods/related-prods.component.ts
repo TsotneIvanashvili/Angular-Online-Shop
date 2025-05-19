@@ -27,7 +27,7 @@ export class RelatedProdsComponent implements OnInit {
     'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=';
 
   ngOnInit(): void {
-    this.getRelatedProds();
+    this.showCards()
   }
 
   otherRelatedPage(id: string) {
@@ -46,5 +46,28 @@ export class RelatedProdsComponent implements OnInit {
 
         this.relatedProds = filtered;
       });
+  }
+
+
+  
+  protected productList!: Product[];
+
+  showCards() {
+    this.serv.getCardsforHome().subscribe({
+      next: (data: AllProductArea) => {
+       this.productList = data.products
+       
+        
+        
+      },
+      error: (error) => {
+        alert(error)
+      },
+    })
+  }
+
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

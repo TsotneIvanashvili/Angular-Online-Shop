@@ -17,40 +17,57 @@
     (sendSearchInfo)="search($event)"
     ></app-sidebar>
   </div>
-  <section class="container">
-   
-      <div  class="categories">
+  <section class="containerr">
+
+
+
+      <section class="container">
+           
+      <div  class="categoriess">
         @for (item of categories; track $index) {
-        <button class="button1">
+        <button class="button11">
           <img class="hehe" [src]="item.image" alt="" />
           <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
         </button>
         }
       </div>
+<main>
+  @for (item of productList; track $index) {
+    <div class="card-wrapper">
+      <div class="card-inner">
+        <div class="card-front">
+          <img [src]="item.images[0]" alt="product" />
+          <div class="main-but">
+            <h2 class="title">{{item.title}}</h2>
+            <div class="but">
+              <h2 class="h2">
+                ${{item.price.current}} 
+                <sub>${{item.price.beforeDiscount}}</sub>
+              </h2>
+@if (item.stock <= 0) {
+  <h2 style="color:#FC6189;">
+    ❌ Not In Stock
+  </h2>
+} @else {
+  <h2 style="color:green;">
+    ✔️ {{ item.stock }} In Stock
+  </h2>
+}
 
 
-      <section class="container">
-        <main>
-    
-        
-        @for (item of productList; track $index) {
-      <div class="card">
-        <img
-          [src]="!item.images[0] ? altImage : item.images[0]"
-          alt="product"
-        />
-        <div class="main-but">
-          <h2 class="title">{{item.title}}</h2>
-          <div class="but">
-            <h2>${{item.price.current}} <sub>${{item.price.beforeDiscount}}</sub></h2>
-            <button routerLink="/details/{{item._id}}"><i class="fa-solid fa-eye"></i> See Details </button>
+            </div>
           </div>
         </div>
-    
-    
+        <div class="card-back">
+          <h1>Description</h1>
+          <p>{{item.description}}</p>
+        <button routerLink="/details/{{item._id}}" class="add-cart"><i class="fa-solid fa-eye"></i> See Details </button>
+        </div>
       </div>
-    }
-    </main>
+    </div>
+  }
+ 
+</main>
     </section>
 
 

@@ -9,12 +9,12 @@ import { SignInComponent } from './sign-in/sign-in.component';
 
 
 export const routes: Routes = [
-    {path: "", component: HomeComponent},
+    {path: "home", component: HomeComponent},
     {path: "profile", component: ProfilePageComponent},
     {path: "cart", component: CartComponent},
     {path: "shop", component: ShopComponent},
     {path: "details/:id", component: DetailsComponent},
     {path: "register", component: SignUpComponent},
     {path: "Signin", component: SignInComponent},
-
+    { path: '**', redirectTo: 'home' }
 ];

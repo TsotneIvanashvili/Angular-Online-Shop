@@ -13,6 +13,16 @@
                 ${{item.price.current}} 
                 <sub>${{item.price.beforeDiscount}}</sub>
               </h2>
+@if (item.stock <= 0) {
+  <h2 style="color:#FC6189;">
+    ❌ Not In Stock
+  </h2>
+} @else {
+  <h2 style="color:green;">
+    ✔️ In Stock ({{ item.stock }})
+  </h2>
+}
+
 
             </div>
           </div>

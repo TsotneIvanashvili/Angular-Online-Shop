@@ -42,7 +42,7 @@ header {
 .container {
   padding: 2rem;
   color: #e3e3e3;
-  border-radius: 30px;
+  
 }
 
 main {
@@ -87,53 +87,8 @@ main {
   margin-bottom: 0.5rem;
 }
 
-.but {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-}
 
-.but h2 {
-  font-size: 1.1rem;
-  color: #ffcc00;
-  margin: 0;
-}
 
-.but h2 sub {
-  color: #888;
-  text-decoration: line-through;
-  font-size: 0.8rem;
-  margin-left: 0.5rem;
-}
-
-.but button {
-  background-color: #e3e3e3;
-  color: #2f2e2e;
-  padding: 0.5rem 0.8rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.but button:hover {
-  background-color: #565656;
-  color: white;
-}
-
-.viewMore {
-  display: block;
-  margin: 2rem auto;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  background-color: #e3e3e3;
-  color: #2f2e2e;
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
 .viewMore:hover {
   background-color: #565656;
@@ -192,13 +147,14 @@ main {
 }
 
 
-.button1{
+.button11{
   display: flex;
   font-size: 20px;
   width: 200px;
+  height: 70px;
   align-items: center;
   color: white;
-  background-color: #ff9f43;
+  background-color: #1258a9;
   border: none;
   border-radius: 5px;
   padding: 10px;
@@ -210,16 +166,17 @@ main {
 
 .hehe{
   width: 30px;
+  height: 30px;
 }
 
-.categories{
+.categoriess{
   display: flex;
   gap: 20px;
 }
 
 button:hover{
-  scale: 1.03;
-  background-color: #ff9f43;
+  scale: 1.05;
+  background-color: #084080;
 }
 
 .bestS{
@@ -249,4 +206,136 @@ button:hover{
 
 .scrollToTop:hover {
   transform: translateY(-10px) scale(1.1);
+}
+.container {
+    color: #e3e3e3;
+    background-color: #1E1E1E;
+  padding-bottom: 50px;
+  min-width: 100%;
+  }
+  
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 50px;
+    justify-content: center;
+    height: fit-content;
+  }
+
+  .main-but{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-top: 10px;
+    flex-direction: column;
+
+
+  }
+  
+ .card-wrapper {
+  perspective: 1000px;
+  width: 260px;
+  height: 400px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card-wrapper:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background-color: #2f2e2e;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.card-front {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: rotateY(180deg);
+  padding: 20px;
+  gap: 20px;
+}
+
+img{
+  height: 200px;
+}
+
+.card-back .add-cart {
+  background-color: #e3e3e3;
+  color: #2f2e2e;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card-back .add-cart:hover {
+  background-color: #565656;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+h2{
+  text-align: center;
+}
+
+.h2{
+  color: rgb(218, 218, 218);
+}
+
+sub{
+  color: rgb(142, 142, 142);
+  text-decoration: line-through;
+}
+
+.view{
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewMore {
+  text-decoration: none;
+  color: #e3e3e3;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #2f2e2e;
+  border: none;
+    transition: 0.3s ease;
+    margin: 10px;
+
+}
+
+
+.viewMore:hover {
+  background-color: #212121;
+  color: #ffffff;
+  scale: 1.05;
 }

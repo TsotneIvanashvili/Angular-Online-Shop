@@ -21,14 +21,14 @@
   
   .footer-title {
     font-size: 1.5rem;
-    color: #00F0FF;
+    color: green;
     margin-bottom: 0.5rem;
   }
   
   .footer-section h4 {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
-    color: #FF5E3A;
+    color: green;
   }
   
   .footer-section ul {
@@ -48,7 +48,7 @@
   }
   
   .footer-section ul li a:hover {
-    color: #00F0FF;
+    color: green;
   }
   
   .footer-bottom {

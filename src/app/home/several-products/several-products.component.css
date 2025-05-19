@@ -2,6 +2,7 @@
     color: #e3e3e3;
     background-color: #1E1E1E;
   padding-bottom: 50px;
+  min-width: 100%;
   }
   
   main {
@@ -9,9 +10,8 @@
     flex-wrap: wrap;
     gap: 2rem;
     padding-top: 50px;
-
     justify-content: center;
-
+    height: fit-content;
   }
 
   .main-but{
@@ -28,7 +28,7 @@
  .card-wrapper {
   perspective: 1000px;
   width: 260px;
-  height: 360px;
+  height: 400px;
 }
 
 .card-inner {

@@ -17,6 +17,17 @@ nav {
 
 li{
     cursor: pointer;
+
+}
+
+li:hover{
+          color: green;
+
+}
+
+.active{
+          color: green;
+
 }
 
 .laptop{
@@ -107,7 +118,7 @@ nav .account button i {
 }
 
 nav .account button:hover {
-    background-color: #FF9F43; /* Warm Orange on hover */
+    background-color: green; /* Warm Orange on hover */
 }
 
 ul{

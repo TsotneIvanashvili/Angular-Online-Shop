@@ -62,7 +62,7 @@
     <div class="prices">
       <h1 class="green">{{ prodINFO.price.current | currency }}</h1>
       @if (prodINFO.price.current != prodINFO.price.beforeDiscount) {
-      <h1 class="beforeDisc">{{ prodINFO.price.beforeDiscount | currency }}</h1>
+      <sub class="beforeDisc">{{ prodINFO.price.beforeDiscount | currency }}</sub>
       }
     </div>
 

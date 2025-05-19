@@ -23,4 +23,6 @@ export class CartAreaService {
   deleteProduct(body: any) {
     return this.http.delete('https://api.everrest.educata.dev/shop/cart/product', { body: body });
   }
+
+  
 }
