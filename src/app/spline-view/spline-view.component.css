@@ -12,6 +12,14 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  .spline-container {
+    height: 250px;
+      pointer-events: none;
+
+  }
+}
+
 canvas {
   width: 100%;
   height: 100%;

@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.shopCards = shopCards
+    // No need to assign to this.loopImages since it's a getter
   }
 
   scrollToTop() {
