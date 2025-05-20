@@ -80,6 +80,7 @@ this.tools.isErrSMS.next(true);
 }
 
 addToCart(id: number) {
+  
   const prodInfo = {
     id: id,
     quantity: this.prodQuant,
@@ -112,6 +113,8 @@ addToCart(id: number) {
     this.errorSMS();
   }
 }
+
+
 
 }
 
