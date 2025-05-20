@@ -17,16 +17,19 @@ nav {
 
 li{
     cursor: pointer;
+    transition: 0.3s;
 
 }
 
 li:hover{
-          color: green;
+          color: blue;
+              transform: scale(1.05);
+
 
 }
 
 .active{
-          color: green;
+          color: blue;
 
 }
 
@@ -67,7 +70,7 @@ nav h1 {
     letter-spacing: 0.5px;
     font-size: 30px;
     cursor: pointer;
-    color: green; 
+    color: blue; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +121,7 @@ nav .account button i {
 }
 
 nav .account button:hover {
-    background-color: green; /* Warm Orange on hover */
+    background-color: blue; /* Warm Orange on hover */
 }
 
 ul{

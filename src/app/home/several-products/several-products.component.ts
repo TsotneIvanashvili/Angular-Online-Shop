@@ -17,6 +17,11 @@ export class SeveralProductsComponent implements OnInit {
     this.showCards()
   }
 
+  public starNum!: number;
+
+  public prodINFO: any;
+
+
   protected productList!: Product[];
 
   showCards() {
