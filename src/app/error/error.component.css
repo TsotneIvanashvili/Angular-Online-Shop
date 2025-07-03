@@ -1,0 +1,26 @@
+.error-wrapper {
+  height: 100dvh;
+  background: #181818;
+  color: #fafafa;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+button{
+    border: none;
+    background-color: transparent;
+  color: #b09250;
+  text-decoration: underline transparent;
+  transition: text-decoration-color 0.3s;
+}
+
+button:hover {
+  text-decoration-color: currentColor;
+}

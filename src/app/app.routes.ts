@@ -6,6 +6,7 @@ import { ShopComponent } from './shop/shop.component';
 import { DetailsComponent } from './shop/details/details.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ErrorComponent } from './error/error.component';
 
 
 export const routes: Routes = [
@@ -16,5 +17,5 @@ export const routes: Routes = [
     {path: "details/:id", component: DetailsComponent},
     {path: "register", component: SignUpComponent},
     {path: "Signin", component: SignInComponent},
-    { path: '**', redirectTo: 'home' }
+    { path: '**', component: ErrorComponent }
 ];
