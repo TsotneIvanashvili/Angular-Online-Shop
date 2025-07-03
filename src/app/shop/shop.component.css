@@ -27,7 +27,6 @@ header {
   color: #E3E3E3;
   width: 700px;
   gap: 20px;
-
 }
 
 .head p{
@@ -38,11 +37,9 @@ header {
   font-size: 45px;
 }
 
-
 .container {
   padding: 2rem;
   color: #e3e3e3;
-  
 }
 
 main {
@@ -51,50 +48,99 @@ main {
   gap: 2rem;
   justify-content: center;
 }
-
-.card {
-  background-color: #2f2e2e;
-  border-radius: 1rem;
-  overflow: hidden;
+.card-wrapper {
+  perspective: 1000px;
   width: 260px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 400px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card-wrapper:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background: linear-gradient(145deg, #2A2A2A, #1B1B1B);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  color: #e3e3e3;
+}
+
+.card-front {
   display: flex;
   flex-direction: column;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+.card-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: rotateY(180deg);
+  padding: 20px;
+  gap: 20px;
+  background: linear-gradient(145deg, #1C1C1C, #2C2C2C);
 }
 
-.card img {
-  width: 100%;
+.card-front img,
+.card-back img {
   height: 200px;
   object-fit: cover;
+  border-bottom: 1px solid #444;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem 1rem 0 0;
 }
 
-.main-but {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+.card-back .add-cart {
+  background-color: #00BFFF;
+  color: #1E1E1E;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.title {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-
-
-
-.viewMore:hover {
-  background-color: #565656;
+.card-back .add-cart:hover {
+  background-color: #0099cc;
   color: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
+h2 {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.h2 {
+  color: #00ffae;
+  font-weight: bold;
+}
+
+sub {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 0.9rem;
+  margin-left: 4px;
+}
+
+
+/* ...rest of your unchanged CSS... */
 
 .bottomArea {
   display: flex;
@@ -122,7 +168,6 @@ main {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-
 }
 
 .pages button:hover:not(:disabled) {
@@ -146,43 +191,40 @@ main {
   font-weight: bold;
 }
 
-
-.button11{
+.button11 {
   display: flex;
   font-size: 20px;
   width: 200px;
   height: 70px;
   align-items: center;
   color: white;
-  background-color: #1258a9;
+  background-color: #00BFFF;
   border: none;
   border-radius: 5px;
   padding: 10px;
   justify-content: center;
   transition: 0.3s;
   cursor: pointer;
-
 }
 
-.hehe{
+.hehe {
   width: 30px;
   height: 30px;
 }
 
-.categoriess{
+.categoriess {
   display: flex;
   gap: 20px;
 }
 
-button:hover{
+button:hover {
   scale: 1.05;
   background-color: #084080;
 }
 
-.bestS{
-    text-align: center;
+.bestS {
+  text-align: center;
 }
-
 
 .scrollToTop {
   position: fixed;
@@ -207,140 +249,33 @@ button:hover{
 .scrollToTop:hover {
   transform: translateY(-10px) scale(1.1);
 }
+
 .container {
-    color: #e3e3e3;
-    background-color: #1E1E1E;
+  color: #e3e3e3;
+  background-color: #1E1E1E;
   padding-bottom: 50px;
   min-width: 100%;
-  }
-  
-  main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding-top: 50px;
-    justify-content: center;
-    height: fit-content;
-  }
-
-  .main-but{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding-top: 10px;
-    flex-direction: column;
-
-
-  }
-  
- .card-wrapper {
-  perspective: 1000px;
-  width: 260px;
-  height: 400px;
 }
 
-.card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s;
-}
-
-.card-wrapper:hover .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 1rem;
-  backface-visibility: hidden;
-  overflow: hidden;
-  background-color: #2f2e2e;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-.card-front {
+main {
   display: flex;
-  flex-direction: column;
-}
-
-.card-back {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  transform: rotateY(180deg);
-  padding: 20px;
-  gap: 20px;
-}
-
-img{
-  height: 200px;
-}
-
-.card-back .add-cart {
-  background-color: #e3e3e3;
-  color: #2f2e2e;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card-back .add-cart:hover {
-  background-color: #565656;
-  color: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-}
-
-h2{
-  text-align: center;
-}
-
-.h2{
-  color: rgb(218, 218, 218);
-}
-
-sub{
-  color: rgb(142, 142, 142);
-  text-decoration: line-through;
-}
-
-.view{
+  flex-wrap: wrap;
+  gap: 2rem;
   padding-top: 50px;
+  justify-content: center;
+  height: fit-content;
+}
+
+.main-but {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 15px;
+  padding-top: 10px;
+  flex-direction: column;
 }
 
-.viewMore {
-  text-decoration: none;
-  color: #e3e3e3;
-  font-size: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #2f2e2e;
-  border: none;
-    transition: 0.3s ease;
-    margin: 10px;
-
-}
-
-
-.viewMore:hover {
-  background-color: #212121;
-  color: #ffffff;
-  scale: 1.05;
-}
-
-  .nope{
+.nope {
   animation-name: load-in;
   animation-duration: 1s;
 }
@@ -348,7 +283,7 @@ sub{
 @keyframes load-in {
   0%{
     opacity: 0;
-    }
+  }
 
   100%{
     opacity: 1;
