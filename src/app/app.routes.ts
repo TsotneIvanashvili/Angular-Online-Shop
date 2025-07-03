@@ -10,12 +10,12 @@ import { ErrorComponent } from './error/error.component';
 
 
 export const routes: Routes = [
-    {path: "home", component: HomeComponent},
+    {path: "", component: HomeComponent},
     {path: "profile", component: ProfilePageComponent},
     {path: "cart", component: CartComponent},
     {path: "shop", component: ShopComponent},
     {path: "details/:id", component: DetailsComponent},
     {path: "register", component: SignUpComponent},
     {path: "Signin", component: SignInComponent},
-    { path: '**', component: ErrorComponent }
+    { path: '**', component: ErrorComponent },
 ];
