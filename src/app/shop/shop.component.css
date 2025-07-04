@@ -1,24 +1,25 @@
-/* HEADER */
 header {
-  background-image: url("https://images.unsplash.com/photo-1537498425277-c283d32ef9db?q=80&w=2078&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-  background-position: center center;
-  background-attachment: fixed; 
-  background-size: cover;
+  position: relative;
   height: 500px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-@media only screen and (max-width: 768px) {
-  header{
-    background-attachment: scroll;
-    background-position: center center;
-    background-size: cover;
-  }
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #0d0d0d;
 }
 
-.head{
+.head {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -29,13 +30,10 @@ header {
   gap: 20px;
 }
 
-.head p{
-  font-size: 20px;
-}
-
-.head h1{
+.head h1 {
   font-size: 45px;
 }
+
 
 .container {
   padding: 2rem;

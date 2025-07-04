@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  HostListener,
+} from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ProductsAreaService } from '../services/products-area.service';
 import { FormsModule } from '@angular/forms';
@@ -13,13 +20,56 @@ import { RouterModule } from '@angular/router';
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, AfterViewInit {
+  @ViewChild('particlesCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+  private ctx!: CanvasRenderingContext2D;
+  private particles: Particle[] = [];
+
   constructor(public prodService: ProductsAreaService) {}
 
   ngOnInit(): void {
     this.showProducts(this.currentPage, this.pageSize);
     this.getCategoriesList();
   }
+
+  ngAfterViewInit(): void {
+    this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
+    this.resizeCanvas();
+    this.initParticles();
+    this.animateParticles();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.resizeCanvas();
+  }
+
+  private resizeCanvas() {
+    const canvas = this.canvasRef.nativeElement;
+    canvas.width = window.innerWidth;
+    canvas.height = 500;
+  }
+
+  private initParticles() {
+    this.particles = [];
+    for (let i = 0; i < 100; i++) {
+      this.particles.push(new Particle(
+        this.canvasRef.nativeElement.width,
+        this.canvasRef.nativeElement.height
+      ));
+    }
+  }
+
+  private animateParticles = () => {
+    const canvas = this.canvasRef.nativeElement;
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of this.particles) {
+      p.update(canvas.width, canvas.height);
+      p.draw(this.ctx);
+    }
+    requestAnimationFrame(this.animateParticles);
+  }
+
   protected categories: any;
   public currentCategory: any;
   public productList: Product[] = [];
@@ -35,7 +85,6 @@ export class ShopComponent implements OnInit {
     this.pageList = [];
     this.productList = data.products;
     let pages = Math.ceil(data.total / this.pageSize);
-
     for (let i = 1; i <= pages; i++) {
       this.pageList.push(i);
     }
@@ -51,8 +100,6 @@ export class ShopComponent implements OnInit {
         this.totalSize = data.total;
         this.pagination(data);
       });
-
-
   }
 
   search(search: string) {
@@ -89,7 +136,6 @@ export class ShopComponent implements OnInit {
   changePageSize() {
     this.currentPage = 1;
     let pageArea = this.pageSize == '' ? this.totalSize : this.pageSize;
-
     if (!this.isCategoryShown) {
       this.showProducts(this.currentPage, pageArea);
     } else {
@@ -128,17 +174,46 @@ export class ShopComponent implements OnInit {
     this.prodService
       .getListByCategory(category, this.currentPage, this.pageSize)
       .subscribe((data: any) => {
-  
         this.productList = data.products;
         this.pagination(data);
       });
-      
   }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
+}
+
+class Particle {
+  x: number;
+  y: number;
+  size: number;
+  speedX: number;
+  speedY: number;
+
+  constructor(canvasWidth: number, canvasHeight: number) {
+    this.x = Math.random() * canvasWidth;
+    this.y = Math.random() * canvasHeight;
+    this.size = Math.random() * 2 + 1;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.speedY = Math.random() * 1 - 0.5;
+  }
+
+  update(canvasWidth: number, canvasHeight: number) {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x > canvasWidth || this.x < 0) this.speedX *= -1;
+    if (this.y > canvasHeight || this.y < 0) this.speedY *= -1;
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+
 
   // code below is not a part of the project
   public one: number = 1;
