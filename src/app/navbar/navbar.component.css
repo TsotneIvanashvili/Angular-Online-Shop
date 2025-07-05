@@ -143,29 +143,42 @@ button img {
   box-shadow: 0 0px 25px -4px rgba(0, 0, 0, 0.9);
   z-index: 10;
 }
-
 @media only screen and (max-width: 768px) {
   .burger {
     display: flex;
+    
+    
   }
 
-  .pages, .account {
+  button{
+    width: 90%;
+    margin-left: 50px;
+    margin-right:50px ;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pages,
+  .account {
     position: fixed;
     top: 60px;
     left: 0;
     width: 100%;
-    background: #0A0A0A;
+    background-color: #1a1a1a;
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    transform: translateX(-100%);
+    transform: scaleY(0);
+    transform-origin: top;
     transition: transform 0.3s ease-in-out;
     z-index: 999999;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    
   }
 
-  .pages.active, .account.active {
-    transform: translateX(0);
+  .pages.active,
+  .account.active {
+    transform: scaleY(1); /* Slide down */
   }
 
   .pages ul {
@@ -186,22 +199,40 @@ button img {
     top: 180px;
     flex-direction: column;
     gap: 15px;
+    
   }
 }
 
-.nope {
-  animation-name: load-in;
-  animation-duration: 1s;
-}
 
-@keyframes load-in {
+
+@keyframes slideFromTop {
   0% {
+    transform: translateY(-100%);
     opacity: 0;
-    transform: translateY(-20px);
   }
-
   100% {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: brightness(90%) blur(5px);
+  transition: 0.5s;
+  z-index: 9999999;
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  box-shadow: 0 4px 15px;
+  padding: 35px;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  /* 👇 This is the new line */
+  animation: slideFromTop 0.6s ease-out both;
 }
