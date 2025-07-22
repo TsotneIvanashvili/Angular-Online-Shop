@@ -10,6 +10,13 @@
   flex-wrap: wrap;
   margin-top: 50px;
   margin: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -297,6 +304,12 @@
 }
 
 
+.mainsecti{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .scrollToTop {
   position: fixed;
   bottom: 30px;
@@ -324,6 +337,7 @@
   .nope{
   animation-name: load-in;
   animation-duration: 1s;
+
 }
 
 @keyframes load-in {
