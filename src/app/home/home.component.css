@@ -148,7 +148,7 @@
   padding: 60px 20px;
   background: linear-gradient(145deg, #161616, #1d1d1d);
   text-align: center;
-  margin-top: 40px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .feature-box {

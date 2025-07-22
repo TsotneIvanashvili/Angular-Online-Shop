@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CartAreaService {
+  initializeCart(cartID: any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(public http: HttpClient) { }
 
