@@ -88,7 +88,7 @@ article {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .button11:hover {
@@ -239,7 +239,7 @@ sub {
   padding: 0.56rem 1rem;
   font-size: 0.95rem;
   font-weight: 700;
-  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .add-cart:hover {
@@ -271,7 +271,7 @@ sub {
   background: rgba(20, 26, 62, 0.8);
   color: #dce4ff;
   font-weight: 700;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .pages button:hover:not(:disabled) {
@@ -305,7 +305,7 @@ sub {
   place-items: center;
   z-index: 100;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .scrollToTop:hover {

@@ -24,8 +24,8 @@
   --radius-sm: 12px;
 
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --hover-duration: 0.4s;
-  --hover-duration-slow: 0.52s;
+  --hover-duration: 0.48s;
+  --hover-duration-slow: 0.62s;
   --hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -115,18 +115,35 @@ button {
 :where(
   a,
   button,
+  input,
+  select,
+  textarea,
+  img,
   [role="button"],
+  .area,
+  .imageArea,
+  h3 span,
+  .signButton,
   .button11,
   .add-cart,
   .viewMore,
   .filter-button,
   .pages button,
+  .pages li,
   .account button,
   .feature-box,
   .footer-section,
+  .footer-section ul li a,
   .scrollToTop,
+  .cta-button,
+  .cta-button i,
   .cube,
+  .carousel-track,
+  .carousel-slide img,
   .otherIMGS img,
+  .infos button,
+  .cartBtn,
+  .quantity button,
   .cart-card,
   .delete-btn,
   .quantity-controls button,
@@ -134,17 +151,25 @@ button {
   .btns button,
   .close,
   .laptop,
-  .card-inner,
   .card-front,
-  .card-back
+  .card-back,
+  .pages,
+  .account
 ) {
-  transition-duration: var(--hover-duration);
-  transition-timing-function: var(--hover-ease);
+  transition-duration: var(--hover-duration) !important;
+  transition-timing-function: var(--hover-ease) !important;
 }
 
-:where(.pages li::after, .glow-btn::after) {
-  transition-duration: var(--hover-duration-slow);
-  transition-timing-function: var(--hover-ease);
+:where(
+  .pages li::after,
+  .glow-btn::after,
+  .area::after,
+  .imageArea::after,
+  button::before,
+  .infos button::before
+) {
+  transition-duration: var(--hover-duration-slow) !important;
+  transition-timing-function: var(--hover-ease) !important;
 }
 
 :focus-visible {

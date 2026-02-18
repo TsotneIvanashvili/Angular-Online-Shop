@@ -33,7 +33,7 @@ section h1 {
   background: linear-gradient(150deg, rgba(15, 20, 52, 0.88), rgba(8, 11, 31, 0.94));
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
   padding: 1rem;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .cart-card:hover {
@@ -81,7 +81,7 @@ section h1 {
   color: #d8e1ff;
   font-size: 1.1rem;
   font-weight: 700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .quantity-controls button:hover:not(:disabled) {
@@ -112,7 +112,7 @@ section h1 {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .delete-btn:hover {

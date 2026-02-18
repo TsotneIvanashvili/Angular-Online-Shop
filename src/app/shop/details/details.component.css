@@ -49,7 +49,7 @@
   border-radius: 10px;
   border: 1px solid rgba(120, 138, 255, 0.35);
   cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .otherIMGS img:hover {
@@ -203,7 +203,7 @@
   color: #dce4ff;
   font-size: 1.3rem;
   font-weight: 700;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .quantity button:hover:not(:disabled) {
@@ -229,7 +229,7 @@
   font-size: 1rem;
   font-weight: 700;
   padding: 0.65rem 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .cartBtn:hover:not(:disabled) {

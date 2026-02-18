@@ -85,7 +85,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .cta-button:hover {
@@ -95,7 +95,7 @@
 }
 
 .cta-button i {
-  transition: transform 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .cta-button:hover i {
@@ -114,7 +114,7 @@
   border-radius: 20px;
   border: 1px solid rgba(28, 243, 255, 0.34);
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation: hoverBob 5s ease-in-out infinite;
 }
 
@@ -151,7 +151,7 @@
   border-radius: 16px;
   border: 1px solid rgba(28, 243, 255, 0.2);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.32);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .carousel-slide img:hover {
@@ -177,7 +177,7 @@
   justify-items: center;
   gap: 0.75rem;
   text-align: center;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .feature-box:hover {
@@ -238,7 +238,7 @@
   color: #f8fbff;
   display: grid;
   place-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
   z-index: 100;
 }

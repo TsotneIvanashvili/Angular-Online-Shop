@@ -33,7 +33,7 @@
   border: 1px solid rgba(94, 117, 255, 0.22);
   background: linear-gradient(155deg, rgba(15, 20, 52, 0.8), rgba(9, 12, 33, 0.85));
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .footer-section:hover {
@@ -74,7 +74,7 @@
 }
 
 .footer-section ul li a {
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), text-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .footer-section ul li a:hover {
