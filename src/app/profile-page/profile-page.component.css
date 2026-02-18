@@ -1,0 +1,47 @@
+.profile-placeholder {
+  min-height: 72vh;
+  margin-top: 86px;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.panel {
+  width: min(620px, 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(96, 120, 255, 0.34);
+  background: linear-gradient(145deg, rgba(15, 20, 52, 0.88), rgba(8, 11, 31, 0.92));
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
+  text-align: center;
+  padding: 1.4rem 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.panel h1 {
+  font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.panel p {
+  color: #bcc5e2;
+  font-size: 1.1rem;
+}
+
+.home-link {
+  justify-self: center;
+  border: 1px solid rgba(28, 243, 255, 0.62);
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(28, 243, 255, 0.24), rgba(255, 62, 242, 0.22));
+  color: #f2f7ff;
+  padding: 0.55rem 1.1rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.home-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143, 255, 46, 0.62);
+  box-shadow: 0 0 14px rgba(28, 243, 255, 0.22);
+}

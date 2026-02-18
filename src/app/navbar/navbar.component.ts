@@ -57,7 +57,7 @@ export class NavbarComponent implements OnInit {
     }
     
     // Close menu if clicking outside (mobile only)
-    if (window.innerWidth <= 570 && this.isMenuOpen && 
+    if (window.innerWidth <= 768 && this.isMenuOpen && 
         !target.closest('.pages') && 
         !target.closest('.account') &&
         !target.closest('.burger')) {

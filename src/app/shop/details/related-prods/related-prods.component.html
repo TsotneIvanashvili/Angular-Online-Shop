@@ -1,45 +1,45 @@
 <div class="nope">
   <section class="container">
-  <h1 style="text-align: center; font-size: 40px;"> Related Products</h1>
-<main>
-  @for (item of productList; track $index) {
-    <div class="card-wrapper">
-      <div class="card-inner">
-        <div class="card-front">
-          <img [src]="item.images[0]" alt="product" />
-          <div class="main-but">
-            <h2 class="title">{{item.title}}</h2>
-            <div class="but">
-              <h2 class="h2">
-                ${{item.price.current}} 
-                <sub>${{item.price.beforeDiscount}}</sub>
-              </h2>
-@if (item.stock <= 0) {
-  <h2 style="color:#FC6189;">
-    ❌ Not In Stock
-  </h2>
-} @else {
-  <h2 style="color:green;">
-    ✔️ In Stock ({{ item.stock }})
-  </h2>
-}
+    <h1 class="related-title">Related Products</h1>
 
+    <main>
+      @for (item of productList; track $index) {
+        <div class="card-wrapper">
+          <div class="card-inner">
+            <div class="card-front">
+              <img [src]="item.images[0]" alt="product" />
+              <div class="main-but">
+                <h2 class="title">{{item.title}}</h2>
+                <div class="but">
+                  <h2 class="h2">
+                    ${{item.price.current}}
+                    <sub>${{item.price.beforeDiscount}}</sub>
+                  </h2>
 
+                  @if (item.stock <= 0) {
+                    <p class="stock-badge out">
+                      <i class="fa-solid fa-circle-xmark"></i> Out of stock
+                    </p>
+                  } @else {
+                    <p class="stock-badge in">
+                      <i class="fa-solid fa-circle-check"></i> In stock ({{ item.stock }})
+                    </p>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="card-back">
+              <h1>Description</h1>
+              <p>{{item.description}}</p>
+              <h2>Rating: {{item.rating}} *</h2>
+              <button (click)="otherRelatedPage(item._id)" class="add-cart">
+                <i class="fa-solid fa-eye"></i> See Details
+              </button>
             </div>
           </div>
         </div>
-        <div class="card-back">
-          <h1>Description</h1>
-          <p>{{item.description}}</p>
-                    <h2>Rating: {{item.rating}}⭐</h2>
-
-        <button (click)="otherRelatedPage(item._id)" class="add-cart"><i class="fa-solid fa-eye"></i> See Details </button>
-        </div>
-      </div>
-    </div>
-  }
- 
-</main>
-</section>
-
+      }
+    </main>
+  </section>
 </div>

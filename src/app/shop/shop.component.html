@@ -1,104 +1,98 @@
 <div class="nope">
-  
-<header>
-  <canvas #particlesCanvas></canvas>
-  <div class="head">
-    <h1>Cutting-Edge Tech at Unbeatable Prices!</h1>
+  <header>
+    <canvas #particlesCanvas></canvas>
+    <div class="head">
+      <h1>Cutting-Edge Tech at Unbeatable Prices!</h1>
+    </div>
+  </header>
+
+  <div class="bestS">
+    <h1>Discover All Of Our Products Here</h1>
   </div>
-</header>
 
-<div class="bestS">
-  <h1>Discover All Of Our Products Here</h1>
-</div>
+  <article>
+    <div class="sidebar">
+      <app-sidebar
+        (sendBrands)="switchBrands($event)"
+        (sendAllProducts)="showProducts(1, pageSize)"
+        (sendFilterData)="filterProducts($event)"
+        (sendSearchInfo)="search($event)"
+      ></app-sidebar>
+    </div>
 
-<article>
-  <div class="sidebar">
-    <app-sidebar 
-    (sendBrands)="switchBrands($event)"
-    (sendAllProducts)="showProducts(1, pageSize)"
-    (sendFilterData)="filterProducts($event)"
-    (sendSearchInfo)="search($event)"
-    ></app-sidebar>
-  </div>
-  <section class="containerr">
-
-
-
+    <section class="containerr">
       <section class="container">
-           
-      <div  class="categoriess">
-        @for (item of categories; track $index) {
-        <button class="button11">
-          <img class="hehe" [src]="item.image" alt="" />
-          <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
-        </button>
-        }
-      </div>
-<main>
-  @for (item of productList; track $index) {
-    <div class="card-wrapper">
-      <div class="card-inner">
-        <div class="card-front">
-          <img [src]="item.images[0]" alt="product" />
-          <div class="main-but">
-            <h2 class="title">{{item.title}}</h2>
-            <div class="but">
-              <h2 class="h2">
-                ${{item.price.current}} 
-                <sub>${{item.price.beforeDiscount}}</sub>
-              </h2>
-@if (item.stock <= 0) {
-  <h2 style="color:#FC6189;">
-    ❌ Not In Stock
-  </h2>
-} @else {
-  <h2 style="color:green;">
-    ✔️ {{ item.stock }} In Stock
-  </h2>
-}
+        <div class="categoriess">
+          @for (item of categories; track $index) {
+            <button class="button11">
+              <img class="hehe" [src]="item.image" alt="" />
+              <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
+            </button>
+          }
+        </div>
 
+        <main>
+          @for (item of productList; track $index) {
+            <div class="card-wrapper">
+              <div class="card-inner">
+                <div class="card-front">
+                  <img [src]="item.images[0]" alt="product" />
+                  <div class="main-but">
+                    <h2 class="title">{{item.title}}</h2>
+                    <div class="but">
+                      <h2 class="h2">
+                        ${{item.price.current}}
+                        <sub>${{item.price.beforeDiscount}}</sub>
+                      </h2>
 
+                      @if (item.stock <= 0) {
+                        <p class="stock-badge out">
+                          <i class="fa-solid fa-circle-xmark"></i> Out of stock
+                        </p>
+                      } @else {
+                        <p class="stock-badge in">
+                          <i class="fa-solid fa-circle-check"></i> {{ item.stock }} in stock
+                        </p>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-back">
+                  <h1>Description</h1>
+                  <p>{{item.description}}</p>
+                  <h2>Rating: {{item.rating}} *</h2>
+                  <button routerLink="/details/{{item._id}}" class="add-cart">
+                    <i class="fa-solid fa-eye"></i> See Details
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="card-back">
-          <h1>Description</h1>
-          <p>{{item.description}}</p>
-                              <h2>Rating: {{item.rating}}⭐</h2>
+          }
+        </main>
+      </section>
 
-        <button routerLink="/details/{{item._id}}" class="add-cart"><i class="fa-solid fa-eye"></i> See Details </button>
+      <div class="bottomArea">
+        <span></span>
+        <div class="pages">
+          <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; Prev</button>
+          @for (item of pageList; track $index) {
+            <button
+              [class.current]="item == currentPage"
+              (click)="!isCategoryShown ? showProducts(item, pageSize) : showByCategory(currentCategory, item)"
+            >
+              {{ item }}
+            </button>
+          }
+          <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows">
+            Next &rarr;
+          </button>
         </div>
       </div>
-    </div>
-  }
- 
-</main>
     </section>
+  </article>
 
-
-    
-    <div class="bottomArea">
-      <span></span>
-      <div class="pages">
-        <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; Prev</button>
-        @for (item of pageList; track $index) {
-        <button
-          [class.current]="item == currentPage"
-          (click)="!isCategoryShown ? showProducts(item, pageSize) : showByCategory(currentCategory, item)"
-        >
-          {{ item }}
-        </button>
-        }
-        <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows"> Next &rarr;</button>
-      </div>
-     
-    </div>
-  </section>
-</article>
-
-
-<button class="scrollToTop " (click)="scrollToTop()">
-  <i class="fa-solid fa-arrow-up fa-xl" style="color: #ffffff;"></i>
-</button>
-
+  <button class="scrollToTop" (click)="scrollToTop()">
+    <i class="fa-solid fa-arrow-up fa-xl"></i>
+  </button>
 </div>

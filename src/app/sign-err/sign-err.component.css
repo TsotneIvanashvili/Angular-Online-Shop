@@ -1,135 +1,98 @@
 .notAccountErr {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(6px) brightness(60%);
-    background: rgba(0, 0, 0, 0.4);
-    animation: fadeIn 0.6s ease-in-out forwards;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(3, 5, 16, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.24s ease;
 }
 
 .errCard {
-    width: 420px;
-    min-height: 270px;
-    background: linear-gradient(135deg, #ffffff, #e0e0e0);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-    transform: scale(0.7);
-    animation: popUp 0.5s forwards ease-out;
+  width: min(420px, 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(103, 126, 255, 0.35);
+  background: linear-gradient(150deg, rgba(15, 20, 52, 0.92), rgba(8, 11, 31, 0.95));
+  box-shadow: 0 24px 45px rgba(0, 0, 0, 0.45);
+  padding: 1.1rem 1rem 1.2rem;
+  text-align: center;
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+  animation: popIn 0.25s ease;
 }
 
-.errCard .close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 16px;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+.close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 111, 159, 0.62);
+  background: rgba(255, 111, 159, 0.2);
+  color: #ffe9f3;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.errCard .close:hover {
-    background: #ff1a1a;
-    transform: rotate(90deg) scale(1.2);
+.close:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 12px rgba(255, 111, 159, 0.28);
 }
 
 .errCard h2 {
-    color: #333;
-    font-size: 24px;
-    animation: slideDown 0.6s ease;
+  margin-top: 0.4rem;
+  color: #edf3ff;
+  font-size: 1.25rem;
 }
 
 .errCard p {
-    color: #555;
-    font-size: 16px;
-    text-align: center;
-    padding: 0 20px;
-    animation: slideUp 0.6s ease;
+  color: #b9c2e2;
 }
 
-.errCard .btns {
-    display: flex;
-    gap: 20px;
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
 }
 
-.errCard .btns button {
-    width: 110px;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: white;
-    letter-spacing: 1px;
-    transition: 0.4s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.btns button {
+  border: 1px solid rgba(28, 243, 255, 0.62);
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(28, 243, 255, 0.24), rgba(255, 62, 242, 0.22));
+  color: #f2f7ff;
+  font-weight: 700;
+  min-width: 120px;
+  padding: 0.5rem 0.9rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.errCard .btns button:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-    transform: translateY(-3px);
-}
-
-/* Animations */
-@keyframes popUp {
-    0% {
-        transform: scale(0.7);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+.btns button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143, 255, 46, 0.62);
+  box-shadow: 0 0 14px rgba(28, 243, 255, 0.22);
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes slideDown {
-    0% {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

@@ -1,45 +1,45 @@
 <section class="container">
+  <main>
+    @for (item of productList; track $index) {
+      <div class="card-wrapper">
+        <div class="card-inner">
+          <div class="card-front">
+            <img [src]="item.images[0]" alt="product" />
+            <div class="main-but">
+              <h2 class="title">{{item.title}}</h2>
+              <div class="but">
+                <h2 class="h2">
+                  ${{item.price.current}}
+                  <sub>${{item.price.beforeDiscount}}</sub>
+                </h2>
 
-<main>
-  @for (item of productList; track $index) {
-    <div class="card-wrapper">
-      <div class="card-inner">
-        <div class="card-front">
-          <img [src]="item.images[0]" alt="product" />
-          <div class="main-but">
-            <h2 class="title">{{item.title}}</h2>
-            <div class="but">
-              <h2 class="h2">
-                ${{item.price.current}} 
-                <sub>${{item.price.beforeDiscount}}</sub>
-              </h2>
-@if (item.stock <= 0) {
-  <h2 style="color: white;">
-    ❌ Not In Stock
-  </h2>
-} @else {
-  <h2 style="color:green;">
-    ✔️ In Stock ({{ item.stock }})
-  </h2>
-}
-
-
+                @if (item.stock <= 0) {
+                  <p class="stock-badge out">
+                    <i class="fa-solid fa-circle-xmark"></i> Out of stock
+                  </p>
+                } @else {
+                  <p class="stock-badge in">
+                    <i class="fa-solid fa-circle-check"></i> In stock ({{ item.stock }})
+                  </p>
+                }
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-back">
-          <h1>Description</h1>
-          <p>{{item.description}}</p>
-          <h1>Rating: {{item.rating}}⭐</h1>
-        <button routerLink="/details/{{item._id}}" class="add-cart"><i class="fa-solid fa-eye"></i> See Details </button>
+
+          <div class="card-back">
+            <h1>Description</h1>
+            <p>{{item.description}}</p>
+            <h1>Rating: {{item.rating}} *</h1>
+            <button routerLink="/details/{{item._id}}" class="add-cart">
+              <i class="fa-solid fa-eye"></i> See Details
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  }
- 
-</main>
- <div class="view">
-  <button routerLink="/shop" class="viewMore" (click)="scrollToTop()" >View More</button>
+    }
+  </main>
 
-</div>
+  <div class="view">
+    <button routerLink="/shop" class="viewMore" (click)="scrollToTop()">View More</button>
+  </div>
 </section>

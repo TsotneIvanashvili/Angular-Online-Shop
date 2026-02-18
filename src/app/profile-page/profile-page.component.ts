@@ -1,10 +1,10 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ApiAreaService } from '../services/api-area.service';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css',
 })

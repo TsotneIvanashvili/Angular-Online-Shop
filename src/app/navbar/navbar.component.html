@@ -1,40 +1,52 @@
-just add it to the navbar components top:<div class="nope">
+<div class="nope">
   <nav appScrolling>
-  <div class="mainh1">
-    <i routerLink="/" class="fa-solid fa-desktop fa-2xl laptop" style="color: #ffffff;" routerLink="/"></i>
-    <h1 class="adzin" id="none" routerLink="/">TechStore</h1>
-  </div>
+    <div class="mainh1">
+      <i routerLink="/" class="fa-solid fa-desktop fa-2xl laptop"></i>
+      <h1 class="adzin" routerLink="/">TechStore</h1>
+    </div>
 
-  <!-- Add burger button (visible only on mobile) -->
-  <div class="burger" (click)="toggleMenu()">
-    <div class="line1"></div>
-    <div class="line2"></div>
-    <div class="line3"></div>
-  </div>
+    <button
+      class="burger"
+      type="button"
+      [class.active]="isMenuOpen"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu"
+    >
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </button>
 
-  <div class="pages" [class.active]="isMenuOpen">
-    <ul>
-      <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</li>
-      <li routerLink="/shop" routerLinkActive="active" (click)="closeMenu()">Shop</li>
-      <li routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Cart</li>
-    </ul>
-  </div>
+    <div class="pages" [class.active]="isMenuOpen">
+      <ul>
+        <li
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          Home
+        </li>
+        <li routerLink="/shop" routerLinkActive="active" (click)="closeMenu()">Shop</li>
+        <li routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Cart</li>
+      </ul>
+    </div>
 
-  <div class="account" [class.active]="isMenuOpen">
-    @if (!isLoggedIn) {
-      <button routerLink="/register" (click)="closeMenu()">
-        <i class="fa-solid fa-user-plus fa-lg" style="color: #ffffff;"></i>Create Account
-      </button>
-      <button routerLink="/Signin" (click)="closeMenu()">
-        <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #ffffff;"></i> Sign in
-      </button>
-    } @else {
-      <button><img [src]="userImg" alt="">{{userName}}</button>
-      <button (click)="signOut()" routerLink="/home"><i class="fa-solid fa-right-to-bracket"></i> Sign Out</button>
-    }
-  </div>
-</nav>
-
-<!-- Keep your existing modal conditions -->
+    <div class="account" [class.active]="isMenuOpen">
+      @if (!isLoggedIn) {
+        <button routerLink="/register" (click)="closeMenu()">
+          <i class="fa-solid fa-user-plus fa-lg"></i>Create Account
+        </button>
+        <button routerLink="/Signin" (click)="closeMenu()">
+          <i class="fa-solid fa-right-to-bracket fa-lg"></i>Sign in
+        </button>
+      } @else {
+        <button><img [src]="userImg" alt="User avatar" />{{userName}}</button>
+        <button (click)="signOut()" routerLink="/">
+          <i class="fa-solid fa-right-to-bracket"></i>Sign Out
+        </button>
+      }
+    </div>
+  </nav>
 </div>
 

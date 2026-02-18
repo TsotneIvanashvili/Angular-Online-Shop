@@ -1,272 +1,251 @@
-/* ===== Navbar ===== */
-@keyframes slideFromTop {
-  0% { transform: translateY(-100%); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes logoGlow {
-  0%, 100% { text-shadow: 0 0 5px rgba(0, 191, 255, 0.3); }
-  50% { text-shadow: 0 0 20px rgba(0, 191, 255, 0.6), 0 0 40px rgba(0, 191, 255, 0.2); }
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 9999999;
-  background: rgba(15, 15, 15, 0.85);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  padding: 35px;
-  gap: 10px;
-  border-bottom: 1px solid rgba(0, 191, 255, 0.08);
-  animation: slideFromTop 0.6s ease-out both;
-}
-
-nav h1 {
-  font-family: 'Segoe UI', sans-serif;
-  font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 28px;
-  cursor: pointer;
-  color: #00BFFF;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  animation: logoGlow 3s ease-in-out infinite;
-  transition: all 0.3s ease;
-}
-
-nav h1:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 25px rgba(0, 191, 255, 0.8), 0 0 50px rgba(0, 191, 255, 0.3);
-}
-
-.mainh1 {
-  flex-direction: row;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  filter: drop-shadow(0px 2px 4px rgba(0, 191, 255, 0.3));
-}
-
-ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style-type: none;
-  color: white;
-  font-size: 20px;
-  gap: 30px;
-  height: fit-content;
-}
-
-li {
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.nope {
   position: relative;
-  padding: 5px 0;
-}
-
-/* Animated underline on hover */
-li::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00BFFF, #00ffae);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateX(-50%);
-  border-radius: 2px;
-}
-
-li:hover::after,
-li.active::after {
-  width: 100%;
-}
-
-li:hover {
-  color: #00BFFF;
-  transform: translateY(-2px);
-  text-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
-}
-
-.active {
-  color: #00BFFF;
-  text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-}
-
-.laptop {
-  cursor: pointer;
-  filter: drop-shadow(0px 2px 4px rgba(0, 191, 255, 0.4));
-  transition: all 0.3s ease;
-}
-
-.laptop:hover {
-  filter: drop-shadow(0px 0px 10px rgba(0, 191, 255, 0.7));
-  transform: scale(1.1);
-}
-
-#none {
-  color: white;
-}
-
-nav .account {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-nav .account button {
-  padding: 8px 18px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-family: sans-serif;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #00BFFF, #0077be);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.25);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-nav .account button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transition: left 0.5s ease;
-}
-
-nav .account button:hover::before {
-  left: 100%;
-}
-
-nav .account button:hover {
-  background: linear-gradient(135deg, #0077be, #00BFFF);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
-}
-
-button img {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
-}
-
-/* Burger Menu */
-.burger {
-  display: none;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 26px;
-  height: 22px;
   z-index: 1000;
 }
 
-.burger div {
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 78px;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: linear-gradient(120deg, rgba(7, 10, 32, 0.84), rgba(13, 17, 46, 0.8));
+  border-bottom: 1px solid rgba(109, 138, 255, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+  animation: navSlideIn 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mainh1 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+nav h1 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: #f8fbff;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 14px rgba(28, 243, 255, 0.38);
+}
+
+.laptop {
+  color: #1cf3ff;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  filter: drop-shadow(0 0 10px rgba(28, 243, 255, 0.45));
+}
+
+.mainh1:hover .laptop {
+  transform: translateY(-2px) scale(1.08);
+  filter: drop-shadow(0 0 16px rgba(255, 62, 242, 0.45));
+}
+
+.pages ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  color: #e6ecff;
+  font-size: 1.15rem;
+  margin: 0;
+  padding: 0;
+}
+
+.pages li {
+  position: relative;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: color 0.25s ease;
+}
+
+.pages li::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1cf3ff, #ff3ef2);
+  transition: width 0.25s ease;
+}
+
+.pages li:hover,
+.pages li.active {
+  color: #1cf3ff;
+}
+
+.pages li:hover::after,
+.pages li.active::after {
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #00BFFF, #00ffae);
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  border-radius: 3px;
-  box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.account button {
+  border: 1px solid rgba(28, 243, 255, 0.42);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  background: linear-gradient(130deg, rgba(28, 243, 255, 0.2), rgba(255, 62, 242, 0.2));
+  color: #f6f9ff;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.account button:hover {
+  transform: translateY(-2px);
+  border-color: #1cf3ff;
+  box-shadow: 0 0 18px rgba(28, 243, 255, 0.35);
+}
+
+.account button img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.burger {
+  border: 1px solid rgba(28, 243, 255, 0.35);
+  background: rgba(8, 10, 30, 0.75);
+  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.burger div {
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1cf3ff, #ff3ef2);
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .burger.active .line1 {
-  transform: rotate(-45deg) translate(-5px, 6px);
-  background: #00ffae;
+  transform: translateY(6px) rotate(45deg);
 }
+
 .burger.active .line2 {
   opacity: 0;
-  transform: scaleX(0);
 }
+
 .burger.active .line3 {
-  transform: rotate(45deg) translate(-5px, -6px);
-  background: #00ffae;
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .navbarSolid {
-  background: rgba(10, 10, 10, 0.95);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 191, 255, 0.05);
+  background: linear-gradient(120deg, rgba(5, 7, 24, 0.95), rgba(9, 12, 32, 0.95));
+  border-bottom-color: rgba(28, 243, 255, 0.45);
 }
 
-/* ===== Mobile ===== */
-@media only screen and (max-width: 768px) {
-  .burger {
-    display: flex;
+@keyframes navSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  nav {
+    padding: 0 0.85rem;
   }
 
-  button {
-    width: 90%;
-    margin-left: 50px;
-    margin-right: 50px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .pages ul {
+    gap: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .account button {
+    font-size: 0.9rem;
+    padding: 0.42rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    height: 70px;
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+
+  .mainh1 .adzin {
+    font-size: 1.1rem;
   }
 
   .pages,
   .account {
     position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: rgba(15, 15, 15, 0.95);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 999999;
-    border-bottom: 1px solid rgba(0, 191, 255, 0.1);
+    left: 0.7rem;
+    right: 0.7rem;
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    border-radius: 16px;
+    border: 1px solid rgba(96, 115, 255, 0.3);
+    background: rgba(8, 10, 30, 0.95);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4);
+    padding: 0.9rem;
   }
 
-  .pages.active,
-  .account.active {
-    transform: scaleY(1);
+  .pages {
+    top: 74px;
   }
 
   .pages ul {
     flex-direction: column;
-    gap: 15px;
+    gap: 0.9rem;
+    align-items: flex-start;
   }
 
-  nav .adzin {
-    display: none;
-  }
-
-  nav {
-    padding: 15px;
-    justify-content: space-between;
+  .pages.active,
+  .account.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .account {
-    top: 180px;
+    top: 228px;
     flex-direction: column;
-    gap: 15px;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .account button {
+    justify-content: center;
+    width: 100%;
   }
 }

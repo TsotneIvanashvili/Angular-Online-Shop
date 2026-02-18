@@ -1,26 +1,43 @@
 .error-wrapper {
-  height: 100dvh;
-  background: #181818;
-  color: #fafafa;
+  min-height: 100dvh;
   display: grid;
   place-content: center;
+  gap: 0.9rem;
   text-align: center;
-  gap: 1rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(28, 243, 255, 0.15), transparent 36%),
+    radial-gradient(circle at 80% 75%, rgba(255, 62, 242, 0.14), transparent 34%),
+    linear-gradient(150deg, #050611, #0c1030);
+  color: #eef3ff;
+  padding: 1rem;
 }
 
 canvas {
   display: block;
-  margin: 0 auto;
+  margin-inline: auto;
+  max-width: min(90vw, 420px);
 }
 
-button{
-    border: none;
-    background-color: transparent;
-  color: #b09250;
-  text-decoration: underline transparent;
-  transition: text-decoration-color 0.3s;
+p {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+button {
+  border: 1px solid rgba(28, 243, 255, 0.62);
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(28, 243, 255, 0.24), rgba(255, 62, 242, 0.22));
+  color: #f2f7ff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.56rem 1rem;
+  justify-self: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 button:hover {
-  text-decoration-color: currentColor;
+  transform: translateY(-2px);
+  border-color: rgba(143, 255, 46, 0.62);
+  box-shadow: 0 0 14px rgba(28, 243, 255, 0.22);
 }
