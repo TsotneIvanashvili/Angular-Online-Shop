@@ -33,7 +33,7 @@ button {
   font-weight: 700;
   padding: 0.56rem 1rem;
   justify-self: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 button:hover {

@@ -141,7 +141,7 @@ sub {
   padding: 0.56rem 1rem;
   font-size: 0.95rem;
   font-weight: 700;
-  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .add-cart:hover {

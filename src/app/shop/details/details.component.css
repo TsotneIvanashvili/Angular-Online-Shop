@@ -277,7 +277,7 @@
   place-items: center;
   z-index: 100;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .scrollToTop:hover {
