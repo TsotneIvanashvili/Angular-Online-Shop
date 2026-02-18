@@ -2,22 +2,22 @@
 
 <app-spline-view></app-spline-view>
 
-
-
-<h1 style="text-align: center; padding: 40px; font-size: 40px;">Explore Our Latest Laptops!</h1>
+<h1 class="section-title gradient-text">Explore Our Latest Laptops!</h1>
 
 <section class="main">
 
 <section id="arrivals">
 
-
-<div class="infos2">
+<div class="infos2 reveal-left">
   <div class="info-text">
     <h1 style="color: white;">Looking for power, performance, and style?</h1>
-    <p style="color: white;     text-align: center;">Browse our collection of the latest laptops — perfect for work, gaming, or everyday use.
-From ultra-light notebooks to high-performance machines, we’ve got the perfect match for your needs.</p>
+    <p style="color: white; text-align: center;">Browse our collection of the latest laptops — perfect for work, gaming, or everyday use.
+From ultra-light notebooks to high-performance machines, we've got the perfect match for your needs.</p>
 
-  <button routerLink="/shop" (click)="scrollToTop()">Shop Now!</button>
+  <button routerLink="/shop" (click)="scrollToTop()" class="cta-button">
+    <span>Shop Now!</span>
+    <i class="fas fa-arrow-right"></i>
+  </button>
   </div>
   <div class="info-image">
     <img
@@ -31,11 +31,11 @@ From ultra-light notebooks to high-performance machines, we’ve got the perfect
 </section>
 
 <section class="one1">
-  
+
 
 </section>
 
-<div class="carousel-wrapper">
+<div class="carousel-wrapper reveal-up">
   <div class="carousel-track">
     @for (image of loopImages; track image) {
       <div class="carousel-slide">
@@ -51,7 +51,7 @@ From ultra-light notebooks to high-performance machines, we’ve got the perfect
 
 
 <section class="features">
-  <div class="feature-box">
+  <div class="feature-box reveal-up" style="animation-delay: 0.1s;">
     <div class="icon-box delivery">
       <i class="fas fa-shipping-fast"></i>
     </div>
@@ -62,7 +62,7 @@ From ultra-light notebooks to high-performance machines, we’ve got the perfect
 
   </div>
 
-  <div class="feature-box">
+  <div class="feature-box reveal-up" style="animation-delay: 0.3s;">
     <div class="icon-box shipping">
       <i class="fas fa-ship"></i>
     </div>
@@ -73,7 +73,7 @@ From ultra-light notebooks to high-performance machines, we’ve got the perfect
 
   </div>
 
-  <div class="feature-box">
+  <div class="feature-box reveal-up" style="animation-delay: 0.5s;">
     <div class="icon-box quality">
       <i class="fas fa-medal"></i>
     </div>
@@ -83,10 +83,10 @@ From ultra-light notebooks to high-performance machines, we’ve got the perfect
 </section>
 
 <div class="bestS">
-  <h1 style="text-align: center; padding: 20px; font-size: 40px;" >Our Best Selling Products</h1>
+  <h1 class="section-title gradient-text">Our Best Selling Products</h1>
 </div>
 
-<button class="scrollToTop " (click)="scrollToTop()">
+<button class="scrollToTop" (click)="scrollToTop()">
   <i class="fa-solid fa-arrow-up fa-xl" style="color: #ffffff;"></i>
 </button>
 

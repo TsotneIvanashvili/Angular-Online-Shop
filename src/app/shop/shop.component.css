@@ -1,3 +1,30 @@
+/* ===== Shop Page Animations ===== */
+@keyframes load-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardEntrance {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); }
+  50% { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 191, 255, 0.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ===== Page Wrapper ===== */
+.nope {
+  animation: load-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Header ===== */
 header {
   position: relative;
   height: 500px;
@@ -14,7 +41,7 @@ canvas {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: #0d0d0d;
+  background: #0a0a0a;
 }
 
 .head {
@@ -31,33 +58,62 @@ canvas {
 }
 
 .head h1 {
-  font-size: 45px;
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00BFFF, #00ffae, #00BFFF);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
 }
 
-
+/* ===== Container ===== */
 .container {
+  color: #e3e3e3;
+  background-color: #111;
+  padding-bottom: 50px;
+  min-width: 100%;
+}
+
+.containerr {
   padding: 2rem;
   color: #e3e3e3;
 }
 
+/* ===== Product Grid ===== */
 main {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+  padding-top: 50px;
   justify-content: center;
+  height: fit-content;
 }
+
+/* ===== Product Cards ===== */
 .card-wrapper {
   perspective: 1000px;
   width: 260px;
   height: 400px;
+  animation: cardEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
+
+.card-wrapper:nth-child(1) { animation-delay: 0.05s; }
+.card-wrapper:nth-child(2) { animation-delay: 0.1s; }
+.card-wrapper:nth-child(3) { animation-delay: 0.15s; }
+.card-wrapper:nth-child(4) { animation-delay: 0.2s; }
+.card-wrapper:nth-child(5) { animation-delay: 0.25s; }
+.card-wrapper:nth-child(6) { animation-delay: 0.3s; }
+.card-wrapper:nth-child(7) { animation-delay: 0.35s; }
+.card-wrapper:nth-child(8) { animation-delay: 0.4s; }
 
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-wrapper:hover .card-inner {
@@ -69,12 +125,19 @@ main {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 1rem;
+  border-radius: 16px;
   backface-visibility: hidden;
   overflow: hidden;
-  background: linear-gradient(145deg, #2A2A2A, #1B1B1B);
+  background: linear-gradient(145deg, #1e1e1e, #151515);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   color: #e3e3e3;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: box-shadow 0.4s ease;
+}
+
+.card-wrapper:hover .card-front,
+.card-wrapper:hover .card-back {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 191, 255, 0.1);
 }
 
 .card-front {
@@ -89,37 +152,57 @@ main {
   flex-direction: column;
   transform: rotateY(180deg);
   padding: 20px;
-  gap: 20px;
-  background: linear-gradient(145deg, #1C1C1C, #2C2C2C);
+  gap: 15px;
+  background: linear-gradient(145deg, #151515, #1e1e1e);
 }
 
 .card-front img,
 .card-back img {
   height: 200px;
   object-fit: cover;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid rgba(0, 191, 255, 0.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 16px 16px 0 0;
+  transition: all 0.4s ease;
 }
 
 .card-back .add-cart {
-  background-color: #00BFFF;
-  color: #1E1E1E;
+  background: linear-gradient(135deg, #00BFFF, #0099cc);
+  color: #fff;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 0.75rem;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.25);
+}
+
+.card-back .add-cart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.card-back .add-cart:hover::before {
+  left: 100%;
 }
 
 .card-back .add-cart:hover {
-  background-color: #0099cc;
-  color: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
+  background: linear-gradient(135deg, #0099cc, #00BFFF);
 }
 
+/* ===== Text Styles ===== */
 h2 {
   text-align: center;
   font-size: 1.1rem;
@@ -131,15 +214,82 @@ h2 {
 }
 
 sub {
-  color: #888;
+  color: #666;
   text-decoration: line-through;
   font-size: 0.9rem;
   margin-left: 4px;
 }
 
+/* ===== Category Buttons ===== */
+.categoriess {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-/* ...rest of your unchanged CSS... */
+.button11 {
+  display: flex;
+  font-size: 18px;
+  width: 200px;
+  height: 60px;
+  align-items: center;
+  color: white;
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  border: 1px solid rgba(0, 191, 255, 0.1);
+  border-radius: 14px;
+  padding: 10px 15px;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  gap: 10px;
+}
 
+.button11:hover {
+  background: linear-gradient(135deg, #00BFFF, #0099cc);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+  border-color: transparent;
+}
+
+.hehe {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.button11:hover .hehe {
+  transform: scale(1.15);
+}
+
+/* ===== Main Button Area ===== */
+.main-but {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding-top: 10px;
+  flex-direction: column;
+}
+
+/* ===== Best Selling ===== */
+.bestS {
+  text-align: center;
+  padding: 20px;
+}
+
+.bestS h1 {
+  background: linear-gradient(90deg, #00BFFF, #00ffae, #00BFFF);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+/* ===== Pagination ===== */
 .bottomArea {
   display: flex;
   justify-content: center;
@@ -151,89 +301,60 @@ sub {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  background-color: #2f2e2e;
+  background: linear-gradient(145deg, #1a1a1a, #222);
   padding: 1rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .pages button {
   background-color: transparent;
   color: #e3e3e3;
-  border: 2px solid #e3e3e3;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   padding: 0.5rem 1rem;
-  border-radius: 2rem;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .pages button:hover:not(:disabled) {
-  background-color: #e3e3e3;
-  color: #2f2e2e;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #00BFFF, #0099cc);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
 }
 
 .pages button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .pages button.current {
-  background-color: #e3e3e3;
-  color: #2f2e2e;
+  background: linear-gradient(135deg, #00BFFF, #00ffae);
+  color: #0a0a0a;
   font-weight: bold;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
 }
 
 .arrows {
   font-weight: bold;
 }
 
-.button11 {
-  display: flex;
-  font-size: 20px;
-  width: 200px;
-  height: 70px;
-  align-items: center;
-  color: white;
-  background-color: #00BFFF;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  justify-content: center;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.hehe {
-  width: 30px;
-  height: 30px;
-}
-
-.categoriess {
-  display: flex;
-  gap: 20px;
-}
-
-button:hover {
-  scale: 1.05;
-  background-color: #084080;
-}
-
-.bestS {
-  text-align: center;
-}
-
+/* ===== Scroll To Top ===== */
 .scrollToTop {
   position: fixed;
   bottom: 30px;
   right: 30px;
   width: 50px;
   height: 50px;
-  background-color: #2F2E2E;
+  background: linear-gradient(135deg, #00BFFF, #0099cc);
   border: none;
   border-radius: 50%;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
   color: white;
   font-size: 24px;
   cursor: pointer;
@@ -241,49 +362,40 @@ button:hover {
   align-items: center;
   justify-content: center;
   z-index: 999;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scrollToTop:hover {
-  transform: translateY(-10px) scale(1.1);
+  transform: translateY(-8px) scale(1.1);
+  box-shadow: 0 12px 35px rgba(0, 191, 255, 0.5);
+  background: linear-gradient(135deg, #00ffae, #00BFFF);
 }
 
-.container {
-  color: #e3e3e3;
-  background-color: #1E1E1E;
-  padding-bottom: 50px;
-  min-width: 100%;
+/* ===== Generic button hover override ===== */
+button:hover {
+  scale: 1;
 }
 
-main {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding-top: 50px;
-  justify-content: center;
-  height: fit-content;
-}
-
-.main-but {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  padding-top: 10px;
-  flex-direction: column;
-}
-
-.nope {
-  animation-name: load-in;
-  animation-duration: 1s;
-}
-
-@keyframes load-in {
-  0%{
-    opacity: 0;
+/* ===== Responsive ===== */
+@media only screen and (max-width: 768px) {
+  .head h1 {
+    font-size: 32px;
   }
 
-  100%{
-    opacity: 1;
+  .head {
+    width: 90%;
+  }
+
+  header {
+    height: 350px;
+  }
+
+  .categoriess {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button11 {
+    width: 90%;
   }
 }

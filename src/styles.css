@@ -1,28 +1,161 @@
+/* ===== CSS Custom Properties ===== */
+:root {
+    --primary: #00BFFF;
+    --primary-glow: rgba(0, 191, 255, 0.4);
+    --accent: #00ffae;
+    --accent-glow: rgba(0, 255, 174, 0.3);
+    --bg-dark: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --bg-card-hover: #222;
+    --text-primary: #f0f0f0;
+    --text-secondary: #aaa;
+    --gradient-primary: linear-gradient(135deg, #00BFFF, #00ffae);
+    --gradient-dark: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    --shadow-glow: 0 0 20px rgba(0, 191, 255, 0.15);
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .container {
     max-width: 1440px;
-    margin-inline:  auto;
+    margin-inline: auto;
 }
 
-
-body{
-    font-family: sans-serif;
-    animation-name: fadeIn;
-    animation-duration: 1s;
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    animation: bodyFadeIn 0.8s var(--transition-smooth);
+    overflow-x: hidden;
 }
 
-
+/* ===== Global Animations ===== */
+@keyframes bodyFadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
 
 @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(0, 191, 255, 0.3); }
+    50% { border-color: rgba(0, 255, 174, 0.5); }
+}
+
+@keyframes ripple {
+    0% { transform: scale(0); opacity: 0.6; }
+    100% { transform: scale(4); opacity: 0; }
+}
+
+/* ===== Animated Gradient Text Utility ===== */
+.gradient-text {
+    background: linear-gradient(90deg, #00BFFF, #00ffae, #00BFFF);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+}
+
+/* ===== Glow Button Utility ===== */
+.glow-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s var(--transition-smooth);
+}
+
+.glow-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.glow-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00BFFF, #00ffae);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #00ffae, #00BFFF);
+}
+
+/* ===== Selection Color ===== */
+::selection {
+    background: rgba(0, 191, 255, 0.3);
+    color: #fff;
+}

@@ -1,12 +1,41 @@
+/* ===== Footer Animations ===== */
+@keyframes load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientLine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nope {
+  animation: load-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Footer ===== */
 .footer {
-  background: linear-gradient(145deg, #0C0C0C, #1A1A1A);
+  background: linear-gradient(145deg, #080808, #121212);
   color: #e3e3e3;
-  padding: 50px 20px 30px;
+  padding: 60px 20px 30px;
   font-family: 'Segoe UI', sans-serif;
   box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 2;
+}
+
+/* Animated gradient top border */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00BFFF, #00ffae, #00BFFF, #00ffae);
+  background-size: 300% 100%;
+  animation: gradientLine 4s linear infinite;
 }
 
 .footer-container {
@@ -21,34 +50,57 @@
 .footer-section {
   flex: 1;
   min-width: 220px;
-  padding: 20px;
-  background: linear-gradient(145deg, #1B1B1B, #0F0F0F);
-  border-radius: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 25px;
+  background: linear-gradient(145deg, #141414, #0c0c0c);
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.03), transparent);
+  transition: left 0.8s ease;
+}
+
+.footer-section:hover::after {
+  left: 100%;
 }
 
 .footer-section:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 191, 255, 0.05);
+  border-color: rgba(0, 191, 255, 0.1);
 }
 
 .footer-title {
   font-size: 1.8rem;
-  color: #00ffae;
+  font-weight: 800;
   margin-bottom: 0.5rem;
-  text-shadow: 0 1px 2px black;
+  background: linear-gradient(90deg, #00ffae, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .footer-section h4 {
   font-size: 1.2rem;
   margin-bottom: 0.75rem;
   color: #00BFFF;
+  font-weight: 700;
 }
 
 .footer-section p {
-  color: #bbbbbb;
-  line-height: 1.6;
+  color: #999;
+  line-height: 1.7;
   font-size: 0.95rem;
 }
 
@@ -59,34 +111,55 @@
 }
 
 .footer-section ul li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .footer-section ul li a {
-  color: #C0C0C0;
+  color: #999;
   text-decoration: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
+  position: relative;
+  padding-left: 0;
+}
+
+.footer-section ul li a::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: #00ffae;
+  transition: width 0.3s ease;
+  transform: translateY(-50%);
 }
 
 .footer-section ul li a:hover {
   color: #00ffae;
-  text-shadow: 0 0 6px #00ffae;
+  text-shadow: 0 0 8px rgba(0, 255, 174, 0.3);
+  padding-left: 20px;
 }
 
+.footer-section ul li a:hover::before {
+  width: 12px;
+}
+
+/* ===== Footer Bottom ===== */
 .footer-bottom {
   text-align: center;
   margin-top: 40px;
   font-size: 0.95rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 15px;
-  color: #888;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 20px;
+  color: #666;
 }
 
 .footer-bottom p {
   margin: 0;
 }
 
+/* ===== Responsive ===== */
 @media screen and (max-width: 768px) {
   .footer-container {
     flex-direction: column;
@@ -96,21 +169,5 @@
   .footer-section {
     width: 100%;
     max-width: 500px;
-  }
-}
-
-.nope {
-  animation-name: load-in;
-  animation-duration: 1s;
-}
-
-@keyframes load-in {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
