@@ -1,30 +1,30 @@
 .main-arrea {
   display: grid;
-  gap: 0.95rem;
+  gap: 1rem;
 }
 
 .main-area {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 0.95rem;
+  grid-template-columns: 260px 1fr;
+  gap: 1rem;
 }
 
 .brands,
 .main-filterr {
-  border-radius: 18px;
-  border: 1px solid rgba(96, 121, 255, 0.28);
-  background: linear-gradient(150deg, rgba(15, 20, 52, 0.86), rgba(8, 11, 30, 0.92));
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.1rem;
 }
 
 .brands h1 {
   text-align: center;
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-  color: #eaf0ff;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
 }
 
 .main-filterr {
@@ -45,9 +45,10 @@
 .search p,
 h4 {
   margin: 0;
-  color: #b8c2e6;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
 }
 
 .prices {
@@ -69,13 +70,14 @@ h4 {
 .dropdown,
 input[type="number"] {
   width: 100%;
-  border: 1px solid rgba(116, 137, 255, 0.35);
-  border-radius: 10px;
-  background: rgba(8, 11, 32, 0.82);
-  color: #e2e9ff;
-  padding: 0.52rem 0.65rem;
-  font-size: 1rem;
-  transition: border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--elevated);
+  color: var(--text);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+  appearance: none;
 }
 
 .brands-dropdown:focus,
@@ -84,31 +86,30 @@ input[type="number"] {
 .dropdown:focus,
 input[type="number"]:focus {
   outline: none;
-  border-color: rgba(28, 243, 255, 0.72);
-  box-shadow: 0 0 0 2px rgba(28, 243, 255, 0.16);
+  border-color: rgba(59, 130, 246, 0.5);
+  background: var(--elevated-2);
 }
 
 .search-input::placeholder,
-.range::placeholder,
 input[type="number"]::placeholder {
-  color: #7f89ad;
+  color: var(--text-tertiary);
 }
 
 .filter-button {
-  border: 1px solid rgba(28, 243, 255, 0.62);
-  border-radius: 999px;
-  background: linear-gradient(120deg, rgba(28, 243, 255, 0.24), rgba(255, 62, 242, 0.22));
-  color: #edf2ff;
-  font-weight: 700;
-  padding: 0.56rem 1rem;
-  min-height: 40px;
-  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.55rem 1rem;
+  min-height: 38px;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .filter-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(143, 255, 46, 0.66);
-  box-shadow: 0 0 16px rgba(28, 243, 255, 0.22);
+  background: var(--accent-dark);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1100px) {
@@ -121,15 +122,7 @@ input[type="number"]::placeholder {
   }
 
   .sort {
-    grid-template-columns: 1fr;
-  }
-
-  .prices {
-    grid-template-columns: 1fr;
-  }
-
-  .prices h4 {
-    grid-column: auto;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -140,5 +133,13 @@ input[type="number"]::placeholder {
 
   .filter-button {
     width: 100%;
+  }
+
+  .prices {
+    grid-template-columns: 1fr;
+  }
+
+  .prices h4 {
+    grid-column: auto;
   }
 }

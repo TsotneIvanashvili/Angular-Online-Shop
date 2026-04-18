@@ -1,86 +1,86 @@
-<div class="nope">
-  <app-spline-view></app-spline-view>
+<div class="page">
 
-  <h1 class="section-title gradient-text">Explore Our Latest Laptops!</h1>
-
-  <section class="main">
-    <section id="arrivals">
-      <div class="infos2 reveal-left">
-        <div class="info-text">
-          <h1>Looking for power, performance, and style?</h1>
-          <p>
-            Browse our collection of the latest laptops - perfect for work, gaming, or everyday use.
-            From ultra-light notebooks to high-performance machines, we have the perfect match for your needs.
-          </p>
-
-          <button routerLink="/shop" (click)="scrollToTop()" class="cta-button">
-            <span>Shop Now!</span>
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-
-        <div class="info-image">
-          <img
-            class="cube"
-            src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Laptop"
-          />
-        </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content" appReveal revealDirection="left">
+      <span class="hero-badge">New Arrivals 2025</span>
+      <h1>Premium Tech,<br>Delivered Fast.</h1>
+      <p>Explore our curated collection of laptops, accessories, and cutting-edge tech from the world's top brands.</p>
+      <div class="hero-actions">
+        <button routerLink="/shop" (click)="scrollToTop()" class="btn-primary">
+          Shop Now <i class="fas fa-arrow-right"></i>
+        </button>
+        <button routerLink="/shop" class="btn-secondary">View All Deals</button>
       </div>
-    </section>
-
-    <section class="one1"></section>
-
-    <div class="carousel-wrapper reveal-up">
-      <div class="carousel-track">
-        @for (image of loopImages; track image) {
-          <div class="carousel-slide">
-            <img [src]="image" alt="Laptop image" />
-          </div>
-        }
-      </div>
+    </div>
+    <div class="hero-image" appReveal revealDirection="right" [revealDelay]="100">
+      <img
+        src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop"
+        alt="Premium laptops"
+      />
     </div>
   </section>
 
+  <!-- Brands carousel -->
+  <div class="carousel-wrapper" appReveal revealDirection="up" [revealDelay]="150">
+    <p class="carousel-label">Trusted by thousands — featuring top brands</p>
+    <div class="carousel-track">
+      @for (image of loopImages; track image) {
+        <div class="carousel-slide">
+          <img [src]="image" alt="Product showcase" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Feature strips -->
   <section class="features">
-    <div class="feature-box reveal-up" style="animation-delay: 0.1s;">
-      <div class="icon-box delivery">
+    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="0">
+      <div class="icon-box">
         <i class="fas fa-shipping-fast"></i>
       </div>
-      <div class="text">
+      <div class="feature-text">
         <h3>Fast Delivery</h3>
         <p>Same-day delivery available in selected cities.</p>
       </div>
     </div>
 
-    <div class="feature-box reveal-up" style="animation-delay: 0.3s;">
-      <div class="icon-box shipping">
+    <div class="feature-divider"></div>
+
+    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="80">
+      <div class="icon-box">
         <i class="fas fa-ship"></i>
       </div>
-      <div class="text">
+      <div class="feature-text">
         <h3>Free Shipping</h3>
         <p>Free worldwide shipping on orders over $50.</p>
       </div>
     </div>
 
-    <div class="feature-box reveal-up" style="animation-delay: 0.5s;">
-      <div class="icon-box quality">
+    <div class="feature-divider"></div>
+
+    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="160">
+      <div class="icon-box">
         <i class="fas fa-medal"></i>
       </div>
-      <div class="text">
+      <div class="feature-text">
         <h3>Best Quality</h3>
         <p>We only sell certified, high-quality products.</p>
       </div>
     </div>
   </section>
 
-  <div class="bestS">
-    <h1 class="section-title gradient-text">Our Best Selling Products</h1>
+  <!-- Best sellers heading -->
+  <div class="section-header" appReveal revealDirection="up">
+    <h2>Best Sellers</h2>
+    <p>Our most popular products this season</p>
+    <a routerLink="/shop" class="section-link">View all products <i class="fas fa-arrow-right"></i></a>
   </div>
 
-  <button class="scrollToTop" (click)="scrollToTop()">
-    <i class="fa-solid fa-arrow-up fa-xl"></i>
+  <app-several-products></app-several-products>
+
+  <button class="scrollToTop" (click)="scrollToTop()" title="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
   </button>
 
-  <app-several-products></app-several-products>
 </div>

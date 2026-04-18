@@ -142,7 +142,7 @@ h1 {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #00BFFF, #00ffae);
+  background: linear-gradient(90deg, #3b82f6, #00ffae);
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -160,7 +160,7 @@ h1 {
 }
 
 .area:focus-within i {
-  color: #00BFFF;
+  color: #3b82f6;
 }
 
 input {
@@ -210,7 +210,7 @@ input::placeholder {
 
 /* ===== Button ===== */
 button {
-  background: linear-gradient(135deg, #00BFFF, #0099cc);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   padding: 0.85rem 1.5rem;
   border: none;
@@ -241,7 +241,7 @@ button:hover::before {
 }
 
 button:hover {
-  background: linear-gradient(135deg, #0099cc, #00BFFF);
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
 }
@@ -264,7 +264,7 @@ h3 {
 }
 
 h3 span {
-  color: #00BFFF;
+  color: #3b82f6;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -283,7 +283,7 @@ h3 span:hover {
 }
 
 .signButton:hover {
-  border-color: #00BFFF;
+  border-color: #3b82f6;
   background: rgba(0, 191, 255, 0.1);
   box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
 }

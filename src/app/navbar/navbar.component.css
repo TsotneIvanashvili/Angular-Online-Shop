@@ -8,55 +8,57 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  height: 78px;
-  padding: 0 1.25rem;
+  height: 64px;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background: linear-gradient(120deg, rgba(7, 10, 32, 0.84), rgba(13, 17, 46, 0.8));
-  border-bottom: 1px solid rgba(109, 138, 255, 0.28);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
-  animation: navSlideIn 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+  background: rgba(8, 8, 15, 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.navbarSolid {
+  background: rgba(8, 8, 15, 0.97);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .mainh1 {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  text-decoration: none;
 }
 
 nav h1 {
   margin: 0;
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  color: #f8fbff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  text-shadow: 0 0 14px rgba(28, 243, 255, 0.38);
+  letter-spacing: -0.03em;
 }
 
 .laptop {
-  color: #1cf3ff;
+  color: var(--accent);
   cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  filter: drop-shadow(0 0 10px rgba(28, 243, 255, 0.45));
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  font-size: 1.1rem !important;
 }
 
 .mainh1:hover .laptop {
-  transform: translateY(-2px) scale(1.08);
-  filter: drop-shadow(0 0 16px rgba(255, 62, 242, 0.45));
+  transform: scale(1.1);
+  color: #60a5fa;
 }
 
 .pages ul {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 1.4rem;
-  color: #e6ecff;
-  font-size: 1.15rem;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
 }
@@ -64,9 +66,22 @@ nav h1 {
 .pages li {
   position: relative;
   cursor: pointer;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.pages li:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pages li.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .pages li::after {
@@ -74,160 +89,143 @@ nav h1 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -8px;
+  bottom: 2px;
   width: 0;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #1cf3ff, #ff3ef2);
-  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.pages li:hover,
-.pages li.active {
-  color: #1cf3ff;
+  background: var(--accent);
+  transition: width 0.25s var(--ease);
 }
 
 .pages li:hover::after,
 .pages li.active::after {
-  width: 100%;
+  width: calc(100% - 1.5rem);
 }
 
 .account {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .account button {
-  border: 1px solid rgba(28, 243, 255, 0.42);
-  border-radius: 999px;
-  padding: 0.5rem 0.95rem;
-  background: linear-gradient(130deg, rgba(28, 243, 255, 0.2), rgba(255, 62, 242, 0.2));
-  color: #f6f9ff;
-  font-size: 1rem;
-  font-weight: 700;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.9rem;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  gap: 0.4rem;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
 .account button:hover {
-  transform: translateY(-2px);
-  border-color: #1cf3ff;
-  box-shadow: 0 0 18px rgba(28, 243, 255, 0.35);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-hover);
+}
+
+.account button:last-child {
+  background: var(--accent-muted);
+  color: var(--accent);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.account button:last-child:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #60a5fa;
 }
 
 .account button img {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--border-hover);
 }
 
 .burger {
-  border: 1px solid rgba(28, 243, 255, 0.35);
-  background: rgba(8, 10, 30, 0.75);
-  border-radius: 12px;
-  width: 42px;
-  height: 42px;
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
   display: none;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 4px;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.burger:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-hover);
 }
 
 .burger div {
-  width: 20px;
-  height: 2px;
+  width: 18px;
+  height: 1.5px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #1cf3ff, #ff3ef2);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: var(--text-secondary);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), background 0.2s var(--ease);
+}
+
+.burger:hover div {
+  background: var(--text);
 }
 
 .burger.active .line1 {
-  transform: translateY(6px) rotate(45deg);
+  transform: translateY(5.5px) rotate(45deg);
 }
-
 .burger.active .line2 {
   opacity: 0;
 }
-
 .burger.active .line3 {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
-.navbarSolid {
-  background: linear-gradient(120deg, rgba(5, 7, 24, 0.95), rgba(9, 12, 32, 0.95));
-  border-bottom-color: rgba(28, 243, 255, 0.45);
-}
-
-@keyframes navSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-18px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 900px) {
-  nav {
-    padding: 0 0.85rem;
-  }
-
-  .pages ul {
-    gap: 1rem;
-    font-size: 1.05rem;
-  }
-
-  .account button {
-    font-size: 0.9rem;
-    padding: 0.42rem 0.8rem;
-  }
+  transform: translateY(-5.5px) rotate(-45deg);
 }
 
 @media (max-width: 768px) {
   nav {
-    height: 70px;
+    height: 60px;
+    padding: 0 1rem;
   }
 
   .burger {
     display: inline-flex;
   }
 
-  .mainh1 .adzin {
-    font-size: 1.1rem;
-  }
-
   .pages,
   .account {
     position: fixed;
-    left: 0.7rem;
-    right: 0.7rem;
-    transform: translateY(-12px);
+    left: 0.75rem;
+    right: 0.75rem;
+    transform: translateY(-8px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-radius: 16px;
-    border: 1px solid rgba(96, 115, 255, 0.3);
-    background: rgba(8, 10, 30, 0.95);
-    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4);
-    padding: 0.9rem;
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: rgba(15, 15, 24, 0.98);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-lg);
+    padding: 0.75rem;
   }
 
-  .pages {
-    top: 74px;
-  }
+  .pages { top: 68px; }
 
   .pages ul {
     flex-direction: column;
-    gap: 0.9rem;
     align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .pages li {
+    width: 100%;
   }
 
   .pages.active,
@@ -238,14 +236,18 @@ nav h1 {
   }
 
   .account {
-    top: 228px;
+    top: 200px;
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.4rem;
   }
 
   .account button {
     justify-content: center;
     width: 100%;
   }
+}
+
+@media (max-width: 900px) {
+  nav { padding: 0 1rem; }
 }
