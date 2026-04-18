@@ -133,6 +133,71 @@ button {
 }
 
 /* ===== Smooth global hover transitions ===== */
+/* Applied on base elements so hover-in AND hover-out animate smoothly */
+
+a,
+button,
+input,
+select,
+textarea,
+img,
+[role="button"],
+.area,
+.imageArea,
+h3 span,
+.signButton,
+.button11,
+.add-cart,
+.viewMore,
+.filter-button,
+.pages button,
+.pages li,
+.account button,
+.feature-box,
+.footer-section,
+.footer-section ul li a,
+.scrollToTop,
+.cta-button,
+.cta-button i,
+.cube,
+.carousel-track,
+.carousel-slide img,
+.otherIMGS img,
+.infos button,
+.cartBtn,
+.quantity button,
+.cart-card,
+.delete-btn,
+.quantity-controls button,
+.home-link,
+.btns button,
+.close,
+.laptop,
+.mainh1,
+nav h1,
+.burger,
+.burger div,
+.card-front,
+.card-back,
+.card-inner,
+.panel,
+.errCard,
+.brands,
+.main-filterr,
+.icon-box,
+.pages,
+.account {
+  transition: all var(--hover-duration) var(--hover-ease);
+}
+
+.pages li::after,
+.glow-btn::after,
+.area::after,
+.imageArea::after,
+button::before,
+.infos button::before {
+  transition: all var(--hover-duration-slow) var(--hover-ease);
+}
 
 :focus-visible {
   outline: 2px solid var(--neon-cyan);
