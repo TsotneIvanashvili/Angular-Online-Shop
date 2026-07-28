@@ -1,98 +1,144 @@
-<div class="nope">
-  <header>
-    <canvas #particlesCanvas></canvas>
-    <div class="head">
-      <h1>Cutting-Edge Tech at Unbeatable Prices!</h1>
-    </div>
-  </header>
+<section class="shop-hero">
+  <div class="ambient" aria-hidden="true"></div>
+  <span class="ghost-type" aria-hidden="true">Catalogue</span>
 
-  <div class="bestS">
-    <h1>Discover All Of Our Products Here</h1>
+  <div class="container">
+    <div class="shop-hero__inner">
+      <p class="eyebrow">Catalogue</p>
+      <h1 gsapSplit splitBy="lines" [splitImmediate]="true" [splitDelay]="0.15">
+        Everything <span class="serif">we stock</span>
+      </h1>
+      <p class="prose">
+        Laptops, components and the accessories worth owning. Filter by what
+        actually matters — price, rating, brand — and skip the rest.
+      </p>
+    </div>
   </div>
+</section>
 
-  <article>
-    <div class="sidebar">
-      <app-sidebar
-        (sendBrands)="switchBrands($event)"
-        (sendAllProducts)="showProducts(1, pageSize)"
-        (sendFilterData)="filterProducts($event)"
-        (sendSearchInfo)="search($event)"
-      ></app-sidebar>
+@if (categories.length) {
+  <div class="container">
+    <div class="cats" role="group" aria-label="Product categories">
+      @for (c of categories; track c.id) {
+        <button
+          class="cat"
+          [class.is-active]="activeCategory?.id === c.id"
+          [attr.aria-pressed]="activeCategory?.id === c.id"
+          (click)="selectCategory(c)"
+        >
+          <!-- Some category thumbnails 403 on the API's CDN; drop the broken
+               image rather than showing a torn-icon placeholder. -->
+          <img [src]="c.image" [alt]="''" loading="lazy" (error)="hideBrokenImage($event)" />
+          <span>{{ c.name }}</span>
+        </button>
+      }
+    </div>
+  </div>
+}
+
+<div class="container shop">
+  <app-sidebar
+    class="shop__side"
+    (filtersChange)="onFilters($event)"
+    (filtersReset)="onFiltersReset()"
+  ></app-sidebar>
+
+  <div class="shop__main">
+    <div class="toolbar">
+      <p class="toolbar__count">
+        @if (loading) {
+          <span class="skeleton" style="display:inline-block;width:130px;height:12px"></span>
+        } @else {
+          <span class="num">{{ total }}</span>
+          {{ total === 1 ? 'product' : 'products' }}
+          @if (totalPages > 1) {
+            <span class="toolbar__page">· page <span class="num">{{ currentPage }}</span> of <span class="num">{{ totalPages }}</span></span>
+          }
+        }
+      </p>
+
+      <label class="toolbar__size">
+        <span class="sr-only">Products per page</span>
+        <select class="select" [(ngModel)]="pageSize" (change)="changePageSize()">
+          @for (s of pageSizes; track s) {
+            <option [value]="s">{{ s }} per page</option>
+          }
+        </select>
+      </label>
     </div>
 
-    <section class="containerr">
-      <section class="container">
-        <div class="categoriess">
-          @for (item of categories; track $index) {
-            <button class="button11">
-              <img class="hehe" [src]="item.image" alt="" />
-              <h4 (click)="showByCategory(item.id, currentPage)">{{ item.name }}</h4>
-            </button>
-          }
-        </div>
-
-        <main>
-          @for (item of productList; track $index) {
-            <div class="card-wrapper">
-              <div class="card-inner">
-                <div class="card-front">
-                  <img [src]="item.images[0]" alt="product" />
-                  <div class="main-but">
-                    <h2 class="title">{{item.title}}</h2>
-                    <div class="but">
-                      <h2 class="h2">
-                        ${{item.price.current}}
-                        <sub>${{item.price.beforeDiscount}}</sub>
-                      </h2>
-
-                      @if (item.stock <= 0) {
-                        <p class="stock-badge out">
-                          <i class="fa-solid fa-circle-xmark"></i> Out of stock
-                        </p>
-                      } @else {
-                        <p class="stock-badge in">
-                          <i class="fa-solid fa-circle-check"></i> {{ item.stock }} in stock
-                        </p>
-                      }
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card-back">
-                  <h1>Description</h1>
-                  <p>{{item.description}}</p>
-                  <h2>Rating: {{item.rating}} *</h2>
-                  <button routerLink="/details/{{item._id}}" class="add-cart">
-                    <i class="fa-solid fa-eye"></i> See Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          }
-        </main>
-      </section>
-
-      <div class="bottomArea">
-        <span></span>
-        <div class="pages">
-          <button [disabled]="currentPage === 1" (click)="prevPage()" class="arrows">&larr; Prev</button>
-          @for (item of pageList; track $index) {
-            <button
-              [class.current]="item == currentPage"
-              (click)="!isCategoryShown ? showProducts(item, pageSize) : showByCategory(currentCategory, item)"
-            >
-              {{ item }}
-            </button>
-          }
-          <button [disabled]="currentPage === pageList.length" (click)="nextPage()" class="arrows">
-            Next &rarr;
+    @if (activePills.length) {
+      <div class="pills">
+        @for (pill of activePills; track pill.label) {
+          <button class="pill" (click)="pill.clear()">
+            {{ pill.label }}
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            <span class="sr-only">Remove filter</span>
           </button>
-        </div>
+        }
+        <button class="pill pill--clear" (click)="onFiltersReset()">Clear all</button>
       </div>
-    </section>
-  </article>
+    }
 
-  <button class="scrollToTop" (click)="scrollToTop()">
-    <i class="fa-solid fa-arrow-up fa-xl"></i>
-  </button>
+    @if (loading) {
+      <div class="grid">
+        <app-product-skeleton [count]="pageSize > 12 ? 12 : pageSize" />
+      </div>
+    } @else if (failed) {
+      <div class="state">
+        <i class="fa-solid fa-triangle-exclamation state__icon"></i>
+        <h3>We couldn't load the catalogue</h3>
+        <p class="prose">The store service didn't respond. Check your connection and try again.</p>
+        <button class="btn btn-secondary" gsapMagnetic (click)="onFiltersReset()">Retry</button>
+      </div>
+    } @else if (!products.length) {
+      <div class="state">
+        <i class="fa-regular fa-face-frown state__icon"></i>
+        <h3>Nothing matched those filters</h3>
+        <p class="prose">Try widening the price range, dropping the rating floor, or clearing the keyword.</p>
+        <button class="btn btn-secondary" gsapMagnetic (click)="onFiltersReset()">Clear all filters</button>
+      </div>
+    } @else {
+      <div class="grid" gsapReveal revealChildren="app-product-card" [revealY]="52" [revealStagger]="0.055">
+        @for (p of products; track p._id; let i = $index) {
+          <app-product-card
+            [product]="p"
+            [index]="i"
+            (quickView)="openQuickView($event)"
+          />
+        }
+      </div>
+
+      @if (totalPages > 1) {
+        <nav class="pager" aria-label="Pagination">
+          <button class="pager__arrow" [disabled]="currentPage === 1" (click)="prevPage()">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="pager__arrow-text">Previous</span>
+          </button>
+
+          <div class="pager__pages">
+            @for (p of pageWindow; track $index) {
+              @if (p === '…') {
+                <span class="pager__gap" aria-hidden="true">…</span>
+              } @else {
+                <button
+                  class="pager__page num"
+                  [class.is-current]="p === currentPage"
+                  [attr.aria-current]="p === currentPage ? 'page' : null"
+                  (click)="goToPage(p)"
+                >{{ p }}</button>
+              }
+            }
+          </div>
+
+          <button class="pager__arrow" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            <span class="pager__arrow-text">Next</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </nav>
+      }
+    }
+  </div>
 </div>
+
+<app-quick-view [product]="quickViewProduct" (closed)="closeQuickView()" />

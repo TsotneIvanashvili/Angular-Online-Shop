@@ -1,47 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { ToolsService } from '../services/tools.service';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ToolsService } from '../services/tools.service';
 
 @Component({
   selector: 'app-sign-err',
+  standalone: true,
   imports: [RouterModule],
   templateUrl: './sign-err.component.html',
-  styleUrl: './sign-err.component.css'
+  styleUrl: './sign-err.component.css',
 })
-export class SignErrComponent implements OnInit {
-  constructor(public tools: ToolsService) {}
+export class SignErrComponent implements OnInit, OnDestroy {
+  private tools = inject(ToolsService);
+  private host: ElementRef<HTMLElement> = inject(ElementRef);
+  private sub = new Subscription();
+
+  protected isShown = false;
+
   ngOnInit(): void {
-    this.tools.isErrSMS.subscribe((info: boolean) => {
-      this.isShown = info
-    })
+    // See QuickViewComponent: ScrollSmoother's transform on #smooth-content
+    // would otherwise break this dialog's `position: fixed`.
+    if (typeof document !== 'undefined') {
+      document.body.appendChild(this.host.nativeElement);
+    }
+
+    this.sub.add(
+      this.tools.isErrSMS.subscribe((info: boolean) => {
+        this.isShown = info;
+        if (typeof document !== 'undefined') {
+          document.body.style.overflow = info ? 'hidden' : '';
+        }
+      })
+    );
   }
 
-  public isShown: boolean = false
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+    if (typeof document !== 'undefined') document.body.style.overflow = '';
+    this.host.nativeElement.remove();
+  }
 
-  outSide(e:any) {
-    if(e.target.className != "errCard") {
-      this.tools.isErrSMS.next(false)
-      
+  @HostListener('document:keydown.escape')
+  protected closeErr() {
+    this.tools.isErrSMS.next(false);
+  }
+
+  protected outSide(event: MouseEvent) {
+    if ((event.target as HTMLElement).classList.contains('gate')) {
+      this.closeErr();
     }
   }
-
-  closeErr() {
-    this.tools.isErrSMS.next(false)
-  }
-
-  signIn() {
-    this.tools.isErrSMS.next(false)
-    this.tools.isSignedIn.next(true)
-  }
-
-  register() {
-    this.tools.isErrSMS.next(false)
-    this.tools.isRegistered.next(true)
-  }
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  }
-
 }

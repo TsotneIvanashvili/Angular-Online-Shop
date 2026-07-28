@@ -1,86 +1,170 @@
-<div class="page">
+<!-- ════ Hero ═══════════════════════════════════════════════ -->
+<section class="hero" #hero>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="hero__grid-lines" aria-hidden="true"></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content" appReveal revealDirection="left">
-      <span class="hero-badge">New Arrivals 2025</span>
-      <h1>Premium Tech,<br>Delivered Fast.</h1>
-      <p>Explore our curated collection of laptops, accessories, and cutting-edge tech from the world's top brands.</p>
-      <div class="hero-actions">
-        <button routerLink="/shop" (click)="scrollToTop()" class="btn-primary">
-          Shop Now <i class="fas fa-arrow-right"></i>
-        </button>
-        <button routerLink="/shop" class="btn-secondary">View All Deals</button>
-      </div>
-    </div>
-    <div class="hero-image" appReveal revealDirection="right" [revealDelay]="100">
-      <img
-        src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop"
-        alt="Premium laptops"
-      />
-    </div>
-  </section>
+  <div class="hero__stage">
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <p class="hero__eyebrow eyebrow">Est. 2019 — Tbilisi</p>
 
-  <!-- Brands carousel -->
-  <div class="carousel-wrapper" appReveal revealDirection="up" [revealDelay]="150">
-    <p class="carousel-label">Trusted by thousands — featuring top brands</p>
-    <div class="carousel-track">
-      @for (image of loopImages; track image) {
-        <div class="carousel-slide">
-          <img [src]="image" alt="Product showcase" />
+        <h1 class="hero__title" gsapSplit splitBy="lines" [splitImmediate]="true" [splitDelay]="0.35">
+          Machines worth
+          <span class="serif">keeping</span>
+          around.
+        </h1>
+
+        <p class="hero__lede">
+          A short list, on purpose. Every laptop, GPU and peripheral here was
+          benchmarked, boxed and warrantied for two years before it went live.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn-primary btn-lg" routerLink="/shop" gsapMagnetic>
+            Browse the catalogue <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <button class="link-arrow" (click)="scrollToShop()">
+            See what's selling <i class="fa-solid fa-arrow-down"></i>
+          </button>
         </div>
+      </div>
+
+      <!-- Three plates, offset and drifting at different speeds -->
+      <div class="hero__plates" aria-hidden="true">
+        <figure class="hero__plate hero__plate--a">
+          <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop"
+               alt="" loading="eager" />
+        </figure>
+        <figure class="hero__plate hero__plate--b">
+          <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=900&auto=format&fit=crop"
+               alt="" loading="lazy" />
+        </figure>
+        <figure class="hero__plate hero__plate--c">
+          <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=900&auto=format&fit=crop"
+               alt="" loading="lazy" />
+        </figure>
+      </div>
+
+      <dl class="hero__stats">
+        <div class="hero__stat">
+          <dd class="num" gsapCounter [counterTo]="18472">0</dd>
+          <dt>Orders shipped</dt>
+        </div>
+        <div class="hero__stat">
+          <dd class="num" gsapCounter [counterTo]="4.7" [counterDecimals]="1">0</dd>
+          <dt>Average rating</dt>
+        </div>
+        <div class="hero__stat">
+          <dd class="num" gsapCounter [counterTo]="2.3" [counterDecimals]="1" counterSuffix="%">0</dd>
+          <dt>Return rate</dt>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="eyebrow">Scroll</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+<!-- ════ Brand marquee ══════════════════════════════════════ -->
+@if (marquee.length) {
+  <section class="marquee" aria-label="Brands we carry">
+    <div class="marquee__track" gsapMarquee>
+      @for (brand of marquee; track $index) {
+        <span class="marquee__item">{{ brand }}</span>
+        <span class="marquee__star" aria-hidden="true">✦</span>
       }
     </div>
-  </div>
-
-  <!-- Feature strips -->
-  <section class="features">
-    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="0">
-      <div class="icon-box">
-        <i class="fas fa-shipping-fast"></i>
-      </div>
-      <div class="feature-text">
-        <h3>Fast Delivery</h3>
-        <p>Same-day delivery available in selected cities.</p>
-      </div>
-    </div>
-
-    <div class="feature-divider"></div>
-
-    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="80">
-      <div class="icon-box">
-        <i class="fas fa-ship"></i>
-      </div>
-      <div class="feature-text">
-        <h3>Free Shipping</h3>
-        <p>Free worldwide shipping on orders over $50.</p>
-      </div>
-    </div>
-
-    <div class="feature-divider"></div>
-
-    <div class="feature-box" appReveal revealDirection="up" [revealDelay]="160">
-      <div class="icon-box">
-        <i class="fas fa-medal"></i>
-      </div>
-      <div class="feature-text">
-        <h3>Best Quality</h3>
-        <p>We only sell certified, high-quality products.</p>
-      </div>
-    </div>
   </section>
+}
 
-  <!-- Best sellers heading -->
-  <div class="section-header" appReveal revealDirection="up">
-    <h2>Best Sellers</h2>
-    <p>Our most popular products this season</p>
-    <a routerLink="/shop" class="section-link">View all products <i class="fas fa-arrow-right"></i></a>
+<!-- ════ Promises ═══════════════════════════════════════════ -->
+<section class="promises">
+  <span class="ghost-type" aria-hidden="true">Why us</span>
+
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow" gsapReveal [revealY]="20">What you get</p>
+      <h2 gsapSplit splitBy="lines">
+        No filler. Just the <span class="serif">good</span> stuff.
+      </h2>
+      <span class="rule"></span>
+    </header>
+
+    <div class="promises__grid">
+      <article class="promise promise--lead spotlight" gsapSpotlight>
+        <div class="promise__bg" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop"
+               alt="" loading="lazy" gsapParallax [parallaxAmount]="-60" />
+        </div>
+        <div class="promise__content">
+          <span class="promise__index num">01</span>
+          <h3>Two-year warranty, no argument</h3>
+          <p>
+            Every machine ships with full two-year cover. If it fails inside that
+            window we repair or replace it — no receipt hunt, no reason required.
+          </p>
+          <a class="link-arrow" routerLink="/shop">See what's covered <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="promise spotlight" gsapSpotlight>
+        <span class="promise__index num">02</span>
+        <i class="fa-solid fa-bolt promise__icon" aria-hidden="true"></i>
+        <h3>Same-day dispatch</h3>
+        <p>Order before 4pm on a weekday and it leaves the warehouse that afternoon.</p>
+      </article>
+
+      <article class="promise spotlight" gsapSpotlight>
+        <span class="promise__index num">03</span>
+        <i class="fa-solid fa-fingerprint promise__icon" aria-hidden="true"></i>
+        <h3>Checked before it ships</h3>
+        <p>Each unit is powered on, benchmarked and inspected — not just box-shuffled.</p>
+      </article>
+    </div>
   </div>
+</section>
 
-  <app-several-products></app-several-products>
+<!-- ════ Best sellers ═══════════════════════════════════════ -->
+<section class="sellers">
+  <div class="container">
+    <header class="head head--split">
+      <div>
+        <p class="eyebrow" gsapReveal [revealY]="20">Moving fast</p>
+        <h2 gsapSplit splitBy="lines">What people are buying</h2>
+      </div>
+      <a class="link-arrow" routerLink="/shop" gsapMagnetic [magneticStrength]="0.2">
+        All products <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </header>
+    <span class="rule"></span>
 
-  <button class="scrollToTop" (click)="scrollToTop()" title="Back to top">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
+    <app-several-products />
+  </div>
+</section>
 
-</div>
+<!-- ════ Closing CTA ════════════════════════════════════════ -->
+<section class="container">
+  <div class="cta spotlight" gsapSpotlight gsapReveal [revealY]="60">
+    <div class="ambient" aria-hidden="true"></div>
+    <span class="ghost-type cta__ghost" aria-hidden="true">Shop</span>
+
+    <div class="cta__body">
+      <h2>
+        Still deciding?<br />
+        <span class="serif">Start here.</span>
+      </h2>
+      <p class="prose">
+        Filter by budget, rating or brand and cut the list down in a few clicks.
+        Or save what catches your eye and come back to it.
+      </p>
+    </div>
+
+    <div class="cta__actions">
+      <a class="btn btn-primary btn-lg" routerLink="/shop" gsapMagnetic>Start browsing</a>
+      <a class="btn btn-secondary btn-lg" routerLink="/wishlist" gsapMagnetic>View wishlist</a>
+    </div>
+  </div>
+</section>

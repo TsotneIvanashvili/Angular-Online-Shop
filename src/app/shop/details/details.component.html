@@ -1,112 +1,167 @@
-<div class="nope">
-  @if (prodINFO) {
-    <div class="mainsecti">
-      <section class="container detailArea">
-        <div class="main-left">
-          <div class="left">
-            <img class="mainImg" [src]="mainImage" alt="" />
-            <div class="otherIMGS">
-              @for (item of allImages; track $index) {
-                <img
-                  [class.activeImg]="item === mainImage"
-                  (click)="zoomImg(item)"
-                  [src]="item"
-                  alt=""
-                />
-              }
-            </div>
-          </div>
+@if (loading) {
+  <div class="container detail">
+    <div class="detail__gallery">
+      <div class="skeleton" style="aspect-ratio:1/1;border-radius:var(--r-lg)"></div>
+    </div>
+    <div class="detail__info">
+      <div class="skeleton" style="height:12px;width:22%"></div>
+      <div class="skeleton" style="height:26px;width:75%"></div>
+      <div class="skeleton" style="height:12px;width:40%"></div>
+      <div class="skeleton" style="height:60px;width:100%"></div>
+    </div>
+    <div class="detail__buy">
+      <div class="skeleton" style="height:180px;border-radius:var(--r-lg)"></div>
+    </div>
+  </div>
+} @else if (failed || !product) {
+  <div class="container">
+    <div class="detail__error">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <h2>We couldn't load this product</h2>
+      <p class="prose">It may have been removed, or the store service is unavailable.</p>
+      <a class="btn btn-secondary" routerLink="/shop">Back to the catalogue</a>
+    </div>
+  </div>
+} @else {
+  <nav class="container crumbs" aria-label="Breadcrumb">
+    <a routerLink="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a routerLink="/shop">Shop</a>
+    <span aria-hidden="true">/</span>
+    <span class="crumbs__here">{{ product.title }}</span>
+  </nav>
 
-          <div class="middle">
-            <h2>{{ prodINFO.title }}</h2>
+  <div class="container detail">
+    <!-- ── Gallery ─────────────────────────────────────── -->
+    <div class="detail__gallery">
+      <figure class="stage">
+        <img [src]="mainImage" [alt]="product.title" />
+        @if (product.price.discountPercentage) {
+          <span class="stage__tag num">−{{ product.price.discountPercentage }}%</span>
+        }
+      </figure>
 
-            <div class="rating">
-              <div class="stars">
-                @if (starNum == 0) {
-                  <h5>No Rating</h5>
-                } @else {
-                  @for (item of [].constructor(starNum ); track $index) {
-                    <i class="fa-solid fa-star"></i>
-                  }
-                  <span>{{ prodINFO.rating }}</span>
-                }
-              </div>
-            </div>
-
-            @if (prodINFO.stock > 0) {
-              <h4 class="stock-chip in">
-                <i class="fa-solid fa-check"></i> {{ prodINFO.stock }} in stock
-              </h4>
-            } @else {
-              <h4 class="stock-chip out">
-                <i class="fa-solid fa-xmark"></i> Not in stock
-              </h4>
-            }
-
-            <ul>
-              <li>Category: {{ prodINFO.category.name }}</li>
-              <li>Brand: {{ prodINFO.brand }}</li>
-              <li>Issue Date: {{ prodINFO.issueDate | date }}</li>
-            </ul>
-
-            <div class="desc">
-              <h3>Description</h3>
-              <div class="line"></div>
-            </div>
-
-            <p>{{ prodINFO.description }}</p>
-          </div>
-        </div>
-
-        <div class="right">
-          @if (prodINFO.price.discountPercentage != 0) {
-            <h2 class="disc">-{{ prodINFO.price.discountPercentage }}%</h2>
+      @if (product.images.length > 1) {
+        <div class="thumbs">
+          @for (img of product.images; track img) {
+            <button
+              class="thumb"
+              [class.is-active]="img === mainImage"
+              (click)="setImage(img)"
+              [attr.aria-label]="'Show another image of ' + product.title"
+            >
+              <img [src]="img" alt="" loading="lazy" />
+            </button>
           }
-
-          <div class="prices">
-            <h1 class="green">{{ prodINFO.price.current | currency }}</h1>
-            @if (prodINFO.price.current != prodINFO.price.beforeDiscount) {
-              <sub class="beforeDisc">{{ prodINFO.price.beforeDiscount | currency }}</sub>
-            }
-          </div>
-
-          <div class="quantity">
-            <button [disabled]="prodQuant == 1" (click)="decrease()">-</button>
-            <h2>{{ prodQuant }}</h2>
-            <button (click)="increase()">+</button>
-          </div>
-
-          <button [disabled]="prodINFO.stock <= 0" (click)="addToCart(prodINFO._id)" class="cartBtn">
-            <i class="fa-solid fa-cart-shopping"></i> Add To cart
-          </button>
-
-          <div class="line"></div>
-
-          <div class="delivInfos">
-            <p><i class="fa-solid fa-truck-fast"></i> Worldwide shipping</p>
-            <p><i class="fa-solid fa-table-cells-row-lock"></i> Secure payment</p>
-            <p>
-              <i class="fa-solid fa-calendar-check"></i> {{ prodINFO.warranty }} years
-              full warranty
-            </p>
-          </div>
         </div>
-      </section>
+      }
     </div>
 
-    <app-related-prods
-      [categoryID]="prodINFO.category.id"
-      (otherRelated)="otherRelatedArea($event)"
-    ></app-related-prods>
-  }
+    <!-- ── Info ────────────────────────────────────────── -->
+    <div class="detail__info" gsapReveal revealChildren=".detail__info > *" [revealY]="28" [revealStagger]="0.06">
+      <p class="eyebrow">{{ product.brand }}</p>
+      <h1 class="detail__title">{{ product.title }}</h1>
 
-  <app-sign-err></app-sign-err>
+      <div class="detail__meta">
+        @if (product.rating) {
+          <app-star-rating [value]="product.rating" />
+        } @else {
+          <span class="detail__norating">Not yet rated</span>
+        }
 
-  <button class="scrollToTop" (click)="scrollToTop()">
-    <i class="fa-solid fa-arrow-up fa-xl"></i>
-  </button>
+        <span class="detail__sep" aria-hidden="true">·</span>
 
-  <div class="particles-wrapper">
-    <canvas id="particles-canvas"></canvas>
+        @if (product.stock > 0) {
+          <span class="badge badge-ok"><i class="fa-solid fa-check"></i> {{ product.stock }} in stock</span>
+        } @else {
+          <span class="badge badge-bad"><i class="fa-solid fa-xmark"></i> Out of stock</span>
+        }
+      </div>
+
+      <dl class="specs">
+        <div><dt>Category</dt><dd>{{ product.category.name }}</dd></div>
+        <div><dt>Brand</dt><dd>{{ product.brand }}</dd></div>
+        <div><dt>Released</dt><dd>{{ product.issueDate | date: 'mediumDate' }}</dd></div>
+        <div><dt>Warranty</dt><dd>{{ product.warranty }} years</dd></div>
+      </dl>
+
+      <div class="desc">
+        <h2 class="desc__heading">About this product</h2>
+        <p class="prose">{{ product.description }}</p>
+      </div>
+    </div>
+
+    <!-- ── Buy box ─────────────────────────────────────── -->
+    <aside class="detail__buy" gsapReveal [revealY]="34" [revealDelay]="0.12">
+      <div class="buy panel spotlight">
+        <div class="buy__prices">
+          <span class="buy__price num">{{ product.price.current | currency }}</span>
+          @if (product.price.current !== product.price.beforeDiscount) {
+            <s class="buy__was num">{{ product.price.beforeDiscount | currency }}</s>
+          }
+        </div>
+
+        @if (product.stock > 0) {
+          <p class="buy__ship">
+            <i class="fa-solid fa-truck-fast"></i>
+            Ships today if ordered before 4pm
+          </p>
+        }
+
+        <div class="buy__row">
+          <div class="qty" role="group" aria-label="Quantity">
+            <button (click)="step(-1)" [disabled]="quantity <= 1" aria-label="Decrease quantity">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="qty__value num">{{ quantity }}</span>
+            <button (click)="step(1)" [disabled]="quantity >= product.stock" aria-label="Increase quantity">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <button
+            class="btn btn-secondary buy__save"
+            (click)="toggleSave()"
+            [attr.aria-pressed]="isSaved"
+            [attr.aria-label]="isSaved ? 'Remove from wishlist' : 'Save to wishlist'"
+          >
+            <i [class]="isSaved ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          </button>
+        </div>
+
+        <button
+          class="btn btn-primary btn-lg btn-block"
+          gsapMagnetic
+          [magneticStrength]="0.16"
+          (click)="addToCart()"
+          [disabled]="product.stock <= 0 || adding"
+        >
+          @if (adding) {
+            <i class="fa-solid fa-circle-notch fa-spin"></i> Adding…
+          } @else if (product.stock <= 0) {
+            Out of stock
+          } @else {
+            <i class="fa-solid fa-cart-shopping"></i> Add to cart
+          }
+        </button>
+
+        <hr class="hairline" />
+
+        <ul class="buy__perks">
+          <li><i class="fa-solid fa-globe"></i> Worldwide shipping</li>
+          <li><i class="fa-solid fa-lock"></i> Encrypted checkout</li>
+          <li><i class="fa-solid fa-rotate-left"></i> 30-day returns</li>
+          <li><i class="fa-solid fa-shield-halved"></i> {{ product.warranty }}-year warranty</li>
+        </ul>
+      </div>
+    </aside>
   </div>
-</div>
+
+  <app-related-prods
+    [categoryID]="product.category.id"
+    [excludeID]="product._id"
+    (otherRelated)="onRelatedSelected($event)"
+  />
+}
+
+<app-sign-err />

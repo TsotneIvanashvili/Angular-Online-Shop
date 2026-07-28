@@ -1,44 +1,109 @@
-<div class="signArea" >
-    <div class="card">
-        <form [formGroup]="signInForm" (ngSubmit)="signIn()">
-            @if (errAlert) {
-                <small class="err"><i class="fa-solid fa-circle-info"></i> {{errorSMS}}</small>
-            }
-            @else if (successLogin) {
-                <small class="success"><i class="fa-solid fa-address-book"></i>Signed in Successfully</small>
-            }
+<section class="auth">
+  <div class="ambient" aria-hidden="true"></div>
 
-            <h1>Welcome Back</h1>
+  <div class="auth__card">
+    <!-- ── Form ────────────────────────────────────────── -->
+    <div class="auth__pane">
+      <header class="auth__head">
+        <p class="eyebrow">Welcome back</p>
+        <h1>Sign <span class="serif">in</span></h1>
+        <p class="auth__sub">Pick up wherever you left off — your cart is waiting.</p>
+      </header>
 
+      @if (errAlert) {
+        <p class="notice notice--bad" role="alert">
+          <i class="fa-solid fa-circle-exclamation"></i> {{ errorSMS }}
+        </p>
+      } @else if (successLogin) {
+        <p class="notice notice--ok" role="status">
+          <i class="fa-solid fa-circle-check"></i> Signed in — taking you through
+        </p>
+      }
 
-            <div class="main-area">
-                <div class="area">
-                    <i class="fa-solid fa-envelope"></i>
-                    
-                    <input type="email" formControlName="email" placeholder="Enter your email">
-                </div>
-                <div class="area">
-                    <i class="fa-solid fa-lock"></i>
-                   
-                    <input type="password" formControlName="password" placeholder="Enter your password">
-                </div>
-                <p>Forgot password?</p>
-
-            </div>
-            <div class="okey">
-
-                <button class="submit" [disabled]="signInForm.invalid" type="submit">Sign In</button>
-                </div>
-
-        </form>
-        <div class="mainimgtext">
-            <div class="imgtext">
-                <h1 class="new">New Here?</h1>
-                <p>Sign up and discover great amount of new opportunities!</p>
-            </div>
-            <button class="signButton" routerLink="/register">Sign Up</button>
+      <form [formGroup]="signInForm" (ngSubmit)="signIn()" novalidate>
+        <div class="field">
+          <label class="field-label" for="signin-email">Email</label>
+          <div class="with-icon">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <input
+              id="signin-email"
+              class="input"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              [attr.aria-invalid]="invalid('email')"
+            />
+          </div>
+          @if (invalid('email')) {
+            <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> Enter a valid email address.</p>
+          }
         </div>
 
-    
-</div>
-</div>
+        <div class="field">
+          <label class="field-label" for="signin-password">Password</label>
+          <div class="with-icon">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <input
+              id="signin-password"
+              class="input"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Your password"
+              autocomplete="current-password"
+              [attr.aria-invalid]="invalid('password')"
+            />
+            <button
+              type="button"
+              class="peek"
+              (click)="showPassword = !showPassword"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            >
+              <i [class]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+            </button>
+          </div>
+          @if (invalid('password')) {
+            <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> Your password is required.</p>
+          }
+        </div>
+
+        <button
+          class="btn btn-primary btn-lg btn-block"
+          type="submit"
+          gsapMagnetic
+          [magneticStrength]="0.14"
+          [disabled]="signInForm.invalid || loading"
+        >
+          @if (loading) {
+            <i class="fa-solid fa-circle-notch fa-spin"></i> Signing in…
+          } @else {
+            Sign in
+          }
+        </button>
+      </form>
+
+      <p class="auth__alt">
+        No account yet? <a routerLink="/register">Create one</a>
+      </p>
+    </div>
+
+    <!-- ── Side panel ──────────────────────────────────── -->
+    <aside class="auth__aside">
+      <div class="auth__aside-bg" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+          alt=""
+          loading="lazy"
+        />
+      </div>
+      <div class="auth__aside-body">
+        <h2>Your account, your cart</h2>
+        <ul class="auth__perks">
+          <li><i class="fa-solid fa-check"></i> Cart syncs across devices</li>
+          <li><i class="fa-solid fa-check"></i> Order history in one place</li>
+          <li><i class="fa-solid fa-check"></i> Faster repeat checkout</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>

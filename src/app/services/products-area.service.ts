@@ -1,81 +1,85 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AllProductArea } from '../../interfaces/all-product-area';
 import { FilteredProducts } from '../../interfaces/filtered-products';
 import { Product } from '../../interfaces/product';
 
+const API = 'https://api.everrest.educata.dev/shop/products';
+
+export interface ProductFilters {
+  search?: string;
+  min?: number | null;
+  max?: number | null;
+  rating?: number | null;
+  sortBy?: string;
+  sortDirection?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsAreaService {
-  getFilteredProducts(arg0: { search: string; min: number | undefined; max: number | undefined; rating: number; type: string; sort: string; brand: string | undefined; }) {
-    throw new Error('Method not implemented.');
-  }
   constructor(public http: HttpClient) {}
 
   getCategories() {
-    return this.http.get(
-      'https://api.everrest.educata.dev/shop/products/categories'
-    );
+    return this.http.get(`${API}/categories`);
   }
 
   getListByCategory(id: any, page: any, size: any) {
     return this.http.get<AllProductArea>(
-      `https://api.everrest.educata.dev/shop/products/category/${id}?page_index=${page}&page_size=${size}`
+      `${API}/category/${id}?page_index=${page}&page_size=${size}`
     );
   }
 
   getBrands() {
-    return this.http.get<string[]>(
-      'https://api.everrest.educata.dev/shop/products/brands'
-    );
+    return this.http.get<string[]>(`${API}/brands`);
   }
 
-  getExactBrandData(name: string) {
+  getExactBrandData(name: string, size: number = 12) {
     return this.http.get<AllProductArea>(
-      `https://api.everrest.educata.dev/shop/products/brand/${name}?page_size=10`
+      `${API}/brand/${encodeURIComponent(name)}?page_size=${size}`
     );
   }
 
   getSearchedData(searchInput: string, size: number) {
-    return this.http.get<FilteredProducts>(
-      `https://api.everrest.educata.dev/shop/products/search?page_size=${size}&keywords=${searchInput}`
-    );
+    const params = new HttpParams()
+      .set('page_size', size)
+      .set('keywords', searchInput);
+
+    return this.http.get<FilteredProducts>(`${API}/search`, { params });
   }
 
-  filterData(
-    searchText: string = '',
-    rating: number | string = '',
-    min: string = '1',
-    max: string = '99999',
-    type: string,
-    sort: string,
-    size: number
-  ) {
-    let isRated = rating != '' ? '&rating=' : '';
-    let isChosenType = type != '' ? '&sort_by=' : '';
-    let isSorted = sort != '' ? '&sort_direction=' : '';
+  /**
+   * Builds the search query from whichever filters are actually set.
+   * Empty values are omitted entirely rather than sent as blanks, which
+   * the API treats as "match nothing" on some fields.
+   */
+  filterData(filters: ProductFilters, size: number, page: number = 1) {
+    let params = new HttpParams()
+      .set('page_size', size)
+      .set('page_index', page);
 
-    return this.http.get<FilteredProducts>(
-      `https://api.everrest.educata.dev/shop/products/search?page_size=${size}&keywords=${searchText}${isRated}${rating}&price_min=${min}&price_max=${max}${isChosenType}${type}${isSorted}${sort}`
-    );
+    if (filters.search?.trim()) params = params.set('keywords', filters.search.trim());
+    if (filters.rating != null) params = params.set('rating', filters.rating);
+    if (filters.min != null) params = params.set('price_min', filters.min);
+    if (filters.max != null) params = params.set('price_max', filters.max);
+    if (filters.sortBy) params = params.set('sort_by', filters.sortBy);
+    if (filters.sortDirection) params = params.set('sort_direction', filters.sortDirection);
+
+    return this.http.get<FilteredProducts>(`${API}/search`, { params });
   }
 
-  getCardsforHome() {
-    return this.http.get<AllProductArea>(
-      'https://api.everrest.educata.dev/shop/products/all?page_size=10'
-    );
+  getCardsforHome(size: number = 8) {
+    return this.http.get<AllProductArea>(`${API}/all?page_size=${size}`);
   }
 
   getCardsOnShopPage(page: any, size: any) {
     return this.http.get<AllProductArea>(
-      `https://api.everrest.educata.dev/shop/products/all?page_index=${page}&page_size=${size}`
+      `${API}/all?page_index=${page}&page_size=${size}`
     );
   }
 
   getProductDetailInfo(id: string) {
-    return this.http.get<Product>(
-      `https://api.everrest.educata.dev/shop/products/id/${id}`
-    );
+    return this.http.get<Product>(`${API}/id/${id}`);
   }
 }

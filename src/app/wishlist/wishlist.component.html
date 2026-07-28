@@ -1,0 +1,82 @@
+<section class="container wish">
+  <header class="wish__head">
+    <div class="wish__title">
+      <p class="eyebrow">Saved for later</p>
+      <h1 gsapSplit splitBy="lines" [splitImmediate]="true">Wishlist</h1>
+      @if (wishlist.count()) {
+        <p class="prose">
+          <span class="num">{{ wishlist.count() }}</span>
+          {{ wishlist.count() === 1 ? 'product' : 'products' }} saved on this device.
+        </p>
+      }
+    </div>
+
+    @if (wishlist.count()) {
+      <button class="btn btn-ghost btn-sm" (click)="clearAll()">
+        <i class="fa-solid fa-trash"></i> Clear all
+      </button>
+    }
+  </header>
+
+  @if (!wishlist.count()) {
+    <div class="state">
+      <i class="fa-regular fa-heart state__icon"></i>
+      <h2>Nothing saved yet</h2>
+      <p class="prose">
+        Tap the heart on any product to keep it here. The list lives in this
+        browser, so it survives a refresh without needing an account.
+      </p>
+      <a class="btn btn-primary" routerLink="/shop">Find something</a>
+    </div>
+  } @else {
+    <ul class="rows" gsapReveal revealChildren=".row" [revealY]="34" [revealStagger]="0.06">
+      @for (item of wishlist.items(); track item.id; let i = $index) {
+        <li class="row spotlight" gsapSpotlight>
+          <a class="row__img" [routerLink]="['/details', item.id]">
+            <img [src]="item.image" [alt]="item.title" loading="lazy" />
+          </a>
+
+          <div class="row__body">
+            @if (item.brand) { <p class="eyebrow">{{ item.brand }}</p> }
+            <a class="row__title" [routerLink]="['/details', item.id]">{{ item.title }}</a>
+
+            <div class="row__meta">
+              <app-star-rating [value]="item.rating" />
+              @if (item.stock > 0) {
+                <span class="badge badge-ok">{{ item.stock }} in stock</span>
+              } @else {
+                <span class="badge badge-bad">Out of stock</span>
+              }
+            </div>
+          </div>
+
+          <div class="row__prices">
+            <span class="row__price num">{{ item.price | currency }}</span>
+            @if (item.price !== item.beforeDiscount) {
+              <s class="row__was num">{{ item.beforeDiscount | currency }}</s>
+            }
+          </div>
+
+          <div class="row__actions">
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="addToCart(item)"
+              [disabled]="item.stock <= 0 || isPending(item.id)"
+            >
+              @if (isPending(item.id)) {
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+              } @else {
+                <i class="fa-solid fa-cart-shopping"></i>
+              }
+              Add to cart
+            </button>
+
+            <button class="row__remove" (click)="remove(item)" [attr.aria-label]="'Remove ' + item.title">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>

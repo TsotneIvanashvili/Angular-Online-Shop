@@ -1,45 +1,16 @@
-<section class="container">
-  <main>
-    @for (item of productList; track $index) {
-      <div class="card-wrapper">
-        <div class="card-inner">
-          <div class="card-front">
-            <img [src]="item.images[0]" alt="product" />
-            <div class="main-but">
-              <h2 class="title">{{item.title}}</h2>
-              <div class="but">
-                <h2 class="h2">
-                  ${{item.price.current}}
-                  <sub>${{item.price.beforeDiscount}}</sub>
-                </h2>
-
-                @if (item.stock <= 0) {
-                  <p class="stock-badge out">
-                    <i class="fa-solid fa-circle-xmark"></i> Out of stock
-                  </p>
-                } @else {
-                  <p class="stock-badge in">
-                    <i class="fa-solid fa-circle-check"></i> In stock ({{ item.stock }})
-                  </p>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div class="card-back">
-            <h1>Description</h1>
-            <p>{{item.description}}</p>
-            <h1>Rating: {{item.rating}} *</h1>
-            <button routerLink="/details/{{item._id}}" class="add-cart">
-              <i class="fa-solid fa-eye"></i> See Details
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="grid" gsapReveal revealChildren="app-product-card" [revealY]="56" [revealStagger]="0.07">
+  @if (loading) {
+    <app-product-skeleton [count]="8" />
+  } @else if (failed) {
+    <p class="fallback">
+      We couldn't reach the catalogue just now.
+      <button class="link-arrow" (click)="showCards()">Try again <i class="fa-solid fa-rotate-right"></i></button>
+    </p>
+  } @else {
+    @for (item of productList; track item._id; let i = $index) {
+      <app-product-card [product]="item" [index]="i" (quickView)="openQuickView($event)" />
     }
-  </main>
+  }
+</div>
 
-  <div class="view">
-    <button routerLink="/shop" class="viewMore" (click)="scrollToTop()">View More</button>
-  </div>
-</section>
+<app-quick-view [product]="quickViewProduct" (closed)="closeQuickView()" />

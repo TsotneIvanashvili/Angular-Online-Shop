@@ -1,0 +1,92 @@
+@if (product) {
+  <div class="qv" (click)="onBackdrop($event)" role="dialog" aria-modal="true" [attr.aria-label]="product.title">
+    <div class="qv__panel glass">
+      <button class="qv__close" (click)="close()" aria-label="Close quick view">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="qv__media">
+        <div class="qv__stage">
+          <img [src]="activeImage" [alt]="product.title" />
+        </div>
+
+        @if (product.images.length > 1) {
+          <div class="qv__thumbs">
+            @for (img of product.images; track img) {
+              <button
+                class="qv__thumb"
+                [class.is-active]="img === activeImage"
+                (click)="activeImage = img"
+                [attr.aria-label]="'View image of ' + product.title"
+              >
+                <img [src]="img" [alt]="''" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="qv__info">
+        <p class="eyebrow">{{ product.brand }}</p>
+        <h2 class="qv__title">{{ product.title }}</h2>
+
+        <div class="qv__meta">
+          <app-star-rating [value]="product.rating" />
+          <span class="qv__dot">·</span>
+          @if (product.stock > 0) {
+            <span class="badge badge-ok"><i class="fa-solid fa-check"></i> {{ product.stock }} in stock</span>
+          } @else {
+            <span class="badge badge-bad">Out of stock</span>
+          }
+        </div>
+
+        <div class="qv__prices">
+          <span class="qv__price num">{{ product.price.current | currency }}</span>
+          @if (product.price.current !== product.price.beforeDiscount) {
+            <s class="qv__was num">{{ product.price.beforeDiscount | currency }}</s>
+            <span class="badge badge-accent num">−{{ product.price.discountPercentage }}%</span>
+          }
+        </div>
+
+        <p class="qv__desc">{{ product.description }}</p>
+
+        <div class="qv__buy">
+          <div class="qty" role="group" aria-label="Quantity">
+            <button (click)="step(-1)" [disabled]="quantity <= 1" aria-label="Decrease quantity">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="qty__value num">{{ quantity }}</span>
+            <button (click)="step(1)" [disabled]="quantity >= product.stock" aria-label="Increase quantity">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <button
+            class="btn btn-primary qv__add"
+            (click)="addToCart()"
+            [disabled]="product.stock <= 0 || adding"
+          >
+            @if (adding) {
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Adding
+            } @else {
+              <i class="fa-solid fa-cart-shopping"></i> Add to cart
+            }
+          </button>
+
+          <button
+            class="btn btn-secondary qv__save"
+            (click)="toggleSave()"
+            [attr.aria-pressed]="isSaved"
+            [attr.aria-label]="isSaved ? 'Remove from wishlist' : 'Save to wishlist'"
+          >
+            <i [class]="isSaved ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          </button>
+        </div>
+
+        <a class="link-arrow" [routerLink]="['/details', product._id]" (click)="close()">
+          Full specifications <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+}

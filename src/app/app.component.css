@@ -1,0 +1,18 @@
+/* ScrollSmoother transforms #smooth-content, so the wrapper must clip
+   and the content must not collapse its margins. */
+#smooth-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+#smooth-content {
+  will-change: transform;
+}
+
+/* Offsets the fixed navbar so page content never starts underneath it. */
+.shell {
+  display: block;
+  padding-top: 62px;
+  min-height: 60dvh;
+}

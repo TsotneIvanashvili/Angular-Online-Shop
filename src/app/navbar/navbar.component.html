@@ -1,52 +1,118 @@
-<div class="nope">
-  <nav appScrolling>
-    <div class="mainh1">
-      <i routerLink="/" class="fa-solid fa-desktop fa-2xl laptop"></i>
-      <h1 class="adzin" routerLink="/">TechStore</h1>
-    </div>
+<nav class="nav" appScrolling>
+  <div class="nav__inner">
+    <a class="brand" routerLink="/" (click)="closeMenu()" aria-label="TechStore home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 8h16M4 12h11M4 16h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand__name">TechStore</span>
+    </a>
 
-    <button
-      class="burger"
-      type="button"
-      [class.active]="isMenuOpen"
-      (click)="toggleMenu()"
-      aria-label="Toggle menu"
-    >
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
-    </button>
-
-    <div class="pages" [class.active]="isMenuOpen">
-      <ul>
-        <li
-          routerLink="/"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
-        >
-          Home
+    <div class="nav__panel" [class.is-open]="isMenuOpen">
+      <ul class="nav__links">
+        <li>
+          <a routerLink="/" routerLinkActive="is-active"
+             [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
         </li>
-        <li routerLink="/shop" routerLinkActive="active" (click)="closeMenu()">Shop</li>
-        <li routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">Cart</li>
+        <li><a routerLink="/shop" routerLinkActive="is-active" (click)="closeMenu()">Shop</a></li>
+        <li><a routerLink="/wishlist" routerLinkActive="is-active" (click)="closeMenu()">Wishlist</a></li>
       </ul>
+
+      <div class="search" role="search">
+        <i class="fa-solid fa-magnifying-glass search__icon" aria-hidden="true"></i>
+        <input
+          class="search__input"
+          type="search"
+          placeholder="Search products…"
+          autocomplete="off"
+          aria-label="Search products"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchInput()"
+          (focus)="showSuggestions = true"
+          (keyup.enter)="submitSearch()"
+        />
+
+        @if (searchTerm) {
+          <button class="search__clear" (click)="clearSearch()" aria-label="Clear search">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        }
+
+        @if (showSuggestions && searchTerm.trim().length >= 2) {
+          <div class="ac glass" role="listbox">
+            @if (searching) {
+              @for (i of [1,2,3]; track i) {
+                <div class="ac__row ac__row--sk">
+                  <div class="skeleton ac__sk-img"></div>
+                  <div class="ac__sk-text">
+                    <div class="skeleton" style="height:10px;width:70%"></div>
+                    <div class="skeleton" style="height:9px;width:36%"></div>
+                  </div>
+                </div>
+              }
+            } @else if (suggestions.length) {
+              @for (s of suggestions; track s._id) {
+                <button class="ac__row" role="option" (click)="pickSuggestion(s._id)">
+                  <img class="ac__img" [src]="s.images[0]" [alt]="''" loading="lazy" />
+                  <span class="ac__text">
+                    <span class="ac__title">{{ s.title }}</span>
+                    <span class="ac__brand">{{ s.brand }}</span>
+                  </span>
+                  <span class="ac__price num">{{ '$' + s.price.current }}</span>
+                </button>
+              }
+              <button class="ac__all" (click)="submitSearch()">
+                See all results for “{{ searchTerm }}” <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            } @else {
+              <p class="ac__empty">No products match “{{ searchTerm }}”.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="nav__account">
+        @if (!isLoggedIn) {
+          <a class="btn btn-ghost btn-sm" routerLink="/Signin" (click)="closeMenu()">Sign in</a>
+          <a class="btn btn-primary btn-sm" routerLink="/register" (click)="closeMenu()">Create account</a>
+        } @else {
+          <a class="user" routerLink="/profile" (click)="closeMenu()">
+            @if (userImg) { <img [src]="userImg" [alt]="''" /> }
+            <span>{{ userName }}</span>
+          </a>
+          <button class="btn btn-ghost btn-sm" (click)="signOut()" routerLink="/">Sign out</button>
+        }
+      </div>
     </div>
 
-    <div class="account" [class.active]="isMenuOpen">
-      @if (!isLoggedIn) {
-        <button routerLink="/register" (click)="closeMenu()">
-          <i class="fa-solid fa-user-plus fa-lg"></i>Create Account
-        </button>
-        <button routerLink="/Signin" (click)="closeMenu()">
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>Sign in
-        </button>
-      } @else {
-        <button><img [src]="userImg" alt="User avatar" />{{userName}}</button>
-        <button (click)="signOut()" routerLink="/">
-          <i class="fa-solid fa-right-to-bracket"></i>Sign Out
-        </button>
-      }
-    </div>
-  </nav>
-</div>
+    <div class="nav__utility">
+      <a class="icon-btn" routerLink="/wishlist" (click)="closeMenu()"
+         [attr.aria-label]="'Wishlist, ' + wishlist.count() + ' items'">
+        <i class="fa-regular fa-heart"></i>
+        @if (wishlist.count() > 0) {
+          <span class="count num">{{ wishlist.count() }}</span>
+        }
+      </a>
 
+      <a class="icon-btn" routerLink="/cart" (click)="closeMenu()"
+         [attr.aria-label]="'Cart, ' + cart.count() + ' items'">
+        <i class="fa-solid fa-bag-shopping"></i>
+        @if (cart.count() > 0) {
+          <span class="count count--accent num">{{ cart.count() }}</span>
+        }
+      </a>
+
+      <button
+        class="burger"
+        type="button"
+        [class.is-open]="isMenuOpen"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="isMenuOpen"
+        aria-label="Toggle navigation menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>

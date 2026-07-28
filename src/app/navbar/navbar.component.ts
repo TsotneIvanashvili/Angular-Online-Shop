@@ -1,86 +1,165 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { ScrollingDirective } from '../../directives/scrolling.directive';
-import { RouterModule } from '@angular/router';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { Subject, Subscription, of } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+} from 'rxjs/operators';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
+
+import { ScrollingDirective } from '../../directives/scrolling.directive';
 import { ToolsService } from '../services/tools.service';
+import { CartStateService } from '../services/cart-state.service';
+import { WishlistService } from '../services/wishlist.service';
+import { ProductsAreaService } from '../services/products-area.service';
+import { Product } from '../../interfaces/product';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ ScrollingDirective, RouterModule],
+  standalone: true,
+  imports: [ScrollingDirective, RouterModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  standalone: true,
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+  protected cart = inject(CartStateService);
+  protected wishlist = inject(WishlistService);
+  private products = inject(ProductsAreaService);
+  private router = inject(Router);
+
   constructor(public _cookie: SsrCookieService, public tools: ToolsService) {}
 
-  public isSignShow: boolean = false;
-  public isRegisterShow: boolean = false;
-  public isLoggedIn: boolean = false;
-  public isMenuOpen: boolean = false;
-  public userImg: string | null = sessionStorage.getItem('userAvatar');
-  public userName: string | null = sessionStorage.getItem('userName');
+  public isLoggedIn = false;
+  public isMenuOpen = false;
+  public userImg: string | null = null;
+  public userName: string | null = null;
+
+  protected searchTerm = '';
+  protected suggestions: Product[] = [];
+  protected searching = false;
+  protected showSuggestions = false;
+
+  private search$ = new Subject<string>();
+  private subs = new Subscription();
 
   ngOnInit(): void {
+    if (typeof sessionStorage !== 'undefined') {
+      this.userImg = sessionStorage.getItem('userAvatar');
+      this.userName = sessionStorage.getItem('userName');
+    }
     this.isLoggedIn = !!this.userName;
-    this.tools.isSignedIn.subscribe((info: boolean) => {
-      this.isSignShow = info;
-      if (info) {
-        document.body.style.overflow = 'hidden';
-        this.closeMenu();
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
-    
-    this.tools.isRegistered.subscribe((info: boolean) => {
-      this.isRegisterShow = info;
-      if (info) {
-        document.body.style.overflow = 'hidden';
-        this.closeMenu();
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
+
+    this.cart.refresh();
+
+    this.subs.add(
+      this.search$
+        .pipe(
+          debounceTime(280),
+          distinctUntilChanged(),
+          filter((term) => term.trim().length >= 2),
+          switchMap((term) =>
+            this.products
+              .getSearchedData(term.trim(), 6)
+              .pipe(catchError(() => of({ products: [] as Product[] } as any)))
+          )
+        )
+        .subscribe((data: any) => {
+          this.suggestions = data?.products ?? [];
+          this.searching = false;
+        })
+    );
   }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+    this.unlockScroll();
+  }
+
+  // ── Search ───────────────────────────────────────────────
+
+  onSearchInput() {
+    this.showSuggestions = true;
+
+    if (this.searchTerm.trim().length < 2) {
+      this.suggestions = [];
+      this.searching = false;
+      return;
+    }
+
+    this.searching = true;
+    this.search$.next(this.searchTerm);
+  }
+
+  submitSearch() {
+    const term = this.searchTerm.trim();
+    if (!term) return;
+    this.closeSuggestions();
+    this.closeMenu();
+    this.router.navigate(['/shop'], { queryParams: { q: term } });
+  }
+
+  pickSuggestion(id: string) {
+    this.closeSuggestions();
+    this.closeMenu();
+    this.searchTerm = '';
+    this.suggestions = [];
+    this.router.navigate(['/details', id]);
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.suggestions = [];
+    this.showSuggestions = false;
+  }
+
+  closeSuggestions() {
+    this.showSuggestions = false;
+  }
+
+  // ── Menu ─────────────────────────────────────────────────
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    
-    // Close modals if clicking outside
-    if (this.isSignShow && !target.closest('app-sign-in')) {
-      this.closeForm(false);
-    }
-    if (this.isRegisterShow && !target.closest('app-sign-up')) {
-      this.closeRegister(false);
-    }
-    
-    // Close menu if clicking outside (mobile only)
-    if (window.innerWidth <= 768 && this.isMenuOpen && 
-        !target.closest('.pages') && 
-        !target.closest('.account') &&
-        !target.closest('.burger')) {
+
+    if (!target.closest('.search')) this.closeSuggestions();
+
+    if (
+      this.isMenuOpen &&
+      window.innerWidth <= 960 &&
+      !target.closest('.nav__panel') &&
+      !target.closest('.burger')
+    ) {
       this.closeMenu();
     }
   }
 
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeSuggestions();
+    if (this.isMenuOpen) this.closeMenu();
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+    }
   }
 
   closeMenu() {
     this.isMenuOpen = false;
-    document.body.style.overflow = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  }
-
-  signInForm() {
-    this.tools.isSignedIn.next(true);
-    this.isRegisterShow = false;
-    this.closeMenu();
+    this.unlockScroll();
   }
 
   signOut() {
@@ -89,36 +168,11 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = false;
     this.userImg = null;
     this.userName = null;
+    this.cart.lines.set([]);
     this.closeMenu();
   }
 
-  showRegister() {
-    this.tools.isSignedIn.next(false);
-    this.tools.isRegistered.next(true);
-    this.closeMenu();
-  }
-
-  closeForm(close: boolean) {
-    this.isSignShow = close;
-    if (!close) document.body.style.overflow = '';
-  }
-
-  closeRegister(close: boolean) {
-    this.isRegisterShow = close;
-    if (!close) document.body.style.overflow = '';
-  }
-
-  loggedIn(logg: boolean) {
-    this.isLoggedIn = logg;
-    this.closeMenu();
-  }
-
-  profileInfoNav(info: any) {
-    this.userImg = info.avatar;
-    this.userName = info.firstName;
-    sessionStorage.setItem('userAvatar', info.avatar);
-    sessionStorage.setItem('userName', info.firstName);
-    this.closeMenu();
+  private unlockScroll() {
+    if (typeof document !== 'undefined') document.body.style.overflow = '';
   }
 }
-

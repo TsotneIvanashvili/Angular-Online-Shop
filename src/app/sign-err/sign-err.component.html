@@ -1,14 +1,24 @@
 @if (isShown) {
-<div class="notAccountErr" (click)="outSide($event)">
-    <div class="errCard">
-        <button (click)="closeErr()" class="close">X</button>
-        <h2>You are not signed in</h2>
-        <p>please sign in or sign up to continue...</p>
-        <div class="btns">
-            <button routerLink="/Signin" (click)="scrollToTop()">Sign in</button>
-            <button routerLink="/register" (click)="scrollToTop()">Sign up</button>
-        </div>
+  <div class="gate" (click)="outSide($event)" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate__card glass">
+      <button class="gate__close" (click)="closeErr()" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="gate__icon" aria-hidden="true">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+
+      <h2 id="gate-title">Sign in to add this</h2>
+      <p class="gate__text">
+        Your cart is tied to your account, so it follows you between devices.
+        It only takes a moment.
+      </p>
+
+      <div class="gate__actions">
+        <a class="btn btn-primary" routerLink="/Signin" (click)="closeErr()">Sign in</a>
+        <a class="btn btn-secondary" routerLink="/register" (click)="closeErr()">Create an account</a>
+      </div>
     </div>
   </div>
-
 }

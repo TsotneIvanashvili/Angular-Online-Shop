@@ -6,12 +6,14 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { GsapMagneticDirective } from '../../directives/motion.directives';
 
 @Component({
   selector: 'app-error',
+  standalone: true,
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css'],
-  imports: [RouterModule]
+  imports: [RouterModule, GsapMagneticDirective]
 })
 export class ErrorComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;

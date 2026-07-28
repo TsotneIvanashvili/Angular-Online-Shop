@@ -3,71 +3,70 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { ProductsAreaService } from '../../../services/products-area.service';
-import { RouterModule } from '@angular/router';
 import { Product } from '../../../../interfaces/product';
 import { AllProductArea } from '../../../../interfaces/all-product-area';
+import { ProductCardComponent } from '../../../shared/product-card/product-card.component';
+import { ProductSkeletonComponent } from '../../../shared/product-skeleton/product-skeleton.component';
 
 @Component({
   selector: 'app-related-prods',
-  imports: [RouterModule],
+  standalone: true,
+  imports: [ProductCardComponent, ProductSkeletonComponent],
   templateUrl: './related-prods.component.html',
   styleUrl: './related-prods.component.css',
 })
-export class RelatedProdsComponent implements OnInit {
-  constructor(public serv: ProductsAreaService) {}
-  @Input() public categoryID: string | undefined;
-  @Output() public otherRelated: EventEmitter<any> = new EventEmitter();
-  public relatedProds: Product[] = [];
-  public altImage: string =
-    'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=';
+export class RelatedProdsComponent implements OnChanges {
+  private serv = inject(ProductsAreaService);
 
-  ngOnInit(): void {
-    this.showCards()
+  @Input() categoryID: string | undefined;
+  /** The product being viewed, so it isn't listed as related to itself. */
+  @Input() excludeID: string | undefined;
+
+  @Output() otherRelated = new EventEmitter<string>();
+
+  protected products: Product[] = [];
+  protected loading = true;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categoryID'] || changes['excludeID']) {
+      this.loadRelated();
+    }
   }
 
-  otherRelatedPage(id: string) {
-    this.otherRelated.emit(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  /**
+   * Pulls from the product's own category. The previous version called
+   * the homepage endpoint, so "related" products were just the newest
+   * items in the store regardless of what you were looking at.
+   */
+  private loadRelated() {
+    if (!this.categoryID) {
+      this.products = [];
+      this.loading = false;
+      return;
+    }
 
-  }
+    this.loading = true;
 
-  getRelatedProds() {
-    this.serv
-      .getListByCategory(this.categoryID, 1, 5)
-      .subscribe((data: AllProductArea) => {
-        let filtered = data.products.filter(
-          (item: any) => item._id != this.categoryID
-        );
-
-        this.relatedProds = filtered;
-      });
-  }
-
-
-  
-  protected productList!: Product[];
-
-  showCards() {
-    this.serv.getCardsforHome().subscribe({
+    this.serv.getListByCategory(this.categoryID, 1, 6).subscribe({
       next: (data: AllProductArea) => {
-       this.productList = data.products
-       
-        
-        
+        this.products = (data?.products ?? [])
+          .filter((p) => p._id !== this.excludeID)
+          .slice(0, 4);
+        this.loading = false;
       },
-      error: (error) => {
-        alert(error)
+      error: () => {
+        this.products = [];
+        this.loading = false;
       },
-    })
+    });
   }
 
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  protected select(id: string) {
+    this.otherRelated.emit(id);
   }
 }

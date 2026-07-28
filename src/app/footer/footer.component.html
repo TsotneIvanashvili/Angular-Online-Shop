@@ -1,29 +1,57 @@
-<div class="nope">
-
 <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-section">
-        <h3 class="footer-title">TechStore</h3>
-        <p>Innovating your digital lifestyle.</p>
-      </div>
-  
-      <div class="footer-section">
-        <h4>Quick Links</h4>
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="brand" routerLink="/">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 8h16M4 12h11M4 16h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand__name">TechStore</span>
+      </a>
+      <p class="footer__blurb">
+        A short, deliberate catalogue of laptops, components and gear.
+        Two-year warranty on every machine.
+      </p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <div class="footer__col">
+        <h3 class="eyebrow">Shop</h3>
         <ul>
-          <li><a routerLink="/">Home</a></li>
-          <li><a routerLink="/shop">Shop</a></li>
+          <li><a routerLink="/shop">All products</a></li>
+          <li><a routerLink="/shop" [queryParams]="{ q: 'laptop' }">Laptops</a></li>
+          <li><a routerLink="/wishlist">Wishlist</a></li>
+          <li><a routerLink="/cart">Cart</a></li>
         </ul>
       </div>
-  
-      <div class="footer-section">
-        <h4>Contact</h4>
-        <p>Phone: +1 234 567 890</p>
+
+      <div class="footer__col">
+        <h3 class="eyebrow">Account</h3>
+        <ul>
+          <li><a routerLink="/Signin">Sign in</a></li>
+          <li><a routerLink="/register">Create account</a></li>
+          <li><a routerLink="/profile">Your account</a></li>
+        </ul>
       </div>
-    </div>
-  
-    <div class="footer-bottom">
-      <p>&copy; 2025 TechStore. All rights reserved.</p>
-    </div>
-  </footer>
-  
-</div>
+
+      <div class="footer__col">
+        <h3 class="eyebrow">Contact</h3>
+        <ul>
+          <li><a href="mailto:support&#64;techstore.example">support&#64;techstore.example</a></li>
+          <li><a href="tel:+995322194780" class="num">+995 322 19 47 80</a></li>
+          <li><span class="footer__muted">Mon–Fri, 09:00–18:00</span></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container footer__bottom">
+    <p class="footer__muted">© {{ year }} TechStore. All rights reserved.</p>
+    <ul class="footer__legal">
+      <li><a routerLink="/">Privacy policy</a></li>
+      <li><a routerLink="/">Terms of service</a></li>
+      <li><a routerLink="/">Returns</a></li>
+    </ul>
+  </div>
+</footer>

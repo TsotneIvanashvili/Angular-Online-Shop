@@ -1,45 +1,20 @@
-<div class="nope">
-  <section class="container">
-    <h1 class="related-title">Related Products</h1>
+@if (loading || products.length) {
+  <section class="container related">
+    <div class="section-head">
+      <div class="section-head__title">
+        <p class="eyebrow">More like this</p>
+        <h2>From the same category</h2>
+      </div>
+    </div>
 
-    <main>
-      @for (item of productList; track $index) {
-        <div class="card-wrapper">
-          <div class="card-inner">
-            <div class="card-front">
-              <img [src]="item.images[0]" alt="product" />
-              <div class="main-but">
-                <h2 class="title">{{item.title}}</h2>
-                <div class="but">
-                  <h2 class="h2">
-                    ${{item.price.current}}
-                    <sub>${{item.price.beforeDiscount}}</sub>
-                  </h2>
-
-                  @if (item.stock <= 0) {
-                    <p class="stock-badge out">
-                      <i class="fa-solid fa-circle-xmark"></i> Out of stock
-                    </p>
-                  } @else {
-                    <p class="stock-badge in">
-                      <i class="fa-solid fa-circle-check"></i> In stock ({{ item.stock }})
-                    </p>
-                  }
-                </div>
-              </div>
-            </div>
-
-            <div class="card-back">
-              <h1>Description</h1>
-              <p>{{item.description}}</p>
-              <h2>Rating: {{item.rating}} *</h2>
-              <button (click)="otherRelatedPage(item._id)" class="add-cart">
-                <i class="fa-solid fa-eye"></i> See Details
-              </button>
-            </div>
-          </div>
-        </div>
+    <div class="grid">
+      @if (loading) {
+        <app-product-skeleton [count]="4" />
+      } @else {
+        @for (p of products; track p._id; let i = $index) {
+          <app-product-card [product]="p" [index]="i" (open)="select($event)" />
+        }
       }
-    </main>
+    </div>
   </section>
-</div>
+}

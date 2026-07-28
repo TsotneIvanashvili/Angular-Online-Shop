@@ -1,7 +1,73 @@
-<section class="profile-placeholder">
-  <div class="panel">
-    <h1 class="gradient-text">Profile Zone</h1>
-    <p>Your profile dashboard design is being prepared.</p>
-    <a routerLink="/" class="home-link">Back To Home</a>
-  </div>
+<section class="container profile">
+  <header class="profile__head">
+    <p class="eyebrow">Your account</p>
+    <h1 gsapSplit splitBy="lines" [splitImmediate]="true">
+      Account <span class="serif">overview</span>
+    </h1>
+  </header>
+
+  @if (loading) {
+    <div class="profile__grid">
+      <div class="skeleton" style="height:220px;border-radius:var(--r-lg)"></div>
+      <div class="skeleton" style="height:220px;border-radius:var(--r-lg)"></div>
+    </div>
+  } @else if (failed || !profile) {
+    <div class="state">
+      <i class="fa-solid fa-user-lock state__icon"></i>
+      <h2>You're not signed in</h2>
+      <p class="prose">Sign in to see your details, orders and saved products.</p>
+      <div class="state__actions">
+        <a class="btn btn-primary" routerLink="/Signin">Sign in</a>
+        <a class="btn btn-secondary" routerLink="/register">Create an account</a>
+      </div>
+    </div>
+  } @else {
+    <div class="profile__grid" gsapReveal revealChildren=".card" [revealY]="34" [revealStagger]="0.08">
+      <!-- ── Identity ─────────────────────────────────── -->
+      <article class="card card--id spotlight" gsapSpotlight>
+        <div class="id">
+          @if (profile.avatar) {
+            <img class="id__avatar" [src]="profile.avatar" [alt]="fullName" />
+          } @else {
+            <span class="id__avatar id__avatar--fallback">{{ initials }}</span>
+          }
+          <div class="id__text">
+            <h2>{{ fullName || 'Your account' }}</h2>
+            @if (profile.email) { <p class="id__email">{{ profile.email }}</p> }
+          </div>
+        </div>
+
+        <dl class="facts">
+          @if (profile.phone) { <div><dt>Phone</dt><dd class="num">{{ profile.phone }}</dd></div> }
+          @if (profile.age) { <div><dt>Age</dt><dd class="num">{{ profile.age }}</dd></div> }
+          @if (profile.address) { <div class="facts__wide"><dt>Address</dt><dd>{{ profile.address }}</dd></div> }
+          @if (profile.zipcode) { <div><dt>Postal code</dt><dd class="num">{{ profile.zipcode }}</dd></div> }
+        </dl>
+      </article>
+
+      <!-- ── Activity ─────────────────────────────────── -->
+      <article class="card card--stats spotlight" gsapSpotlight>
+        <h2 class="card__heading">At a glance</h2>
+
+        <div class="tiles">
+          <a class="tile" routerLink="/cart">
+            <span class="tile__num num">{{ cart.count() }}</span>
+            <span class="tile__label">In your cart</span>
+            <i class="fa-solid fa-arrow-right tile__go"></i>
+          </a>
+
+          <a class="tile" routerLink="/wishlist">
+            <span class="tile__num num">{{ wishlist.count() }}</span>
+            <span class="tile__label">Saved products</span>
+            <i class="fa-solid fa-arrow-right tile__go"></i>
+          </a>
+        </div>
+
+        <div class="card__actions">
+          <a class="btn btn-primary btn-block" routerLink="/shop">Continue shopping</a>
+          <a class="btn btn-secondary btn-block" routerLink="/checkout">Go to checkout</a>
+        </div>
+      </article>
+    </div>
+  }
 </section>

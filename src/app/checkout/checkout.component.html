@@ -1,0 +1,260 @@
+@if (placed) {
+  <!-- ── Confirmation ────────────────────────────────────── -->
+  <section class="container confirm">
+    <div class="confirm__mark" aria-hidden="true">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <p class="eyebrow">Order confirmed</p>
+    <h1>Thanks — we're on it</h1>
+    <p class="prose">
+      A confirmation is on its way to
+      <strong>{{ form.value.email }}</strong>. You'll get tracking details as
+      soon as the parcel leaves the warehouse.
+    </p>
+
+    <dl class="confirm__meta">
+      <div>
+        <dt>Reference</dt>
+        <dd class="num">{{ orderRef }}</dd>
+      </div>
+      <div>
+        <dt>Total paid</dt>
+        <dd class="num">{{ cart.total() | currency }}</dd>
+      </div>
+      <div>
+        <dt>Shipping to</dt>
+        <dd>{{ form.value.city }}, {{ form.value.country }}</dd>
+      </div>
+    </dl>
+
+    <div class="confirm__actions">
+      <a class="btn btn-primary" routerLink="/shop">Keep shopping</a>
+      <a class="btn btn-secondary" routerLink="/">Back home</a>
+    </div>
+  </section>
+} @else {
+  <section class="container checkout">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a routerLink="/cart">Cart</a>
+      <span aria-hidden="true">/</span>
+      <span class="crumbs__here">Checkout</span>
+    </nav>
+
+    <header class="checkout__head">
+      <h1 gsapSplit splitBy="lines" [splitImmediate]="true">Checkout</h1>
+      <p class="prose">Two minutes, three steps. Nothing is charged until you confirm.</p>
+    </header>
+
+    @if (!cart.isAuthed()) {
+      <div class="state">
+        <i class="fa-solid fa-lock state__icon"></i>
+        <h2>Sign in to check out</h2>
+        <p class="prose">You need an account so we can attach this order to it.</p>
+        <div class="state__actions">
+          <a class="btn btn-primary" routerLink="/Signin">Sign in</a>
+          <a class="btn btn-secondary" routerLink="/register">Create an account</a>
+        </div>
+      </div>
+    } @else if (!cart.lines().length && !cart.loading()) {
+      <div class="state">
+        <i class="fa-solid fa-bag-shopping state__icon"></i>
+        <h2>There's nothing to check out</h2>
+        <p class="prose">Your cart is empty — add a product first.</p>
+        <div class="state__actions">
+          <a class="btn btn-primary" routerLink="/shop">Browse products</a>
+        </div>
+      </div>
+    } @else {
+      <form class="checkout__grid" [formGroup]="form" (ngSubmit)="placeOrder()" novalidate>
+        <div class="checkout__forms" gsapReveal revealChildren=".block" [revealY]="34" [revealStagger]="0.09">
+          <!-- ── Contact ───────────────────────────────── -->
+          <fieldset class="block">
+            <legend class="block__legend"><span class="block__num num">1</span> Contact</legend>
+
+            <div class="block__rows">
+              <div class="field">
+                <label class="field-label" for="email">Email</label>
+                <input id="email" class="input" type="email" formControlName="email"
+                       placeholder="you@example.com" autocomplete="email"
+                       [attr.aria-invalid]="invalid('email')" />
+                @if (invalid('email')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('email') }}</p>
+                }
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="phone">Phone</label>
+                <input id="phone" class="input" type="tel" formControlName="phone"
+                       placeholder="+995 555 01 23 45" autocomplete="tel"
+                       [attr.aria-invalid]="invalid('phone')" />
+                @if (invalid('phone')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('phone') }}</p>
+                }
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ── Shipping ──────────────────────────────── -->
+          <fieldset class="block">
+            <legend class="block__legend"><span class="block__num num">2</span> Shipping address</legend>
+
+            <div class="block__rows">
+              <div class="field field--wide">
+                <label class="field-label" for="fullName">Full name</label>
+                <input id="fullName" class="input" type="text" formControlName="fullName"
+                       placeholder="Nino Beridze" autocomplete="name"
+                       [attr.aria-invalid]="invalid('fullName')" />
+                @if (invalid('fullName')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('fullName') }}</p>
+                }
+              </div>
+
+              <div class="field field--wide">
+                <label class="field-label" for="address">Street address</label>
+                <input id="address" class="input" type="text" formControlName="address"
+                       placeholder="14 Rustaveli Avenue, apt 7" autocomplete="street-address"
+                       [attr.aria-invalid]="invalid('address')" />
+                @if (invalid('address')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('address') }}</p>
+                }
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="city">City</label>
+                <input id="city" class="input" type="text" formControlName="city"
+                       placeholder="Tbilisi" autocomplete="address-level2"
+                       [attr.aria-invalid]="invalid('city')" />
+                @if (invalid('city')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('city') }}</p>
+                }
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="zip">Postal code</label>
+                <input id="zip" class="input num" type="text" formControlName="zip"
+                       placeholder="0108" autocomplete="postal-code"
+                       [attr.aria-invalid]="invalid('zip')" />
+                @if (invalid('zip')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('zip') }}</p>
+                }
+              </div>
+
+              <div class="field field--wide">
+                <label class="field-label" for="country">Country</label>
+                <select id="country" class="select" formControlName="country">
+                  @for (c of countries; track c) { <option [value]="c">{{ c }}</option> }
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ── Payment ───────────────────────────────── -->
+          <fieldset class="block">
+            <legend class="block__legend"><span class="block__num num">3</span> Payment</legend>
+
+            <p class="block__note">
+              <i class="fa-solid fa-flask"></i>
+              Demo checkout — no payment provider is connected and no card is charged.
+            </p>
+
+            <div class="block__rows">
+              <div class="field field--wide">
+                <label class="field-label" for="cardName">Name on card</label>
+                <input id="cardName" class="input" type="text" formControlName="cardName"
+                       placeholder="N. BERIDZE" autocomplete="cc-name"
+                       [attr.aria-invalid]="invalid('cardName')" />
+                @if (invalid('cardName')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('cardName') }}</p>
+                }
+              </div>
+
+              <div class="field field--wide">
+                <label class="field-label" for="cardNumber">Card number</label>
+                <input id="cardNumber" class="input num" type="text" inputmode="numeric"
+                       formControlName="cardNumber" (input)="formatCard()"
+                       placeholder="4242 4242 4242 4242" autocomplete="cc-number"
+                       [attr.aria-invalid]="invalid('cardNumber')" />
+                @if (invalid('cardNumber')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('cardNumber') }}</p>
+                }
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="cardExpiry">Expiry</label>
+                <input id="cardExpiry" class="input num" type="text" inputmode="numeric"
+                       formControlName="cardExpiry" (input)="formatExpiry()"
+                       placeholder="MM/YY" autocomplete="cc-exp"
+                       [attr.aria-invalid]="invalid('cardExpiry')" />
+                @if (invalid('cardExpiry')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('cardExpiry') }}</p>
+                }
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="cardCvc">Security code</label>
+                <input id="cardCvc" class="input num" type="text" inputmode="numeric" maxlength="4"
+                       formControlName="cardCvc" placeholder="123" autocomplete="cc-csc"
+                       [attr.aria-invalid]="invalid('cardCvc')" />
+                @if (invalid('cardCvc')) {
+                  <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('cardCvc') }}</p>
+                }
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- ── Summary ─────────────────────────────────── -->
+        <aside class="summary panel spotlight" gsapReveal [revealY]="34" [revealDelay]="0.08">
+          <h2 class="summary__heading">Order summary</h2>
+
+          <ul class="summary__items">
+            @for (line of cart.lines(); track line.productId) {
+              <li class="mini">
+                <span class="mini__img">
+                  <img [src]="line.image" [alt]="''" loading="lazy" />
+                  <span class="mini__qty num">{{ line.quantity }}</span>
+                </span>
+                <span class="mini__title">{{ line.title }}</span>
+                <span class="mini__price num">{{ line.lineTotal | currency }}</span>
+              </li>
+            }
+          </ul>
+
+          <hr class="hairline" />
+
+          <dl class="summary__rows">
+            <div><dt>Subtotal</dt><dd class="num">{{ cart.subtotal() | currency }}</dd></div>
+            <div>
+              <dt>Shipping</dt>
+              <dd class="num">
+                @if (cart.shipping() === 0) { <span class="summary__free">Free</span> }
+                @else { {{ cart.shipping() | currency }} }
+              </dd>
+            </div>
+            <div><dt>Estimated tax</dt><dd class="num">{{ cart.tax() | currency }}</dd></div>
+          </dl>
+
+          <hr class="hairline" />
+
+          <div class="summary__total">
+            <span>Total</span>
+            <span class="num">{{ cart.total() | currency }}</span>
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block" type="submit"
+                  gsapMagnetic [magneticStrength]="0.14" [disabled]="submitting">
+            @if (submitting) {
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Placing order…
+            } @else {
+              <i class="fa-solid fa-lock"></i> Place order
+            }
+          </button>
+
+          <a class="link-arrow summary__back" routerLink="/cart">
+            <i class="fa-solid fa-arrow-left"></i> Back to cart
+          </a>
+        </aside>
+      </form>
+    }
+  </section>
+}

@@ -1,47 +1,155 @@
-.profile-placeholder {
-  min-height: 72vh;
-  margin-top: 86px;
+:host { display: block; padding-bottom: 5rem; }
+
+.profile { padding-top: 2.5rem; }
+
+.profile__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.profile__head h1 { font-size: clamp(2.2rem, 6vw, 4rem); line-height: 0.95; }
+.profile__head .serif { color: var(--accent); }
+
+.profile__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  transition: border-color var(--t-base) var(--ease);
+}
+.card:hover { border-color: var(--border-strong); }
+.card > * { position: relative; z-index: 3; }
+
+.card__heading {
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* ── Identity ───────────────────────────────────────────── */
+
+.id { display: flex; align-items: center; gap: 1rem; }
+
+.id__avatar {
+  width: 62px;
+  height: 62px;
+  flex-shrink: 0;
+  /* Squircle, not the default circle */
+  border-radius: 18px;
+  object-fit: cover;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-sunken);
+}
+
+.id__avatar--fallback {
   display: grid;
   place-items: center;
-  padding: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-color: var(--accent-line);
 }
 
-.panel {
-  width: min(620px, 100%);
-  border-radius: 22px;
-  border: 1px solid rgba(96, 120, 255, 0.34);
-  background: linear-gradient(145deg, rgba(15, 20, 52, 0.88), rgba(8, 11, 31, 0.92));
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
-  text-align: center;
-  padding: 1.4rem 1rem;
+.id__text { min-width: 0; }
+.id__text h2 { font-size: 1.25rem; letter-spacing: -0.03em; }
+.id__email {
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.facts {
   display: grid;
-  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.facts__wide { grid-column: 1 / -1; }
+.facts dt { font-size: 0.6875rem; color: var(--text-3); margin-bottom: 0.25rem; }
+.facts dd { font-size: 0.875rem; font-weight: 450; }
+
+/* ── Tiles ──────────────────────────────────────────────── */
+
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.1rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+  transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.tile:hover { border-color: var(--accent-line); transform: translateY(-2px); }
+
+.tile__num {
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
-.panel h1 {
-  font-size: clamp(1.4rem, 3.2vw, 2.2rem);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.tile__label { font-size: 0.75rem; color: var(--text-3); }
+
+.tile__go {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  font-size: 0.7rem;
+  color: var(--text-4);
+  transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.tile:hover .tile__go { color: var(--accent); transform: translateX(2px); }
+
+.card__actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
+
+/* ── Signed-out state ───────────────────────────────────── */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: clamp(3rem, 9vw, 5.5rem) 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+.state__icon { font-size: 1.6rem; color: var(--text-4); margin-bottom: 0.3rem; }
+.state h2 { font-size: 1.2rem; }
+.state .prose { text-align: center; font-size: 0.875rem; }
+.state__actions { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin-top: 0.6rem; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .profile__grid { grid-template-columns: 1fr; }
 }
 
-.panel p {
-  color: #bcc5e2;
-  font-size: 1.1rem;
-}
-
-.home-link {
-  justify-self: center;
-  border: 1px solid rgba(28, 243, 255, 0.62);
-  border-radius: 999px;
-  background: linear-gradient(120deg, rgba(28, 243, 255, 0.24), rgba(255, 62, 242, 0.22));
-  color: #f2f7ff;
-  padding: 0.55rem 1.1rem;
-  font-weight: 700;
-  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.38s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.home-link:hover {
-  transform: translateY(-2px);
-  border-color: rgba(143, 255, 46, 0.62);
-  box-shadow: 0 0 14px rgba(28, 243, 255, 0.22);
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: 1fr; }
+  .id__avatar { width: 52px; height: 52px; }
 }

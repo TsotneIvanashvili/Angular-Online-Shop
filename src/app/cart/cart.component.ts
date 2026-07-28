@@ -1,66 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiAreaService } from '../services/api-area.service';
-import { HttpHeaders } from '@angular/common/http';
-import { ProductsAreaService } from '../services/products-area.service';
-import { CartAreaService } from '../services/cart-area.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { CartStateService } from '../services/cart-state.service';
+import { ToastService } from '../services/toast.service';
+import {
+  GsapRevealDirective,
+  GsapSplitDirective,
+  GsapMagneticDirective,
+} from '../../directives/motion.directives';
 
 @Component({
-    selector: 'app-cart',
-    imports: [],
-    templateUrl: './cart.component.html',
-    styleUrl: './cart.component.css'
+  selector: 'app-cart',
+  standalone: true,
+  imports: [
+    RouterModule,
+    CurrencyPipe,
+    GsapRevealDirective,
+    GsapSplitDirective,
+    GsapMagneticDirective,
+  ],
+  templateUrl: './cart.component.html',
+  styleUrl: './cart.component.css',
 })
-export class CartComponent   {
-  constructor(public api: CartAreaService,   public productService: ProductsAreaService) {
-    this.getCart()
+export class CartComponent implements OnInit {
+  protected cart = inject(CartStateService);
+  private toast = inject(ToastService);
+
+  /** Ids mid-request, so only the affected row shows a pending state. */
+  protected pending = new Set<string>();
+
+  ngOnInit(): void {
+    this.cart.refresh();
   }
 
-  public cart: any[] = []
+  protected updateQuantity(productId: string, quantity: number) {
+    if (quantity < 1 || this.pending.has(productId)) return;
 
-getCart() {
-  this.api.getCart().subscribe((data: any) => {
-    const cartItems = data.products;
-
-    const enrichedCartItems: any[] = [];
-
-    cartItems.forEach((item: any) => {
-      this.productService.getProductDetailInfo(item.productId).subscribe((productData: any) => {
-        enrichedCartItems.push({
-          ...item,
-          title: productData.title,
-          image: productData.images[0] || '', 
-        });
-      });
+    this.pending.add(productId);
+    this.cart.updateQuantity(productId, quantity).subscribe({
+      next: () => this.pending.delete(productId),
+      error: () => {
+        this.pending.delete(productId);
+        this.toast.error("We couldn't update that quantity", 'Please try again.');
+      },
     });
+  }
 
-    this.cart = enrichedCartItems;
-  });
-}
+  protected remove(productId: string, title: string) {
+    if (this.pending.has(productId)) return;
 
+    this.pending.add(productId);
+    this.cart.removeItem(productId).subscribe({
+      next: () => {
+        this.pending.delete(productId);
+        this.toast.info('Removed from cart', title);
+      },
+      error: () => {
+        this.pending.delete(productId);
+        this.toast.error("We couldn't remove that item", 'Please try again.');
+      },
+    });
+  }
 
-updateQuantity(productId: string, newQuantity: number) {
-  if (newQuantity < 1) return;
-
-  const body = {
-    id: productId,
-    quantity: newQuantity,
-  };
-
-  this.api.updateToCart(body).subscribe(() => {
-    this.getCart(); 
-  });
-}
-
-deleteProduct(productId: string) {
-  const body = {
-    id: productId,
-  };
-
-  this.api.deleteProduct(body).subscribe(() => {
-    this.getCart(); 
-  });
-}
-
-
-
+  protected isPending(id: string): boolean {
+    return this.pending.has(id);
+  }
 }

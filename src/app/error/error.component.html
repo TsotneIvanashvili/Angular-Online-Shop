@@ -1,5 +1,26 @@
-<main class="error-wrapper">
-  <canvas #canvas></canvas>
-  <p>Page not found</p>
-  <button routerLink="/">Go Back Home</button>
-</main>
+<section class="notfound">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <div class="notfound__inner">
+    <canvas #canvas class="notfound__canvas" aria-hidden="true"></canvas>
+
+    <h1 class="notfound__title">This page <span class="serif">doesn't exist</span></h1>
+    <p class="prose notfound__text">
+      The link may be out of date, or the product was taken off the store.
+      Here's where most people go next.
+    </p>
+
+    <div class="notfound__actions">
+      <a class="btn btn-primary btn-lg" routerLink="/shop" gsapMagnetic>Browse the catalogue</a>
+      <a class="btn btn-secondary btn-lg" routerLink="/" gsapMagnetic>Back home</a>
+    </div>
+
+    <nav class="notfound__links" aria-label="Helpful links">
+      <a routerLink="/cart">Your cart</a>
+      <span aria-hidden="true">·</span>
+      <a routerLink="/wishlist">Wishlist</a>
+      <span aria-hidden="true">·</span>
+      <a routerLink="/Signin">Sign in</a>
+    </nav>
+  </div>
+</section>

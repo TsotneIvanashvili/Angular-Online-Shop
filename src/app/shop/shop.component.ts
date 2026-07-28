@@ -1,1359 +1,303 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  HostListener,
-} from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { ProductsAreaService } from '../services/products-area.service';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
+import { SidebarComponent, ShopFilters, EMPTY_FILTERS } from '../sidebar/sidebar.component';
+import { ProductsAreaService } from '../services/products-area.service';
 import { Product } from '../../interfaces/product';
 import { AllProductArea } from '../../interfaces/all-product-area';
 import { FilteredProducts } from '../../interfaces/filtered-products';
-import { RouterModule } from '@angular/router';
+
+import { ProductCardComponent } from '../shared/product-card/product-card.component';
+import { ProductSkeletonComponent } from '../shared/product-skeleton/product-skeleton.component';
+import { QuickViewComponent } from '../shared/quick-view/quick-view.component';
+import {
+  GsapRevealDirective,
+  GsapSplitDirective,
+  GsapMagneticDirective,
+} from '../../directives/motion.directives';
+
+interface Category {
+  id: string;
+  name: string;
+  image: string;
+}
+
+/** Which endpoint the current view reads from. */
+type Source = 'all' | 'category' | 'filter' | 'brand';
 
 @Component({
   selector: 'app-shop',
-  imports: [SidebarComponent, FormsModule, RouterModule],
+  standalone: true,
+  imports: [
+    SidebarComponent,
+    FormsModule,
+    RouterModule,
+    ProductCardComponent,
+    ProductSkeletonComponent,
+    QuickViewComponent,
+    GsapRevealDirective,
+    GsapSplitDirective,
+    GsapMagneticDirective,
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
-export class ShopComponent implements OnInit, AfterViewInit {
-  @ViewChild('particlesCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  private ctx!: CanvasRenderingContext2D;
-  private particles: Particle[] = [];
+export class ShopComponent implements OnInit {
+  @ViewChild(SidebarComponent) private sidebar?: SidebarComponent;
 
-  constructor(public prodService: ProductsAreaService) {}
+  private prodService = inject(ProductsAreaService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  protected categories: Category[] = [];
+  protected products: Product[] = [];
+  protected loading = true;
+  protected failed = false;
+
+  protected currentPage = 1;
+  protected pageSize = 12;
+  protected total = 0;
+
+  protected source: Source = 'all';
+  protected activeCategory: Category | null = null;
+  protected filters: ShopFilters = { ...EMPTY_FILTERS };
+
+  protected quickViewProduct: Product | null = null;
+
+  protected readonly pageSizes = [12, 24, 48];
 
   ngOnInit(): void {
-    this.showProducts(this.currentPage, this.pageSize);
-    this.getCategoriesList();
-  }
+    this.prodService.getCategories().subscribe({
+      next: (list: any) => (this.categories = list ?? []),
+      error: () => (this.categories = []),
+    });
 
-  ngAfterViewInit(): void {
-    this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
-    this.resizeCanvas();
-    this.initParticles();
-    this.animateParticles();
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.resizeCanvas();
-  }
-
-  private resizeCanvas() {
-    const canvas = this.canvasRef.nativeElement;
-    canvas.width = window.innerWidth;
-    canvas.height = 500;
-  }
-
-  private initParticles() {
-    this.particles = [];
-    for (let i = 0; i < 100; i++) {
-      this.particles.push(new Particle(
-        this.canvasRef.nativeElement.width,
-        this.canvasRef.nativeElement.height
-      ));
-    }
-  }
-
-  private animateParticles = () => {
-    const canvas = this.canvasRef.nativeElement;
-    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of this.particles) {
-      p.update(canvas.width, canvas.height);
-      p.draw(this.ctx);
-    }
-    requestAnimationFrame(this.animateParticles);
-  }
-
-  protected categories: any;
-  public currentCategory: any;
-  public productList: Product[] = [];
-  public pageList: number[] = [];
-  public currentPage: number = 1;
-  public pageSize: any = 10;
-  public totalSize!: any;
-  public isCategoryShown: boolean = false;
-  public altImage: string =
-    'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=';
-
-  pagination(data: FilteredProducts | AllProductArea) {
-    this.pageList = [];
-    this.productList = data.products;
-    let pages = Math.ceil(data.total / this.pageSize);
-    for (let i = 1; i <= pages; i++) {
-      this.pageList.push(i);
-    }
-  }
-
-  showProducts(page: number | string = 1, size: number = this.totalSize) {
-    this.isCategoryShown = false;
-    this.currentPage = +page;
-    this.prodService
-      .getCardsOnShopPage(page, size)
-      .subscribe((data: AllProductArea) => {
-        this.productList = data.products;
-        this.totalSize = data.total;
-        this.pagination(data);
-      });
-  }
-
-  search(search: string) {
-    this.prodService
-      .getSearchedData(search, this.pageSize)
-      .subscribe((data: FilteredProducts) => {
-        this.productList = data.products;
-        this.pagination(data);
-      });
-  }
-
-  filterProducts(info: any) {
-    this.prodService
-      .filterData(
-        (info.search = ''),
-        info.rating,
-        (info.min = '1'),
-        (info.max = '99999'),
-        info.type,
-        info.sort,
-        this.pageSize
-      )
-      .subscribe((data: FilteredProducts) => {
-        this.productList = data.products;
-        this.pagination(data);
-      });
-  }
-
-  switchBrands(dataOfBrand: AllProductArea) {
-    this.productList = dataOfBrand.products;
-    this.pageList = [1];
-  }
-
-  changePageSize() {
-    this.currentPage = 1;
-    let pageArea = this.pageSize == '' ? this.totalSize : this.pageSize;
-    if (!this.isCategoryShown) {
-      this.showProducts(this.currentPage, pageArea);
-    } else {
-      this.showByCategory(this.currentCategory, this.currentPage);
-    }
-  }
-
-  prevPage() {
-    this.currentPage--;
-    if (!this.isCategoryShown) {
-      this.showProducts(this.currentPage, this.pageSize);
-    } else {
-      this.showByCategory(this.currentCategory, this.currentPage);
-    }
-  }
-
-  nextPage() {
-    this.currentPage++;
-    if (!this.isCategoryShown) {
-      this.showProducts(this.currentPage, this.pageSize);
-    } else {
-      this.showByCategory(this.currentCategory, this.currentPage);
-    }
-  }
-
-  getCategoriesList() {
-    this.prodService.getCategories().subscribe((list: any) => {
-      this.categories = list;
+    // A ?q= handed over from the navbar search seeds the keyword filter.
+    this.route.queryParams.subscribe((params) => {
+      const q = (params['q'] ?? '').toString();
+      if (q) {
+        this.filters = { ...EMPTY_FILTERS, search: q };
+        this.source = 'filter';
+        this.sidebar?.setSearchText(q);
+      } else {
+        this.filters = { ...EMPTY_FILTERS };
+        this.source = 'all';
+      }
+      this.activeCategory = null;
+      this.currentPage = 1;
+      this.load();
     });
   }
 
-  showByCategory(category: string, pageNum: any) {
-    this.isCategoryShown = true;
-    this.currentCategory = category;
-    this.currentPage = pageNum;
+  // ── Data ─────────────────────────────────────────────────
+
+  private load() {
+    this.loading = true;
+    this.failed = false;
+
+    const done = (data: AllProductArea | FilteredProducts) => {
+      this.products = data?.products ?? [];
+      this.total = data?.total ?? this.products.length;
+      this.loading = false;
+    };
+
+    const fail = () => {
+      this.products = [];
+      this.total = 0;
+      this.loading = false;
+      this.failed = true;
+    };
+
+    if (this.source === 'category' && this.activeCategory) {
+      this.prodService
+        .getListByCategory(this.activeCategory.id, this.currentPage, this.pageSize)
+        .subscribe({ next: done, error: fail });
+      return;
+    }
+
+    if (this.source === 'brand' && this.filters.brand) {
+      this.prodService
+        .getExactBrandData(this.filters.brand, this.pageSize)
+        .subscribe({ next: done, error: fail });
+      return;
+    }
+
+    if (this.source === 'filter') {
+      this.prodService
+        .filterData(
+          {
+            search: this.filters.search,
+            min: this.filters.min,
+            max: this.filters.max,
+            rating: this.filters.rating,
+            sortBy: this.filters.sortBy,
+            sortDirection: this.filters.sortDirection,
+          },
+          this.pageSize,
+          this.currentPage
+        )
+        .subscribe({ next: done, error: fail });
+      return;
+    }
+
     this.prodService
-      .getListByCategory(category, this.currentPage, this.pageSize)
-      .subscribe((data: any) => {
-        this.productList = data.products;
-        this.pagination(data);
-      });
+      .getCardsOnShopPage(this.currentPage, this.pageSize)
+      .subscribe({ next: done, error: fail });
   }
 
-  scrollToTop() {
+  // ── Filters ──────────────────────────────────────────────
+
+  protected onFilters(filters: ShopFilters) {
+    this.filters = filters;
+    this.activeCategory = null;
+    this.currentPage = 1;
+
+    const hasSearchFilters =
+      !!filters.search ||
+      filters.min !== null ||
+      filters.max !== null ||
+      filters.rating !== null ||
+      !!filters.sortBy;
+
+    // Brand lives on its own endpoint and can't be combined with the
+    // search filters, so it only wins when nothing else is set.
+    this.source =
+      filters.brand && !hasSearchFilters ? 'brand'
+      : hasSearchFilters ? 'filter'
+      : 'all';
+
+    this.load();
+  }
+
+  protected onFiltersReset() {
+    this.filters = { ...EMPTY_FILTERS };
+    this.activeCategory = null;
+    this.source = 'all';
+    this.currentPage = 1;
+
+    if (this.route.snapshot.queryParams['q']) {
+      this.router.navigate(['/shop']);
+      return;
+    }
+    this.load();
+  }
+
+  protected selectCategory(category: Category) {
+    if (this.activeCategory?.id === category.id) {
+      this.clearCategory();
+      return;
+    }
+    this.activeCategory = category;
+    this.filters = { ...EMPTY_FILTERS };
+    this.source = 'category';
+    this.currentPage = 1;
+    this.load();
+  }
+
+  protected clearCategory() {
+    this.activeCategory = null;
+    this.source = 'all';
+    this.currentPage = 1;
+    this.load();
+  }
+
+  protected changePageSize() {
+    this.currentPage = 1;
+    this.load();
+  }
+
+  // ── Active filter pills ──────────────────────────────────
+
+  protected get activePills(): { label: string; clear: () => void }[] {
+    const pills: { label: string; clear: () => void }[] = [];
+    const f = this.filters;
+
+    if (this.activeCategory) {
+      pills.push({ label: this.activeCategory.name, clear: () => this.clearCategory() });
+    }
+    if (f.search) {
+      pills.push({ label: `“${f.search}”`, clear: () => this.clearFilterKey('search') });
+    }
+    if (f.brand) {
+      pills.push({ label: f.brand, clear: () => this.clearFilterKey('brand') });
+    }
+    if (f.min !== null || f.max !== null) {
+      const label =
+        f.min !== null && f.max !== null ? `$${f.min}–$${f.max}`
+        : f.min !== null ? `Over $${f.min}`
+        : `Under $${f.max}`;
+      pills.push({
+        label,
+        clear: () => {
+          this.filters = { ...this.filters, min: null, max: null };
+          this.onFilters(this.filters);
+        },
+      });
+    }
+    if (f.rating !== null) {
+      pills.push({ label: `${f.rating}★ & up`, clear: () => this.clearFilterKey('rating') });
+    }
+    if (f.sortBy) {
+      pills.push({
+        label: `Sorted by ${f.sortBy.replace('_', ' ')}`,
+        clear: () => this.clearFilterKey('sortBy'),
+      });
+    }
+
+    return pills;
+  }
+
+  private clearFilterKey(key: keyof ShopFilters) {
+    const next: ShopFilters = { ...this.filters };
+    (next as any)[key] = key === 'rating' ? null : '';
+    this.onFilters(next);
+  }
+
+  // ── Pagination ───────────────────────────────────────────
+
+  protected get totalPages(): number {
+    return Math.max(1, Math.ceil(this.total / this.pageSize));
+  }
+
+  /** Windowed page list with ellipses rather than every page number. */
+  protected get pageWindow(): (number | '…')[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+    const pages: (number | '…')[] = [1];
+    const start = Math.max(2, current - 1);
+    const end = Math.min(total - 1, current + 1);
+
+    if (start > 2) pages.push('…');
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (end < total - 1) pages.push('…');
+    pages.push(total);
+
+    return pages;
+  }
+
+  protected goToPage(page: number | '…') {
+    if (page === '…' || page === this.currentPage) return;
+    this.currentPage = Math.max(1, Math.min(this.totalPages, page));
+    this.load();
+    this.scrollToTop();
+  }
+
+  protected prevPage() { this.goToPage(this.currentPage - 1); }
+  protected nextPage() { this.goToPage(this.currentPage + 1); }
+
+  // ── Quick view ───────────────────────────────────────────
+
+  protected openQuickView(product: Product) { this.quickViewProduct = product; }
+  protected closeQuickView() { this.quickViewProduct = null; }
+
+  protected hideBrokenImage(event: Event) {
+    (event.target as HTMLImageElement).style.display = 'none';
+  }
+
+  protected scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
-
-class Particle {
-  x: number;
-  y: number;
-  size: number;
-  speedX: number;
-  speedY: number;
-
-  constructor(canvasWidth: number, canvasHeight: number) {
-    this.x = Math.random() * canvasWidth;
-    this.y = Math.random() * canvasHeight;
-    this.size = Math.random() * 2 + 1;
-    this.speedX = Math.random() * 1 - 0.5;
-    this.speedY = Math.random() * 1 - 0.5;
-  }
-
-  update(canvasWidth: number, canvasHeight: number) {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x > canvasWidth || this.x < 0) this.speedX *= -1;
-    if (this.y > canvasHeight || this.y < 0) this.speedY *= -1;
-  }
-
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-
-
-  // code below is not a part of the project
-  public one: number = 1;
-  public two: number = 2;
-  public three: number = 3;
-  public four: number = 4;
-  public five: number = 5;
-  public six: number = 6;
-  public seven: number = 7;
-  public eight: number = 8;
-  public nine: number = 9;
-  public ten: number = 10;
-  public eleven: number = 11;
-  public twelve: number = 12;
-  public thirteen: number = 13;
-  public fourteen: number = 14;
-  public fifteen: number = 15;
-  public sixteen: number = 16;
-  public seventeen: number = 17;
-  public eighteen: number = 18;
-  public nineteen: number = 19;
-  public twenty: number = 20;
-  public twentyOne: number = 21;
-  public twentyTwo: number = 22;
-  public twentyThree: number = 23;
-  public twentyFour: number = 24;
-  public twentyFive: number = 25;
-  public twentySix: number = 26;
-  public twentySeven: number = 27;
-  public twentyEight: number = 28;
-  public twentyNine: number = 29;
-  public thirty: number = 30;
-  public thirtyOne: number = 31;
-  public thirtyTwo: number = 32;
-  public thirtyThree: number = 33;
-  public thirtyFour: number = 34;
-  public thirtyFive: number = 35;
-  public thirtySix: number = 36;
-  public thirtySeven: number = 37;
-  public thirtyEight: number = 38;
-  public thirtyNine: number = 39;
-  public forty: number = 40;
-  public fortyOne: number = 41;
-  public fortyTwo: number = 42;
-  public fortyThree: number = 43;
-  public fortyFour: number = 44;
-  public fortyFive: number = 45;
-  public fortySix: number = 46;
-  public fortySeven: number = 47;
-  public fortyEight: number = 48;
-  public fortyNine: number = 49;
-  public fifty: number = 50;
-  public fiftyOne: number = 51;
-  public fiftyTwo: number = 52;
-  public fiftyThree: number = 53;
-  public fiftyFour: number = 54;
-  public fiftyFive: number = 55;
-  public fiftySix: number = 56;
-  public fiftySeven: number = 57;
-  public fiftyEight: number = 58;
-  public fiftyNine: number = 59;
-  public sixty: number = 60;
-  public sixtyOne: number = 61;
-  public sixtyTwo: number = 62;
-  public sixtyThree: number = 63;
-  public sixtyFour: number = 64;
-  public sixtyFive: number = 65;
-  public sixtySix: number = 66;
-  public sixtySeven: number = 67;
-  public sixtyEight: number = 68;
-  public sixtyNine: number = 69;
-  public seventy: number = 70;
-  public seventyOne: number = 71;
-  public seventyTwo: number = 72;
-  public seventyThree: number = 73;
-  public seventyFour: number = 74;
-  public seventyFive: number = 75;
-  public seventySix: number = 76;
-  public seventySeven: number = 77;
-  public seventyEight: number = 78;
-  public seventyNine: number = 79;
-  public eighty: number = 80;
-  public eightyOne: number = 81;
-  public eightyTwo: number = 82;
-  public eightyThree: number = 83;
-  public eightyFour: number = 84;
-  public eightyFive: number = 85;
-  public eightySix: number = 86;
-  public eightySeven: number = 87;
-  public eightyEight: number = 88;
-  public eightyNine: number = 89;
-  public ninety: number = 90;
-  public ninetyOne: number = 91;
-  public ninetyTwo: number = 92;
-  public ninetyThree: number = 93;
-  public ninetyFour: number = 94;
-  public ninetyFive: number = 95;
-  public ninetySix: number = 96;
-  public ninetySeven: number = 97;
-  public ninetyEight: number = 98;
-  public ninetyNine: number = 99;
-  public oneHundred: number = 100;
-  public oneHundredOne: number = 101;
-  public oneHundredTwo: number = 102;
-  public oneHundredThree: number = 103;     
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

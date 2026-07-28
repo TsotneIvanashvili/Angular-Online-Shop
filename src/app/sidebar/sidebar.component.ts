@@ -1,84 +1,119 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ProductsAreaService } from '../services/products-area.service';
-import { AllProductArea } from '../../interfaces/all-product-area';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ProductsAreaService } from '../services/products-area.service';
+
+export interface ShopFilters {
+  search: string;
+  min: number | null;
+  max: number | null;
+  rating: number | null;
+  sortBy: string;
+  sortDirection: string;
+  brand: string;
+}
+
+export const EMPTY_FILTERS: ShopFilters = {
+  search: '',
+  min: null,
+  max: null,
+  rating: null,
+  sortBy: '',
+  sortDirection: '',
+  brand: '',
+};
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  constructor(public productApi: ProductsAreaService) {}
+  private productApi = inject(ProductsAreaService);
 
-  @Output() sendBrands: EventEmitter<AllProductArea> = new EventEmitter();
-  @Output() sendAllProducts: EventEmitter<AllProductArea> = new EventEmitter();
-  @Output() sendCategoryData: EventEmitter<AllProductArea> = new EventEmitter();
-  @Output() sendFilterData: EventEmitter<Object> = new EventEmitter();
-  @Output() sendSearchInfo: EventEmitter<string> = new EventEmitter();
+  @Output() filtersChange = new EventEmitter<ShopFilters>();
+  @Output() filtersReset = new EventEmitter<void>();
 
-  public searchText: string = '';
-  public minPrice: string = '';
-  public maxPrice: string = '';
-  public rating!: number;
-  public sort: string = '';
-  public type: string = '';
-  public activeBrand: string = 'All';
   protected brands: string[] = [];
+  protected loadingBrands = true;
+
+  protected searchText = '';
+  protected minPrice: number | null = null;
+  protected maxPrice: number | null = null;
+  protected rating: number | null = null;
+  protected sortBy = '';
+  protected sortDirection = 'asc';
+  protected activeBrand = '';
+
+  protected readonly ratingOptions = [4, 3, 2, 1];
+  protected readonly pricePresets = [
+    { label: 'Under $100', min: null, max: 100 },
+    { label: '$100 – $500', min: 100, max: 500 },
+    { label: '$500 – $1,500', min: 500, max: 1500 },
+    { label: '$1,500+', min: 1500, max: null },
+  ];
+
   ngOnInit(): void {
-    this.getBrandsList();
+    this.productApi.getBrands().subscribe({
+      next: (list) => {
+        this.brands = list ?? [];
+        this.loadingBrands = false;
+      },
+      error: () => {
+        this.brands = [];
+        this.loadingBrands = false;
+      },
+    });
   }
 
-  searchData() {
-    this.sendSearchInfo.emit(this.searchText);
+  protected setRating(value: number) {
+    this.rating = this.rating === value ? null : value;
+    this.apply();
   }
 
-  filterData() {
-    const min = this.minPrice !== '' ? Number(this.minPrice) : undefined;
-    const max = this.maxPrice !== '' ? Number(this.maxPrice) : undefined;
+  protected setPreset(preset: { min: number | null; max: number | null }) {
+    const alreadyOn = this.minPrice === preset.min && this.maxPrice === preset.max;
+    this.minPrice = alreadyOn ? null : preset.min;
+    this.maxPrice = alreadyOn ? null : preset.max;
+    this.apply();
+  }
 
-    if ((min !== undefined && isNaN(min)) || (max !== undefined && isNaN(max))) {
-      return;
-    }
-    this.sendFilterData.emit({
-      search: this.searchText,
-      min,
-      max,
+  protected isPreset(preset: { min: number | null; max: number | null }): boolean {
+    return this.minPrice === preset.min && this.maxPrice === preset.max;
+  }
+
+  protected apply() {
+    this.filtersChange.emit({
+      search: this.searchText.trim(),
+      min: this.normalise(this.minPrice),
+      max: this.normalise(this.maxPrice),
       rating: this.rating,
-      type: this.type,
-      sort: this.sort,
-      brand: this.activeBrand !== 'All' ? this.activeBrand : undefined
+      sortBy: this.sortBy,
+      sortDirection: this.sortBy ? this.sortDirection : '',
+      brand: this.activeBrand,
     });
   }
 
-  showAll() {
-    this.activeBrand = 'All';
-    this.productApi.getCardsOnShopPage(1, 15).subscribe((data: AllProductArea) => {
-        this.sendAllProducts.emit(data);
-      });
+  protected reset() {
+    this.searchText = '';
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.rating = null;
+    this.sortBy = '';
+    this.sortDirection = 'asc';
+    this.activeBrand = '';
+    this.filtersReset.emit();
   }
 
-  getBrandsList() {
-    this.productApi.getBrands().subscribe((list: string[]) => {
-      this.brands = list;
-    });
+  /** Applies external state (e.g. a ?q= search) without re-emitting. */
+  setSearchText(value: string) {
+    this.searchText = value;
   }
 
-  getBrandData(brand: string) {
-    this.activeBrand = brand;
-    this.productApi
-      .getExactBrandData(brand)
-      .subscribe((data: AllProductArea) => {
-        this.sendBrands.emit(data);
-      });
-  }
-
-  onBrandChange(event: Event) {
-    if (this.activeBrand === 'All') {
-      this.showAll();
-    } else {
-      this.getBrandData(this.activeBrand);
-    }
+  private normalise(value: number | null): number | null {
+    if (value === null || value === undefined) return null;
+    const n = Number(value);
+    return Number.isFinite(n) && n >= 0 ? n : null;
   }
 }

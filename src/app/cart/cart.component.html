@@ -1,46 +1,144 @@
-<div class="nope">
-  <section>
-    @if (cart && cart.length > 0) {
-      <h1>Your Cart!</h1>
+<section class="container cart">
+  <header class="cart__head">
+    <p class="eyebrow">Your basket</p>
+    <h1 gsapSplit splitBy="lines" [splitImmediate]="true">Cart</h1>
+  </header>
 
-      <div class="cart-container">
-        @for (item of cart; track $index) {
-          <div class="cart-card">
-            <div class="cart-img">
-              <img class="image" [src]="item.image" alt="{{ item.title }}" />
-            </div>
-
-            <div class="cart-details">
-              <h3>{{ item.title }}</h3>
-              <p class="price">{{ item.pricePerQuantity }}$</p>
-
-              <div class="quantity-controls">
-                <button
-                  type="button"
-                  (click)="updateQuantity(item.productId, item.quantity - 1)"
-                  [disabled]="item.quantity <= 1"
-                >
-                  -
-                </button>
-                <span>{{ item.quantity }}</span>
-                <button type="button" (click)="updateQuantity(item.productId, item.quantity + 1)">+</button>
-              </div>
-
-              <button type="button" class="delete-btn" (click)="deleteProduct(item.productId)">
-                <i class="fa-solid fa-trash"></i> Delete
-              </button>
+  @if (cart.loading() && !cart.lines().length) {
+    <div class="cart__grid">
+      <div class="lines">
+        @for (i of [1,2,3]; track i) {
+          <div class="line line--sk">
+            <div class="skeleton line__img"></div>
+            <div class="line__sk-text">
+              <div class="skeleton" style="height:12px;width:55%"></div>
+              <div class="skeleton" style="height:10px;width:25%"></div>
             </div>
           </div>
         }
       </div>
-    } @else {
-      <h1>Your cart is empty!</h1>
-      <div class="empty-cart">
-        <img
-          src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png?f=webp"
-          alt="Empty Cart"
-        />
+      <div class="skeleton" style="height:280px;border-radius:var(--r-lg)"></div>
+    </div>
+  } @else if (!cart.isAuthed()) {
+    <div class="state">
+      <i class="fa-solid fa-lock state__icon"></i>
+      <h2>Sign in to see your cart</h2>
+      <p class="prose">Your basket is tied to your account so it follows you between devices.</p>
+      <div class="state__actions">
+        <a class="btn btn-primary" routerLink="/Signin">Sign in</a>
+        <a class="btn btn-secondary" routerLink="/register">Create an account</a>
       </div>
-    }
-  </section>
-</div>
+    </div>
+  } @else if (!cart.lines().length) {
+    <div class="state">
+      <i class="fa-solid fa-bag-shopping state__icon"></i>
+      <h2>Your cart is empty</h2>
+      <p class="prose">Nothing here yet. Browse the catalogue and add something you actually want.</p>
+      <div class="state__actions">
+        <a class="btn btn-primary" routerLink="/shop">Browse products</a>
+        <a class="btn btn-secondary" routerLink="/wishlist">Open wishlist</a>
+      </div>
+    </div>
+  } @else {
+    <div class="cart__grid">
+      <!-- ── Lines ─────────────────────────────────────── -->
+      <div class="lines" gsapReveal revealChildren=".line" [revealY]="34" [revealStagger]="0.07">
+        @for (line of cart.lines(); track line.productId) {
+          <article class="line" [class.is-pending]="isPending(line.productId)">
+            <a class="line__img" [routerLink]="['/details', line.productId]">
+              <img [src]="line.image" [alt]="line.title" loading="lazy" />
+            </a>
+
+            <div class="line__body">
+              <div class="line__top">
+                <div class="line__names">
+                  @if (line.brand) { <p class="eyebrow">{{ line.brand }}</p> }
+                  <a class="line__title" [routerLink]="['/details', line.productId]">{{ line.title }}</a>
+                </div>
+
+                <p class="line__total num">{{ line.lineTotal | currency }}</p>
+              </div>
+
+              <div class="line__bottom">
+                <div class="qty" role="group" [attr.aria-label]="'Quantity for ' + line.title">
+                  <button
+                    (click)="updateQuantity(line.productId, line.quantity - 1)"
+                    [disabled]="line.quantity <= 1 || isPending(line.productId)"
+                    aria-label="Decrease quantity"
+                  ><i class="fa-solid fa-minus"></i></button>
+
+                  <span class="qty__value num">{{ line.quantity }}</span>
+
+                  <button
+                    (click)="updateQuantity(line.productId, line.quantity + 1)"
+                    [disabled]="isPending(line.productId)"
+                    aria-label="Increase quantity"
+                  ><i class="fa-solid fa-plus"></i></button>
+                </div>
+
+                <span class="line__unit num">{{ line.unitPrice | currency }} each</span>
+
+                <button
+                  class="line__remove"
+                  (click)="remove(line.productId, line.title)"
+                  [disabled]="isPending(line.productId)"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                  <span>Remove</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      <!-- ── Summary ───────────────────────────────────── -->
+      <aside class="summary panel spotlight" gsapReveal [revealY]="34" [revealDelay]="0.1">
+        <h2 class="summary__heading">Order summary</h2>
+
+        <dl class="summary__rows">
+          <div>
+            <dt>Subtotal</dt>
+            <dd class="num">{{ cart.subtotal() | currency }}</dd>
+          </div>
+          <div>
+            <dt>Shipping</dt>
+            <dd class="num">
+              @if (cart.shipping() === 0) {
+                <span class="summary__free">Free</span>
+              } @else {
+                {{ cart.shipping() | currency }}
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Estimated tax</dt>
+            <dd class="num">{{ cart.tax() | currency }}</dd>
+          </div>
+        </dl>
+
+        @if (cart.freeShippingGap() > 0) {
+          <p class="summary__nudge">
+            <i class="fa-solid fa-truck-fast"></i>
+            Add <span class="num">{{ cart.freeShippingGap() | currency }}</span> more for free shipping.
+          </p>
+        }
+
+        <hr class="hairline" />
+
+        <div class="summary__total">
+          <span>Total</span>
+          <span class="num">{{ cart.total() | currency }}</span>
+        </div>
+
+        <a class="btn btn-primary btn-lg btn-block" routerLink="/checkout" gsapMagnetic [magneticStrength]="0.16">
+          Checkout <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <a class="link-arrow summary__back" routerLink="/shop">
+          <i class="fa-solid fa-arrow-left"></i> Keep shopping
+        </a>
+      </aside>
+    </div>
+  }
+</section>

@@ -1,168 +1,141 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductsAreaService } from '../../services/products-area.service';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RelatedProdsComponent } from './related-prods/related-prods.component';
-import { Product } from '../../../interfaces/product';
-import { SignErrComponent } from '../../sign-err/sign-err.component';
+import { Subscription } from 'rxjs';
+
+import { ProductsAreaService } from '../../services/products-area.service';
+import { CartStateService } from '../../services/cart-state.service';
+import { ToastService } from '../../services/toast.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { ToolsService } from '../../services/tools.service';
-import { SsrCookieService } from 'ngx-cookie-service-ssr';
-import { ApiAreaService } from '../../services/api-area.service';
-import { CartAreaService } from '../../services/cart-area.service';
+import { Product } from '../../../interfaces/product';
+
+import { RelatedProdsComponent } from './related-prods/related-prods.component';
+import { SignErrComponent } from '../../sign-err/sign-err.component';
+import { StarRatingComponent } from '../../shared/star-rating/star-rating.component';
+// SplitText is deliberately not used on the product title: the element
+// persists while its text changes as you hop between related products,
+// which would leave a stale split behind.
+import {
+  GsapRevealDirective,
+  GsapMagneticDirective,
+} from '../../../directives/motion.directives';
 
 @Component({
-selector: 'app-details',
-imports: [CommonModule, RelatedProdsComponent, SignErrComponent],
-templateUrl: './details.component.html',
-styleUrl: './details.component.css',
+  selector: 'app-details',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    RelatedProdsComponent,
+    SignErrComponent,
+    StarRatingComponent,
+    GsapRevealDirective,
+    GsapMagneticDirective,
+  ],
+  templateUrl: './details.component.html',
+  styleUrl: './details.component.css',
 })
-export class DetailsComponent implements OnInit {
-[x: string]: any;
-constructor(
-public actR: ActivatedRoute,
-public service: ProductsAreaService,
-public router: Router,
-public tools: ToolsService,
-public _cookie: SsrCookieService,
-public userServ: ApiAreaService,
-public CartServ: CartAreaService,
-) {}
+export class DetailsComponent implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute);
+  private service = inject(ProductsAreaService);
+  private cart = inject(CartStateService);
+  private toast = inject(ToastService);
+  private tools = inject(ToolsService);
+  protected wishlist = inject(WishlistService);
 
-ngOnInit(): void {
-this.getParam();
-this.getFullInfoProduct(this.prodID);
-}
+  protected product: Product | null = null;
+  protected loading = true;
+  protected failed = false;
 
-public prodID!: string;
-public prodINFO: any;
-public mainImage!: string;
-public allImages!: string[];
-public starNum!: number;
-public prodQuant: number = 1;
+  protected mainImage = '';
+  protected quantity = 1;
+  protected adding = false;
 
-getParam() {
-this.actR.params.subscribe((data: Params) => {
-this.prodID = data['id'];
-});
-}
+  private sub = new Subscription();
 
-otherRelatedArea(pageID: string) {
-this.getFullInfoProduct(pageID);
-}
+  ngOnInit(): void {
+    this.sub.add(
+      this.route.params.subscribe((params: Params) => {
+        this.load(params['id']);
+      })
+    );
+  }
 
-getFullInfoProduct(pageID: string) {
-this.service.getProductDetailInfo(pageID).subscribe((data: Product) => {
-this.prodINFO = data;
-this.mainImage = data.images[0];
-this.allImages = data.images;
-this.starNum = Math.round(data.rating);
-});
-}
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
-zoomImg(currImg: string) {
-this.mainImage = currImg;
-}
+  private load(id: string) {
+    if (!id) return;
 
-scrollToTop() {
-window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    this.loading = true;
+    this.failed = false;
 
-increase() {
-this.prodQuant++;
-}
-
-decrease() {
-this.prodQuant--;
-}
-
-errorSMS() {
-this.tools.isErrSMS.next(true);
-}
-
-addToCart(id: number) {
-  
-  const prodInfo = {
-    id: id,
-    quantity: this.prodQuant,
-  };
-
-  if (this._cookie.check('userInfo')) {
-    this.userServ.profileInfo().subscribe({
-      next: (userData) => {
-        this.CartServ.updateToCart(prodInfo).subscribe({
-          next: (response) => {
-              alert("Product Added To Cart!")
-          },
-          error: (err) => {
-            this.CartServ.addToCart(prodInfo).subscribe({
-              
-              error: (addErr) => {
-                console.error("Failed to add to cart:", addErr);
-                this.errorSMS(); 
-              }
-            });
-          },
-        });
+    this.service.getProductDetailInfo(id).subscribe({
+      next: (data: Product) => {
+        this.product = data;
+        this.mainImage = data.images?.[0] ?? '';
+        this.quantity = 1;
+        this.loading = false;
       },
-      error: (profileErr) => {
-        console.error("Failed to get user profile:", profileErr);
-        this.errorSMS(); 
-      }
-    });
-  } else {
-    this.errorSMS();
-  }
-}
-
-ngAfterViewInit(): void {
-  this.initParticles();
-}
-
-initParticles(): void {
-  const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d')!;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const particles: { x: number; y: number; dx: number; dy: number; size: number }[] = [];
-
-  for (let i = 0; i < 100; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      dx: (Math.random() - 0.5) * 1,
-      dy: (Math.random() - 0.5) * 1,
-      size: Math.random() * 3 + 1,
+      error: () => {
+        this.product = null;
+        this.loading = false;
+        this.failed = true;
+      },
     });
   }
 
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120, 144, 255, 0.6)';
-      ctx.fill();
-
-      p.x += p.dx;
-      p.y += p.dy;
-
-      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-    });
-    requestAnimationFrame(animate);
+  /** Related products navigate in place rather than re-routing. */
+  protected onRelatedSelected(id: string) {
+    this.load(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  animate();
+  protected setImage(img: string) {
+    this.mainImage = img;
+  }
 
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
+  protected step(delta: number) {
+    const max = this.product?.stock ?? 1;
+    this.quantity = Math.max(1, Math.min(max, this.quantity + delta));
+  }
+
+  protected get isSaved(): boolean {
+    return !!this.product && this.wishlist.has(this.product._id);
+  }
+
+  protected toggleSave() {
+    if (!this.product) return;
+    const saved = this.wishlist.toggle(this.product);
+    saved
+      ? this.toast.success('Saved to wishlist', this.product.title)
+      : this.toast.info('Removed from wishlist', this.product.title);
+  }
+
+  protected addToCart() {
+    if (!this.product || this.adding) return;
+    this.adding = true;
+
+    this.cart.addItem(this.product._id, this.quantity).subscribe({
+      next: () => {
+        this.adding = false;
+        this.toast.success('Added to cart', `${this.quantity} × ${this.product?.title}`);
+      },
+      error: (err: Error) => {
+        this.adding = false;
+        if (err?.message === 'NOT_AUTHED') {
+          // The sign-in prompt offers both routes, which a toast can't.
+          this.tools.isErrSMS.next(true);
+        } else {
+          this.toast.error("We couldn't add that item", 'Please try again.');
+        }
+      },
+    });
+  }
+
+  protected scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
-
-
-}
-

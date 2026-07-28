@@ -1,58 +1,137 @@
-<div class="main-arrea">
-  <div class="main-area">
-    <div class="brands">
-      <h1>Brands</h1>
-      <select class="brands-dropdown" [(ngModel)]="activeBrand" (change)="onBrandChange($event)">
-        <option value="All"> All</option>
-        @for (item of brands; track $index) {
-          <option [value]="item"> {{ item }}</option>
-        }
-      </select>
+<aside class="filters" aria-label="Product filters">
+  <header class="filters__head">
+    <h2 class="filters__heading">Filters</h2>
+    <button class="filters__reset" (click)="reset()">Reset</button>
+  </header>
+
+  <div class="filters__group">
+    <label class="field-label" for="f-search">Keywords</label>
+    <div class="filters__search">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input
+        id="f-search"
+        class="input"
+        type="search"
+        placeholder="Model, chipset, series…"
+        [(ngModel)]="searchText"
+        (keyup.enter)="apply()"
+      />
     </div>
-    
-    <div class="main-filterr">
-      <div class="search">
-        <p>Search:</p>
-        <input
-          class="search-input"
-          (keyup.enter)="searchData()"
-          type="search"
-          placeholder="Search here..."
-          [(ngModel)]="searchText"
-        />
-      </div>
-  
-      <div class="prices">
-        <h4>Select price:</h4>
-        <input class="range" type="text" placeholder="From" [(ngModel)]="minPrice" />
-        <input class="range" type="text" placeholder="To" [(ngModel)]="maxPrice" />
-      </div>
-  
-      <div class="rating">
-        <h4>Rating:</h4>
-        <input type="number" placeholder="0" max="5" min="0" [(ngModel)]="rating" />
-      </div>
-  
-      <div class="sort">
-        <select class="dropdown" [(ngModel)]="type">
-          <option value="">Choose Type</option>
-          <option value="rating">Rating</option>
-          <option value="price">Price</option>
-          <option value="issue_date">Issue Date</option>
-          <option value="title">Title</option>
-        </select>
-  
-        <select class="dropdown" [(ngModel)]="sort">
-          <option value="">Sort Direction</option>
-          <option value="asc">Ascendes</option>
-          <option value="desc">Descendes</option>
-        </select>
-      </div>
-  
-      <button class="filter-button" (click)="filterData()">Filter</button>
-    </div>
+  </div>
+
+  <hr class="hairline" />
+
+  <div class="filters__group">
+    <span class="field-label">Price</span>
+
+    <div class="filters__presets">
+      @for (p of pricePresets; track p.label) {
+        <button
+          class="chip"
+          [class.is-active]="isPreset(p)"
+          [attr.aria-pressed]="isPreset(p)"
+          (click)="setPreset(p)"
+        >{{ p.label }}</button>
+      }
     </div>
 
-    
-  
-</div>
+    <div class="filters__range">
+      <input
+        class="input num"
+        type="number"
+        min="0"
+        inputmode="numeric"
+        placeholder="Min"
+        aria-label="Minimum price"
+        [(ngModel)]="minPrice"
+        (keyup.enter)="apply()"
+      />
+      <span class="filters__dash" aria-hidden="true">–</span>
+      <input
+        class="input num"
+        type="number"
+        min="0"
+        inputmode="numeric"
+        placeholder="Max"
+        aria-label="Maximum price"
+        [(ngModel)]="maxPrice"
+        (keyup.enter)="apply()"
+      />
+    </div>
+  </div>
+
+  <hr class="hairline" />
+
+  <div class="filters__group">
+    <span class="field-label">Minimum rating</span>
+    <div class="filters__ratings">
+      @for (r of ratingOptions; track r) {
+        <button
+          class="rating-row"
+          [class.is-active]="rating === r"
+          [attr.aria-pressed]="rating === r"
+          (click)="setRating(r)"
+        >
+          <span class="rating-row__stars" aria-hidden="true">
+            @for (s of [1,2,3,4,5]; track s) {
+              <i class="fa-solid fa-star" [class.is-lit]="s <= r"></i>
+            }
+          </span>
+          <span class="rating-row__label">{{ r }} & up</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <hr class="hairline" />
+
+  <div class="filters__group">
+    <label class="field-label" for="f-brand">Brand</label>
+    @if (loadingBrands) {
+      <div class="skeleton" style="height: 36px; border-radius: var(--r-sm)"></div>
+    } @else {
+      <select id="f-brand" class="select" [(ngModel)]="activeBrand" (change)="apply()">
+        <option value="">All brands</option>
+        @for (b of brands; track b) {
+          <option [value]="b">{{ b }}</option>
+        }
+      </select>
+    }
+  </div>
+
+  <hr class="hairline" />
+
+  <div class="filters__group">
+    <label class="field-label" for="f-sort">Sort by</label>
+    <select id="f-sort" class="select" [(ngModel)]="sortBy" (change)="apply()">
+      <option value="">Relevance</option>
+      <option value="price">Price</option>
+      <option value="rating">Rating</option>
+      <option value="issue_date">Release date</option>
+      <option value="title">Name</option>
+    </select>
+
+    @if (sortBy) {
+      <div class="filters__dir">
+        <button
+          class="chip"
+          [class.is-active]="sortDirection === 'asc'"
+          (click)="sortDirection = 'asc'; apply()"
+        >
+          <i class="fa-solid fa-arrow-up-short-wide"></i> Ascending
+        </button>
+        <button
+          class="chip"
+          [class.is-active]="sortDirection === 'desc'"
+          (click)="sortDirection = 'desc'; apply()"
+        >
+          <i class="fa-solid fa-arrow-down-wide-short"></i> Descending
+        </button>
+      </div>
+    }
+  </div>
+
+  <button class="btn btn-primary btn-block filters__apply" (click)="apply()">
+    Apply filters
+  </button>
+</aside>

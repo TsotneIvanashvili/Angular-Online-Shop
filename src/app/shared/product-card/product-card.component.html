@@ -1,0 +1,66 @@
+<article class="card spotlight" gsapSpotlight>
+  <a
+    class="card__link"
+    [routerLink]="['/details', product._id]"
+    (click)="onOpen($event)"
+    [attr.aria-label]="'View ' + product.title"
+  >
+    <div class="card__media">
+      <img
+        [src]="product.images[0]"
+        [alt]="product.title + ' — ' + product.brand"
+        loading="lazy"
+      />
+
+      @if (discount > 0) {
+        <span class="card__discount num">−{{ discount }}%</span>
+      }
+
+      @if (product.stock <= 0) {
+        <div class="card__veil"><span class="badge badge-bad">Out of stock</span></div>
+      }
+    </div>
+
+    <div class="card__body">
+      <p class="card__brand eyebrow">{{ product.brand }}</p>
+      <h3 class="card__title">{{ product.title }}</h3>
+
+      <app-star-rating [value]="product.rating" />
+
+      <div class="card__foot">
+        <div class="card__prices">
+          <span class="card__price num">{{ product.price.current | currency }}</span>
+          @if (product.price.current !== product.price.beforeDiscount) {
+            <s class="card__was num">{{ product.price.beforeDiscount | currency }}</s>
+          }
+        </div>
+
+        @if (product.stock > 0) {
+          <span class="card__stock num">{{ product.stock }} left</span>
+        }
+      </div>
+    </div>
+  </a>
+
+  <div class="card__actions">
+    <button
+      type="button"
+      class="card__act"
+      [class.is-saved]="isSaved"
+      (click)="toggleSave($event)"
+      [attr.aria-pressed]="isSaved"
+      [attr.aria-label]="isSaved ? 'Remove from wishlist' : 'Save to wishlist'"
+    >
+      <i [class]="isSaved ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+    </button>
+
+    <button
+      type="button"
+      class="card__act"
+      (click)="onQuickView($event)"
+      aria-label="Quick view"
+    >
+      <i class="fa-solid fa-expand"></i>
+    </button>
+  </div>
+</article>

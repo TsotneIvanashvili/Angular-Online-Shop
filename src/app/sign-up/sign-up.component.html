@@ -1,77 +1,142 @@
-<div class="mainn">
-  <div class="signArea">
-    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-      @if (successRegister) {
-        <small class="success"><i class="fa-solid fa-address-book"></i> Signed in Successfully</small>
-      } @else if (errorList) {
-        <ul class="errors">
-          @for (item of errorList; track $index) {
-            <li><i class="fa-solid fa-circle-info"></i> {{item}}</li>
-          }
-        </ul>
-      }
-      <h1>Registration</h1>
-      <div class="content">
-        <div class="leftSide">
-          <div class="area">
-            <i class="fa-solid fa-user-tie"></i>
-            <input type="text" formControlName="firstName" id="firstName" placeholder="Enter Your First Name" />
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" formControlName="email" id="email" placeholder="Enter Your Email" />
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-phone"></i>
-            <input type="text" formControlName="phone" id="phone" placeholder="The Number Should Start With +995" />
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-map"></i>
-            <input type="text" formControlName="address" id="address" placeholder="Enter Your Address"/>
-          </div>
-        </div>
-        <div class="rightSide">
-          <div class="area">
-            <i class="fa-solid fa-id-badge"></i>
-            <input type="text" formControlName="lastName" id="lastName"  placeholder="Enter Your Last Name" />
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-key"></i>
-            <input type="password" formControlName="password" id="password" placeholder="Enter Your Password"/>
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-file-zipper"></i>
-            <input type="text" formControlName="zipcode" id="zipcode" placeholder="ENter Your Zip Code"/>
-          </div>
-          <div class="area">
-            <i class="fa-solid fa-image-portrait"></i>
-            <input type="text" formControlName="age" id="age" placeholder="Enter Your Age"/>
-          </div>
+<section class="reg">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <div class="reg__inner">
+    <header class="reg__head">
+      <p class="eyebrow">Join TechStore</p>
+      <h1>Create your <span class="serif">account</span></h1>
+      <p class="prose">
+        One account keeps your cart, wishlist and order history in sync.
+        Already have one? <a routerLink="/Signin">Sign in instead</a>.
+      </p>
+    </header>
+
+    @if (successRegister) {
+      <p class="notice notice--ok" role="status">
+        <i class="fa-solid fa-circle-check"></i>
+        Account created — you can sign in now.
+      </p>
+    } @else if (errorList.length) {
+      <div class="notice notice--bad" role="alert">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <div>
+          <p class="notice__title">We couldn't create the account</p>
+          <ul class="notice__list">
+            @for (item of errorList; track $index) { <li>{{ item }}</li> }
+          </ul>
         </div>
       </div>
-      <div class="bottomContent">
-        <div class="imageArea">
-          <i class="fa-solid fa-image"></i>
-          <input type="text" formControlName="avatar" id="avatar" placeholder="Enter The URL Of The Image" />
-        </div>
-        <h3>Gender</h3>
-        <div class="chooseArea">
-          <div class="choose">
-            <input type="radio" name="gender" id="male" value="MALE" formControlName="gender" />
-            <label for="male">Male</label>
+    }
+
+    <form class="reg__form" [formGroup]="signUpForm" (ngSubmit)="signUp()" novalidate
+          gsapReveal revealChildren=".block" [revealY]="30" [revealStagger]="0.09">
+      <fieldset class="block">
+        <legend class="block__legend">About you</legend>
+        <div class="block__rows">
+          <div class="field">
+            <label class="field-label" for="firstName">First name</label>
+            <input id="firstName" class="input" type="text" formControlName="firstName"
+                   placeholder="Nino" autocomplete="given-name" [attr.aria-invalid]="invalid('firstName')" />
+            @if (invalid('firstName')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('firstName') }}</p> }
           </div>
-          <div class="choose">
-            <input type="radio" name="gender" id="female" value="FEMALE" formControlName="gender" />
-            <label for="female">Female</label>
+
+          <div class="field">
+            <label class="field-label" for="lastName">Last name</label>
+            <input id="lastName" class="input" type="text" formControlName="lastName"
+                   placeholder="Beridze" autocomplete="family-name" [attr.aria-invalid]="invalid('lastName')" />
+            @if (invalid('lastName')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('lastName') }}</p> }
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="age">Age</label>
+            <input id="age" class="input num" type="number" min="0" formControlName="age"
+                   placeholder="28" [attr.aria-invalid]="invalid('age')" />
+            @if (invalid('age')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('age') }}</p> }
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="phone">Phone</label>
+            <input id="phone" class="input" type="tel" formControlName="phone"
+                   placeholder="+995 555 01 23 45" autocomplete="tel" [attr.aria-invalid]="invalid('phone')" />
+            @if (invalid('phone')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('phone') }}</p> }
+          </div>
+
+          <div class="field field--wide">
+            <span class="field-label">Gender</span>
+            <div class="radios">
+              <label class="radio">
+                <input type="radio" value="MALE" formControlName="gender" />
+                <span>Male</span>
+              </label>
+              <label class="radio">
+                <input type="radio" value="FEMALE" formControlName="gender" />
+                <span>Female</span>
+              </label>
+            </div>
           </div>
         </div>
-        <button [disabled]="signUpForm.invalid" type="submit">Register</button>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend class="block__legend">Sign-in details</legend>
+        <div class="block__rows">
+          <div class="field field--wide">
+            <label class="field-label" for="reg-email">Email</label>
+            <input id="reg-email" class="input" type="email" formControlName="email"
+                   placeholder="you@example.com" autocomplete="email" [attr.aria-invalid]="invalid('email')" />
+            @if (invalid('email')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('email') }}</p> }
+          </div>
+
+          <div class="field field--wide">
+            <label class="field-label" for="reg-password">Password</label>
+            <input id="reg-password" class="input" type="password" formControlName="password"
+                   placeholder="At least 7 characters" autocomplete="new-password"
+                   [attr.aria-invalid]="invalid('password')" />
+            @if (invalid('password')) {
+              <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('password') }}</p>
+            } @else {
+              <p class="field-hint">Use at least 7 characters.</p>
+            }
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend class="block__legend">Delivery address</legend>
+        <div class="block__rows">
+          <div class="field field--wide">
+            <label class="field-label" for="address">Street address</label>
+            <input id="address" class="input" type="text" formControlName="address"
+                   placeholder="14 Rustaveli Avenue, apt 7" autocomplete="street-address"
+                   [attr.aria-invalid]="invalid('address')" />
+            @if (invalid('address')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('address') }}</p> }
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="zipcode">Postal code</label>
+            <input id="zipcode" class="input num" type="text" formControlName="zipcode"
+                   placeholder="0108" autocomplete="postal-code" [attr.aria-invalid]="invalid('zipcode')" />
+            @if (invalid('zipcode')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('zipcode') }}</p> }
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="avatar">Avatar URL</label>
+            <input id="avatar" class="input" type="url" formControlName="avatar"
+                   placeholder="https://…" [attr.aria-invalid]="invalid('avatar')" />
+            @if (invalid('avatar')) { <p class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ errorFor('avatar') }}</p> }
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="reg__submit">
+        <button class="btn btn-primary btn-lg" type="submit"
+                gsapMagnetic [magneticStrength]="0.16" [disabled]="signUpForm.invalid">
+          Create account
+        </button>
+        <p class="reg__legal">
+          By creating an account you agree to our terms of service and privacy policy.
+        </p>
       </div>
     </form>
   </div>
-  
-  
-  
-  
-  
-</div>
+</section>

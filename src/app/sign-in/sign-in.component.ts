@@ -3,10 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ApiAreaService } from '../services/api-area.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { RouterModule } from '@angular/router';
+import { GsapMagneticDirective } from '../../directives/motion.directives';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule, GsapMagneticDirective],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
@@ -24,10 +25,18 @@ export class SignInComponent {
   public successLogin: boolean = false;
   public loading: boolean = false; // Added loading state
 
+  public showPassword: boolean = false;
+
   protected signInForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', Validators.required),
   });
+
+  /** True once the field has been touched and is still invalid. */
+  protected invalid(name: string): boolean {
+    const control = this.signInForm.get(name);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
 
   signIn() {
     if (this.signInForm.invalid) return;
@@ -65,14 +74,18 @@ export class SignInComponent {
           },
           error: (profileErr) => {
             this._cookie.delete('user'); // Clean up on failure
-            this.errorSMS = profileErr.error?.error || 'Failed to load profile';
+            this.errorSMS = profileErr.error?.error || "We couldn't load your profile";
             this.errAlert = true;
+            this.loading = false;
           }
         });
       },
       error: (err) => {
-        this.errorSMS = err.error?.error || 'Invalid email or password';
+        this.errorSMS = err.error?.error || 'That email and password combination did not work.';
         this.errAlert = true;
+        // `complete` never fires on the error path, so reset here too or
+        // the submit button stays disabled after a failed attempt.
+        this.loading = false;
       },
       complete: () => {
         this.loading = false;
